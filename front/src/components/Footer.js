@@ -87,7 +87,7 @@ function FooterSection() {
             }}
           >
             <Title level={3} style={{ textAlign: "center", marginBottom: 24 }}>
-              Follow on All Platforms
+              Follow on all platforms
             </Title>
 
             <Row gutter={[16, 16]} justify="center">
