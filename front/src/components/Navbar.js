@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   Drawer,
@@ -22,6 +22,22 @@ const logoTextStyle = { display: "flex", flexDirection: "column" };
 function Navbar() {
   const { isMobile, setDarkMode, darkMode } = useContext(UserContext);
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
 
   const toggleDrawer = () => setDrawerVisible(!drawerVisible);
   const toggleMode = () => setDarkMode(!darkMode);
@@ -40,9 +56,19 @@ function Navbar() {
     zIndex: 10,
     width: "100%",
     padding: "0 24px",
-    background: darkMode ? "#090c11" : "#f2f5fa",
     display: "flex",
     alignItems: "center",
+    transition:
+      "background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease",
+    background: scrolled
+      ? darkMode
+        ? "rgba(9, 12, 17, 0.8)" // dark semi-transparent
+        : "rgba(242, 245, 250, 0.8)" // light semi-transparent
+      : darkMode
+      ? "#090c11"
+      : "#f2f5fa",
+    backdropFilter: scrolled ? "blur(6px)" : "none",
+    boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.25)" : "none",
   };
 
   return (
@@ -62,7 +88,7 @@ function Navbar() {
                 borderRadius: "50%",
                 objectFit: "cover",
                 backgroundColor: darkMode ? "whitesmoke" : "#090c11",
-                padding: 2,
+                padding: 1.5,
               }}
             />
             <div style={logoTextStyle}>
@@ -202,7 +228,7 @@ function Navbar() {
             margin: 0,
             padding: 0,
             minHeight: "100vh",
-            background: "whitesmoke",
+            background: darkMode ? "#090c11" : "#f2f5fa",
           }}
         >
           <Outlet />
