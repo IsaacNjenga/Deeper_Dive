@@ -62,8 +62,8 @@ function Navbar() {
       "background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease",
     background: scrolled
       ? darkMode
-        ? "rgba(9, 12, 17, 0.8)" // dark semi-transparent
-        : "rgba(242, 245, 250, 0.8)" // light semi-transparent
+        ? "rgba(9, 12, 17, 0.65)" // dark semi-transparent
+        : "rgba(242, 245, 250, 0.65)" // light semi-transparent
       : darkMode
       ? "#090c11"
       : "#f2f5fa",

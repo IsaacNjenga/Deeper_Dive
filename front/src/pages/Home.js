@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import Motion from "../components/motion.js";
 import { Card, Col, Row, Tag, Typography, Button, Input, Image } from "antd";
-import { UserContext } from "../App.js";
+import { darkTheme, lightTheme, UserContext } from "../App.js";
 
 const { Title, Text, Paragraph } = Typography;
 const img1 =
   "https://images.unsplash.com/photo-1581368135153-a506cf13b1e1?w=900";
 const img2 =
-  "https://plus.unsplash.com/premium_photo-1664195074777-a7c40926f5c2?w=900";
+  "https://images.unsplash.com/photo-1567596275753-92607c3ce1ae?w=900";
 const img3 =
   "https://images.unsplash.com/photo-1593697820826-2e76c9720a99?w=900";
 
@@ -32,7 +32,7 @@ const featuredLists = [
   },
 ];
 function Home() {
-  const { isMobile, mode } = useContext(UserContext);
+  const { isMobile, darkMode } = useContext(UserContext);
 
   return (
     <>
@@ -50,7 +50,13 @@ function Home() {
               <Tag style={{ borderRadius: 15, background: "#f4f8ff" }}>
                 New episode every other Friday
               </Tag>
-              <Title style={{ color: "white", fontWeight: 800, fontSize: 56 }}>
+              <Title
+                style={{
+                  color: darkMode ? darkTheme.color : lightTheme.color,
+                  fontWeight: 800,
+                  fontSize: 56,
+                }}
+              >
                 Go beyond the headlines.{" "}
                 <span style={{ color: "#ed0141" }}>Dive Deeper</span> into the
                 ideas shaping life & work
@@ -88,7 +94,13 @@ function Home() {
 
         {/* Featured Episodes */}
         <div style={{ margin: "60px 20px" }}>
-          <Title level={2} style={{ fontWeight: "bold", color: "#fff" }}>
+          <Title
+            level={2}
+            style={{
+              fontWeight: "bold",
+              color: darkMode ? darkTheme.color : lightTheme.color,
+            }}
+          >
             Featured Episodes
           </Title>
           <Row gutter={[16, 16]}>
@@ -104,9 +116,14 @@ function Home() {
                         borderRadius: 12,
                       }}
                     >
-                      <Image src={img1} alt="pd_img" />
+                      <Image
+                        src={ep.image}
+                        alt="pd_img"
+                        style={{ height: "100%" }}
+                      />
                     </div>
                   }
+                  key={ep.id}
                 >
                   <Card.Meta
                     title={`Episode ${ep.id}: ${ep.title}`}
@@ -122,7 +139,10 @@ function Home() {
         </div>
 
         <div style={{ margin: "60px 20px", textAlign: "center" }}>
-          <Title level={2} style={{ color: "#fff" }}>
+          <Title
+            level={2}
+            style={{ color: darkMode ? darkTheme.color : lightTheme.color }}
+          >
             About the Podcast
           </Title>
           <Paragraph
@@ -130,7 +150,7 @@ function Home() {
               maxWidth: 700,
               margin: "0 auto",
               fontSize: 18,
-              color: "#fff",
+              color: darkMode ? darkTheme.color : lightTheme.color,
             }}
           >
             <strong>A Deeper Dive</strong> is a podcast dedicated to exploring

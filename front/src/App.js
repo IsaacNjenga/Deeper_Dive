@@ -11,6 +11,10 @@ import { AnimatePresence } from "framer-motion";
 
 export const UserContext = createContext();
 
+export const lightTheme = { backgroundColor: "#f2f5fa", color: "#090c11" };
+export const darkTheme = { backgroundColor: "#090c11", color: "#f2f5fa" };
+
+
 function App() {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
