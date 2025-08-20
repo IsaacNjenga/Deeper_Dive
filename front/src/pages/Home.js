@@ -37,7 +37,7 @@ function Home() {
   return (
     <>
       <Motion>
-        <div style={{ margin: "40px 20px" }}>
+        <div style={{ margin: "40px 10px" }}>
           <div
             style={{
               display: "flex",
@@ -47,14 +47,23 @@ function Home() {
             }}
           >
             <div style={{ width: isMobile ? "100%" : "60%", marginTop: 30 }}>
-              <Tag style={{ borderRadius: 15, background: "#f4f8ff" }}>
-                New episode every other Friday
+              <Tag
+                style={{
+                  borderRadius: 15,
+                  background: "#ed0141",
+                  color: "whitesmoke",
+                  padding: 6,
+                  fontWeight: "bold",
+                  borderColor: "rgba(0,0,0,0)",
+                }}
+              >
+                New episode every other Friday!
               </Tag>
               <Title
                 style={{
                   color: darkMode ? darkTheme.color : lightTheme.color,
                   fontWeight: 800,
-                  fontSize: 56,
+                  fontSize: isMobile ? 48 : 56,
                 }}
               >
                 Go beyond the headlines.{" "}
@@ -85,6 +94,7 @@ function Home() {
                 justifyContent: "center",
                 fontWeight: "bold",
                 color: "#555",
+                border: "1px solid grey",
               }}
             >
               🎧 Media Player Here

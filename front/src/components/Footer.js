@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Card, Col, Form, Input, Row, Tag, Typography } from "antd";
+import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
 
 import {
   AppleOutlined,
@@ -13,7 +13,13 @@ import { UserContext } from "../App";
 
 const { Title } = Typography;
 
-const inputStyle = { height: 40, borderRadius: 16, padding: 15, width: "100%" };
+const inputStyle = {
+  height: 40,
+  borderRadius: 16,
+  padding: 15,
+  width: "100%",
+  border: "1px solid #a7b4c0",
+};
 
 const cardStyle = { borderRadius: 20 };
 
@@ -28,8 +34,8 @@ function FooterSection() {
         style={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
-          gap: 15,
-          margin: "0px 20px",
+          gap: 10,
+          margin: "0px 15px",
           padding: "0 10px",
         }}
       >
@@ -58,7 +64,12 @@ function FooterSection() {
                 <Input.TextArea
                   placeholder="Message, guest suggestion, or question"
                   rows={4}
-                  style={{ borderRadius: 16, padding: 15, width: "100%" }}
+                  style={{
+                    borderRadius: 16,
+                    padding: 15,
+                    width: "100%",
+                    border: "1px solid #a7b4c0",
+                  }}
                 />
               </Form.Item>
               <Button type="primary" style={{ borderRadius: 20 }}>
@@ -68,7 +79,7 @@ function FooterSection() {
           </Card>
         </div>
 
-        <div style={{ width: isMobile ? "100%" : "45%", margin: "0 auto" }}>
+        <div style={{ width: isMobile ? "100%" : "42%", margin: "0 auto" }}>
           <Card
             style={{
               ...cardStyle,
@@ -122,7 +133,7 @@ function FooterSection() {
                       padding: "12px 16px",
                       borderRadius: 12,
                       backgroundColor: "white",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.19)",
                       cursor: "pointer",
                       transition: "all 0.3s ease",
                       fontWeight: 500,

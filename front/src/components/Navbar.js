@@ -242,7 +242,7 @@ function Navbar() {
             background: darkMode ? "#090c11" : "#f2f5fa",
           }}
         >
-          <Divider style={{ borderColor: "#333" }} />
+          <Divider style={{ borderColor: darkMode ? "#f2f5fa" : "#a7b4c0" }} />
           <FooterSection />
         </Footer>
       </Layout>
