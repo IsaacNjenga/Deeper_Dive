@@ -11,9 +11,16 @@ import { AnimatePresence } from "framer-motion";
 
 export const UserContext = createContext();
 
-export const lightTheme = { backgroundColor: "#f2f5fa", color: "#090c11" };
-export const darkTheme = { backgroundColor: "#090c11", color: "#f2f5fa" };
-
+export const lightTheme = {
+  backgroundColor: "#f2f5fa",
+  color: "#090c11",
+  secondary: "#85898d",
+};
+export const darkTheme = {
+  backgroundColor: "#090c11",
+  color: "#f2f5fa",
+  secondary: "#85898d",
+};
 
 function App() {
   const location = useLocation();

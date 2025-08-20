@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
+  Divider,
   Drawer,
   FloatButton,
   Layout,
@@ -234,7 +235,14 @@ function Navbar() {
           <Outlet />
         </Content>
 
-        <Footer>
+        <Footer
+          style={{
+            margin: 0,
+            padding: 0,
+            background: darkMode ? "#090c11" : "#f2f5fa",
+          }}
+        >
+          <Divider style={{ borderColor: "#333" }} />
           <FooterSection />
         </Footer>
       </Layout>
