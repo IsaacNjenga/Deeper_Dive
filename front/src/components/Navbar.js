@@ -8,7 +8,7 @@ import {
   Switch,
   Typography,
 } from "antd";
-import { Link, Outlet,  } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import FooterSection from "./Footer";
 import logo from "../assets/icons/logo.png";
 import { MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
@@ -17,23 +17,14 @@ import { UserContext } from "../App";
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
 
-const headerStyle = {
-  position: "sticky",
-  top: 0,
-  zIndex: 10,
-  width: "100%",
-  padding: "0 24px",
-  background: "#090c11",
-  display: "flex",
-  alignItems: "center",
-};
 const logoTextStyle = { display: "flex", flexDirection: "column" };
 
 function Navbar() {
-  const { isMobile } = useContext(UserContext);
+  const { isMobile, setDarkMode, darkMode } = useContext(UserContext);
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   const toggleDrawer = () => setDrawerVisible(!drawerVisible);
+  const toggleMode = () => setDarkMode(!darkMode);
 
   const menuItems = [
     { key: "1", label: "Home", path: "/" },
@@ -42,6 +33,17 @@ function Navbar() {
     { key: "4", label: "About", path: "/about" },
     { key: "5", label: "Contact", path: "/contact" },
   ];
+
+  const headerStyle = {
+    position: "sticky",
+    top: 0,
+    zIndex: 10,
+    width: "100%",
+    padding: "0 24px",
+    background: darkMode ? "#090c11" : "#f2f5fa",
+    display: "flex",
+    alignItems: "center",
+  };
 
   return (
     <>
@@ -59,14 +61,18 @@ function Navbar() {
                 height: 50,
                 borderRadius: "50%",
                 objectFit: "cover",
-                backgroundColor: "whitesmoke",
-                padding: 4,
+                backgroundColor: darkMode ? "whitesmoke" : "#090c11",
+                padding: 2,
               }}
             />
             <div style={logoTextStyle}>
               <Title
                 level={3}
-                style={{ margin: 0, color: "#fff", fontWeight: "bold" }}
+                style={{
+                  margin: 0,
+                  color: darkMode ? "#fff" : "#090c11",
+                  fontWeight: "bold",
+                }}
               >
                 A Deeper Dive
               </Title>
@@ -87,14 +93,21 @@ function Navbar() {
               <Button
                 type="text"
                 onClick={toggleDrawer}
-                icon={<MenuOutlined style={{ color: "white", fontSize: 20 }} />}
+                icon={
+                  <MenuOutlined
+                    style={{
+                      color: darkMode ? "white" : "#090c11",
+                      fontSize: 20,
+                    }}
+                  />
+                }
               />
             </div>
           ) : (
             <>
               {/* Menu */}
               <Menu
-                theme="dark"
+                theme={darkMode ? "dark" : "light"}
                 mode="horizontal"
                 style={{
                   flex: 1,
@@ -119,9 +132,13 @@ function Navbar() {
                   marginLeft: "auto",
                 }}
               >
-                <SunOutlined style={{ color: "#fff", fontSize: 20 }} />
-                <Switch />
-                <MoonOutlined style={{ color: "#fff", fontSize: 20 }} />
+                <Switch
+                  uncheckedChildren={<SunOutlined />}
+                  checkedChildren={<MoonOutlined />}
+                  defaultChecked
+                  size="large"
+                  onClick={toggleMode}
+                />
               </div>
             </>
           )}
@@ -129,9 +146,10 @@ function Navbar() {
 
         <Drawer
           placement="right"
-          width={280}
+          width={240}
           onClose={toggleDrawer}
           open={drawerVisible}
+          style={{ backgroundColor: darkMode ? "#090c11" : "#f2f5fa" }}
         >
           <Menu
             mode="vertical"
@@ -146,13 +164,18 @@ function Navbar() {
               <Menu.Item key={item.path}>
                 <Link
                   to={item.path}
-                  style={{ color: "#3c3b39", textDecoration: "none" }}
+                  style={{
+                    color: darkMode ? "#f2f5fa" : "#090c11",
+                    textDecoration: "none",
+                  }}
                 >
                   {item.label}
                 </Link>
               </Menu.Item>
             ))}
-            <Menu.Item>
+            <Menu.Item
+              style={{ backgroundColor: "rgba(0,0,0,0)", marginTop: 10 }}
+            >
               <div
                 style={{
                   display: "flex",
@@ -161,9 +184,13 @@ function Navbar() {
                   marginLeft: "auto",
                 }}
               >
-                <SunOutlined style={{ color: "#fff", fontSize: 20 }} />
-                <Switch />
-                <MoonOutlined style={{ color: "#fff", fontSize: 20 }} />
+                <Switch
+                  checkedChildren={<SunOutlined />}
+                  unCheckedChildren={<MoonOutlined />}
+                  defaultChecked
+                  size="large"
+                  onClick={toggleMode}
+                />
               </div>
             </Menu.Item>
           </Menu>

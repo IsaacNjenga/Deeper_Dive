@@ -14,7 +14,7 @@ export const UserContext = createContext();
 function App() {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [mode, setMode] = useState("dark");
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -24,7 +24,7 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={{ isMobile, setMode, mode }}>
+      <UserContext.Provider value={{ isMobile, setDarkMode, darkMode }}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Navbar />}>
