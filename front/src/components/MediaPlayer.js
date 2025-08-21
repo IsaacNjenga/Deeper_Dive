@@ -1,15 +1,13 @@
 import React, { useContext, useRef, useState } from "react";
 import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react";
 import { Card, Typography, Button, Space, Slider, Avatar } from "antd";
-import wam from "../assets/audio/wam.mp3";
 import { UserContext } from "../App";
 
 const { Title, Text } = Typography;
 
 function MediaPlayer({ media }) {
   const audioRef = useRef(null);
-  const { isPlaying, setIsPlaying, mediaPlaying, pauseMedia } =
-    useContext(UserContext);
+  const { isPlaying, setIsPlaying, mediaPlaying } = useContext(UserContext);
   const [volume, setVolume] = useState(3);
 
   React.useEffect(() => {
@@ -67,7 +65,9 @@ function MediaPlayer({ media }) {
         <Title level={5} style={{ color: "#fff", margin: 0, fontSize: 14 }}>
           {mediaPlaying.title}
         </Title>
-        <Text style={{ color: "#aaa", fontSize: 12 }}>Episode: {mediaPlaying.episode}</Text>
+        <Text style={{ color: "#aaa", fontSize: 12 }}>
+          Episode: {mediaPlaying.episode}
+        </Text>
       </div>
 
       {/* Controls */}
