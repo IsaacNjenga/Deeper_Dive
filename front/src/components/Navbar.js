@@ -12,7 +12,7 @@ import {
 import { Link, Outlet } from "react-router-dom";
 import FooterSection from "./Footer";
 import logo from "../assets/icons/logo.png";
-import { MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
+import { MenuOutlined, MoonFilled, SunFilled } from "@ant-design/icons";
 import { UserContext } from "../App";
 
 const { Header, Content, Footer } = Layout;
@@ -170,8 +170,12 @@ function Navbar() {
                 }}
               >
                 <Switch
-                  uncheckedChildren={<SunOutlined />}
-                  checkedChildren={<MoonOutlined />}
+                  checkedChildren={
+                    <SunFilled style={{ color: "yellow", fontSize: 15 }} />
+                  }
+                  unCheckedChildren={
+                    <MoonFilled style={{ color: "#F6F1D5", fontSize: 15 }} />
+                  }
                   defaultChecked
                   size="large"
                   onClick={toggleMode}
@@ -223,8 +227,10 @@ function Navbar() {
                 }}
               >
                 <Switch
-                  checkedChildren={<SunOutlined />}
-                  unCheckedChildren={<MoonOutlined />}
+                  checkedChildren={<SunFilled style={{ color: "yellow" }} />}
+                  unCheckedChildren={
+                    <MoonFilled style={{ color: "#F6F1D5" }} />
+                  }
                   defaultChecked
                   size="large"
                   onClick={toggleMode}
