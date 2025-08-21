@@ -24,7 +24,7 @@ const inputStyle = {
 
 const cardStyle = {
   borderRadius: 20,
-  border: "1px solid #333",
+  border: "1px solid #a7b4c0",
   boxShadow: "0 2px 8px 2px rgba(0,0,0,0.29)",
   marginBottom: 10,
 };

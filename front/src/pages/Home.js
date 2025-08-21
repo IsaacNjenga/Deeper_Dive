@@ -10,6 +10,8 @@ const img2 =
   "https://images.unsplash.com/photo-1567596275753-92607c3ce1ae?w=900";
 const img3 =
   "https://images.unsplash.com/photo-1593697820826-2e76c9720a99?w=900";
+const avatarImg =
+  "https://images.unsplash.com/photo-1594703276852-68829b071330?w=900";
 
 const featuredLists = [
   {
@@ -85,19 +87,32 @@ function Home() {
 
             <div
               style={{
-                background: "whitesmoke",
+                background: "rgba(0,0,0,0)",
                 width: isMobile ? "100%" : "40%",
                 borderRadius: 12,
-                minHeight: 300,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontWeight: "bold",
-                color: "#555",
-                border: "1px solid grey",
+                border: "1px solid rgba(0,0,0,0)",
               }}
             >
-              🎧 Media Player Here
+              <div
+                style={{
+                  borderRadius: 12,
+                  width: "100%",
+                  margin: "auto",
+                }}
+              >
+                <Image
+                  src={avatarImg}
+                  alt="_img"
+                  style={{
+                    borderRadius: 12,
+                    objectFit: "cover",
+                  }}
+                  preview={false}
+                />
+              </div>
             </div>
           </div>
         </div>
