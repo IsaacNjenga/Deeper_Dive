@@ -1,21 +1,28 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react";
 import { Card, Typography, Button, Space, Slider, Avatar } from "antd";
 import wam from "../assets/audio/wam.mp3";
+import { UserContext } from "../App";
 
 const { Title, Text } = Typography;
 
-function MediaPlayer() {
+function MediaPlayer({ media }) {
   const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(100);
+  const { isPlaying, setIsPlaying, mediaPlaying, pauseMedia } =
+    useContext(UserContext);
+  const [volume, setVolume] = useState(3);
+
+  React.useEffect(() => {
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying, mediaPlaying]);
 
   const togglePlay = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
     setIsPlaying(!isPlaying);
   };
 
@@ -23,6 +30,8 @@ function MediaPlayer() {
     setVolume(value);
     audioRef.current.volume = value / 100;
   };
+
+  if (!mediaPlaying) return null;
 
   return (
     <Card
@@ -36,6 +45,8 @@ function MediaPlayer() {
         boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
         background: "#1f1f1f",
         color: "#fff",
+        zIndex: 10,
+        padding: "12px 16px",
       }}
       bodyStyle={{
         display: "flex",
@@ -47,16 +58,16 @@ function MediaPlayer() {
       <Avatar
         shape="square"
         size={56}
-        src="/cover.jpg"
+        src={mediaPlaying.cover}
         style={{ borderRadius: 8, marginRight: 12 }}
       />
 
       {/* Track Info */}
       <div style={{ flex: 1 }}>
         <Title level={5} style={{ color: "#fff", margin: 0, fontSize: 14 }}>
-          Wait A Minute!
+          {mediaPlaying.title}
         </Title>
-        <Text style={{ color: "#aaa", fontSize: 12 }}>Willow Smith</Text>
+        <Text style={{ color: "#aaa", fontSize: 12 }}>Episode: {mediaPlaying.episode}</Text>
       </div>
 
       {/* Controls */}
@@ -92,7 +103,7 @@ function MediaPlayer() {
       </Space>
 
       {/* Audio element */}
-      <audio ref={audioRef} src={wam} preload="metadata" />
+      <audio ref={audioRef} src={mediaPlaying.audio} preload="metadata" />
     </Card>
   );
 }

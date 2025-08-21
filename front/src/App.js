@@ -26,6 +26,17 @@ function App() {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [darkMode, setDarkMode] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [mediaPlaying, setMediaPlaying] = useState(null);
+
+  const playMedia = (media) => {
+    setMediaPlaying(media);
+    setIsPlaying(true);
+  };
+
+  const pauseMedia = () => {
+    setIsPlaying(false);
+  };
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -35,7 +46,19 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={{ isMobile, setDarkMode, darkMode }}>
+      <UserContext.Provider
+        value={{
+          isMobile,
+          setDarkMode,
+          darkMode,
+          isPlaying,
+          setIsPlaying,
+          mediaPlaying,
+          setMediaPlaying,
+          playMedia,
+          pauseMedia,
+        }}
+      >
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Navbar />}>
