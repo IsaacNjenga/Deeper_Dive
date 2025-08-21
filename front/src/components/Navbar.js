@@ -99,11 +99,18 @@ function Navbar() {
                   margin: 0,
                   color: darkMode ? "#fff" : "#090c11",
                   fontWeight: "bold",
+                  fontFamily: "Raleway",
                 }}
               >
                 A Deeper Dive
               </Title>
-              <Text style={{ color: "#aaa", fontWeight: "bold" }}>
+              <Text
+                style={{
+                  color: "#aaa",
+                  fontWeight: "bold",
+                  fontFamily: "Roboto",
+                }}
+              >
                 with Jeremy Nyabila
               </Text>
             </div>
@@ -144,7 +151,10 @@ function Navbar() {
                 items={menuItems.map(({ key, label, path }) => ({
                   key,
                   label: (
-                    <Link to={path} style={{ fontSize: 16 }}>
+                    <Link
+                      to={path}
+                      style={{ fontSize: 16, fontFamily: "Raleway" }}
+                    >
                       {label}
                     </Link>
                   ),
@@ -194,6 +204,7 @@ function Navbar() {
                   style={{
                     color: darkMode ? "#f2f5fa" : "#090c11",
                     textDecoration: "none",
+                    fontFamily: "Raleway",
                   }}
                 >
                   {item.label}

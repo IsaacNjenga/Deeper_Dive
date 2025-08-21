@@ -30,7 +30,7 @@ const featuredLists = [
     id: 3,
     image: img3,
     title: "Myth vs Reality",
-    text: "I sits down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
+    text: "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
   },
 ];
 function Home() {
@@ -57,6 +57,7 @@ function Home() {
                   padding: 6,
                   fontWeight: "bold",
                   borderColor: "rgba(0,0,0,0)",
+                  fontFamily: "Raleway",
                 }}
               >
                 New episode every other Friday!
@@ -72,13 +73,24 @@ function Home() {
                 <span style={{ color: "#ed0141" }}>Dive Deeper</span> into the
                 ideas shaping life & work
               </Title>
-              <Text type="secondary" style={{ fontSize: 20, color: "#85898d" }}>
+              <Text
+                type="secondary"
+                style={{
+                  fontSize: 20,
+                  color: "#85898d",
+                  fontFamily: "Raleway",
+                }}
+              >
                 Long-form conversations hosted by Jeremy Nyabila — with
                 founders, artists, scientists, and leaders across Africa and the
                 world.
               </Text>
               <div style={{ marginTop: 20 }}>
-                <Button type="primary" size="large" style={{ marginRight: 10 }}>
+                <Button
+                  type="primary"
+                  size="large"
+                  style={{ marginRight: 10, fontFamily: "Raleway" }}
+                >
                   Listen Now
                 </Button>
                 <Button size="large">Subscribe</Button>
@@ -124,6 +136,8 @@ function Home() {
             style={{
               fontWeight: "bold",
               color: darkMode ? darkTheme.color : lightTheme.color,
+              fontFamily: "Raleway",
+              textAlign: "center",
             }}
           >
             Featured Episodes
@@ -166,7 +180,10 @@ function Home() {
         <div style={{ margin: "60px 20px", textAlign: "center" }}>
           <Title
             level={2}
-            style={{ color: darkMode ? darkTheme.color : lightTheme.color }}
+            style={{
+              color: darkMode ? darkTheme.color : lightTheme.color,
+              fontFamily: "Roboto",
+            }}
           >
             About the Podcast
           </Title>
@@ -176,6 +193,7 @@ function Home() {
               margin: "0 auto",
               fontSize: 18,
               color: darkMode ? darkTheme.color : lightTheme.color,
+              fontFamily: "Raleway",
             }}
           >
             <strong>A Deeper Dive</strong> is a podcast dedicated to exploring

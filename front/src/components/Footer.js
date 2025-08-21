@@ -20,6 +20,7 @@ const inputStyle = {
   padding: 15,
   width: "100%",
   border: "1px solid #a7b4c0",
+  fontFamily: "Raleway",
 };
 
 const cardStyle = {
@@ -72,7 +73,10 @@ function FooterSection() {
       >
         <div style={{ width: isMobile ? "100%" : "60%" }}>
           <Card style={cardStyle}>
-            <Title level={3} style={{ textAlign: "center" }}>
+            <Title
+              level={3}
+              style={{ textAlign: "center", fontFamily: "Raleway" }}
+            >
               Contact the show
             </Title>
             <Form form={form} onFinish={handleSubmit}>
@@ -106,6 +110,7 @@ function FooterSection() {
                     padding: 15,
                     width: "100%",
                     border: "1px solid #a7b4c0",
+                    fontFamily: "Raleway",
                   }}
                 />
               </Form.Item>
@@ -124,7 +129,14 @@ function FooterSection() {
 
         <div style={{ width: isMobile ? "100%" : "40%", margin: "0 auto" }}>
           <Card style={cardStyle}>
-            <Title level={3} style={{ textAlign: "center", marginBottom: 24 }}>
+            <Title
+              level={3}
+              style={{
+                textAlign: "center",
+                marginBottom: 24,
+                fontFamily: "Raleway",
+              }}
+            >
               Follow on all platforms
             </Title>
 
