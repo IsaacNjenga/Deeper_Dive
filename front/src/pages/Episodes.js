@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import {
   CalendarOutlined,
   ClockCircleOutlined,
+  PauseCircleOutlined,
   PlayCircleOutlined,
 } from "@ant-design/icons";
 import Motion from "../components/motion";
@@ -66,8 +67,15 @@ export const formatDuration = (totalSeconds) => {
 };
 
 function Episodes() {
-  const { darkMode, mediaPlaying, setMediaPlaying, playMedia } =
-    useContext(UserContext);
+  const {
+    darkMode,
+    mediaPlaying,
+    playMedia,
+    currentEp,
+    setCurrentEp,
+    isPlaying,
+    setIsPlaying,
+  } = useContext(UserContext);
   const [episodes, setEpisodes] = useState(initialEpisodes);
   const [loading, setLoading] = useState(false);
 
@@ -165,9 +173,23 @@ function Episodes() {
                         {/* Play Button Overlay */}
                         <Button
                           shape="circle"
-                          icon={<PlayCircleOutlined style={{ fontSize: 28 }} />}
+                          icon={
+                            currentEp?.id === ep.id && isPlaying ? (
+                              <PauseCircleOutlined style={{ fontSize: 28 }} />
+                            ) : (
+                              <PlayCircleOutlined style={{ fontSize: 28 }} />
+                            )
+                          }
                           size="large"
-                          onClick={() => playMedia(ep)}
+                          onClick={() => {
+                            if (currentEp?.id === ep.id && isPlaying) {
+                              setIsPlaying(false);
+                            } else {
+                              setCurrentEp(ep);
+                              playMedia(ep);
+                              setIsPlaying(true);
+                            }
+                          }}
                           style={{
                             position: "absolute",
                             top: "50%",

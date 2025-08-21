@@ -26,6 +26,7 @@ function App() {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [darkMode, setDarkMode] = useState(true);
+  const [currentEp, setCurrentEp] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [mediaPlaying, setMediaPlaying] = useState(null);
 
@@ -56,7 +57,7 @@ function App() {
           mediaPlaying,
           setMediaPlaying,
           playMedia,
-          pauseMedia,
+          pauseMedia,currentEp, setCurrentEp
         }}
       >
         <AnimatePresence mode="wait">
