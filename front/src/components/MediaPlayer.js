@@ -3,6 +3,7 @@ import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react";
 import { Card, Typography, Button, Space, Slider, Avatar } from "antd";
 import { darkTheme, lightTheme, UserContext } from "../App";
 import EpisodeModal from "./EpisodeModal";
+import { formatDuration } from "../pages/Episodes";
 
 const { Title, Text } = Typography;
 
@@ -76,7 +77,7 @@ function MediaPlayer() {
     };
   }, [isScrubbing, setIsPlaying, volume]);
 
-  // Reset UI when a new media loads (optional but keeps things tidy)
+  // Reset UI and force audio reload when track changes
   useEffect(() => {
     setCurrentTime(0);
     setDuration(0);
@@ -96,6 +97,7 @@ function MediaPlayer() {
     setIsScrubbing(true);
     setScrubTime(value);
   };
+
   // On release, commit seek to audio and resume live updates
   const handleSeekAfterChange = (value) => {
     if (audioRef.current) {
@@ -103,15 +105,6 @@ function MediaPlayer() {
     }
     setCurrentTime(value);
     setIsScrubbing(false);
-  };
-
-  const formatTime = (secs) => {
-    if (!Number.isFinite(secs)) return "0:00";
-    const m = Math.floor(secs / 60);
-    const s = Math.floor(secs % 60)
-      .toString()
-      .padStart(2, "0");
-    return `${m}:${s}`;
   };
 
   if (!mediaPlaying) return null;
@@ -172,7 +165,7 @@ function MediaPlayer() {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              gap: 12,
+              gap: 8,
             }}
           >
             <Text style={{ color: "#aaa", fontSize: 12 }}>
@@ -190,7 +183,7 @@ function MediaPlayer() {
           {/* Seek bar */}
           <div style={{ display: "flex", alignItems: "center", marginTop: 6 }}>
             <Text style={{ color: "#aaa", fontSize: 11, marginRight: 6 }}>
-              {formatTime(isScrubbing ? scrubTime : currentTime)}
+              {formatDuration(isScrubbing ? scrubTime : currentTime)}
             </Text>
             <Slider
               min={0}
@@ -203,7 +196,7 @@ function MediaPlayer() {
               style={{ flex: 1 }}
             />
             <Text style={{ color: "#aaa", fontSize: 11, marginLeft: 6 }}>
-              {formatTime(duration)}
+              {formatDuration(duration)}
             </Text>
           </div>
         </div>
@@ -267,7 +260,7 @@ function MediaPlayer() {
         {/* Volume */}
         <Space style={{ width: 120 }} size="middle">
           <Volume2
-            size={20}
+            size={22}
             style={{
               color: darkMode ? darkTheme.color : lightTheme.color,
             }}
@@ -282,7 +275,12 @@ function MediaPlayer() {
         </Space>
 
         {/* Audio */}
-        <audio ref={audioRef} src={mediaPlaying.audio} preload="metadata" />
+        <audio
+          key={mediaPlaying?.id}
+          ref={audioRef}
+          src={mediaPlaying.audio}
+          preload="metadata"
+        />
       </Card>
 
       <EpisodeModal
