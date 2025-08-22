@@ -1,24 +1,20 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react";
 import { Card, Typography, Button, Space, Slider, Avatar } from "antd";
-import { UserContext } from "../App";
+import { darkTheme, lightTheme, UserContext } from "../App";
 import EpisodeModal from "./EpisodeModal";
 
 const { Title, Text } = Typography;
 
 function MediaPlayer() {
   const audioRef = useRef(null);
-  const { isPlaying, setIsPlaying, mediaPlaying } = useContext(UserContext);
-
-
+  const { isPlaying, setIsPlaying, mediaPlaying, darkMode } =
+    useContext(UserContext);
   const [volume, setVolume] = useState(70);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-
-  // smooth seek states
   const [isScrubbing, setIsScrubbing] = useState(false);
   const [scrubTime, setScrubTime] = useState(0);
-
   const [openEpisodeModal, setOpenEpisodeModal] = useState(false);
   const [episodeContent, setEpisodeContent] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -112,7 +108,9 @@ function MediaPlayer() {
   const formatTime = (secs) => {
     if (!Number.isFinite(secs)) return "0:00";
     const m = Math.floor(secs / 60);
-    const s = Math.floor(secs % 60).toString().padStart(2, "0");
+    const s = Math.floor(secs % 60)
+      .toString()
+      .padStart(2, "0");
     return `${m}:${s}`;
   };
 
@@ -123,13 +121,15 @@ function MediaPlayer() {
       <Card
         style={{
           position: "fixed",
-          bottom: 1,
+          bottom: 5,
           left: "50%",
           transform: "translateX(-50%)",
           width: 740,
           borderRadius: 16,
-          boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
-          background: "#1f1f1f",
+          boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+          background: darkMode
+            ? darkTheme.backgroundColor
+            : lightTheme.backgroundColor,
           color: "#fff",
           zIndex: 10,
           padding: "1px 16px",
@@ -144,7 +144,7 @@ function MediaPlayer() {
         {/* Cover */}
         <Avatar
           shape="square"
-          size={56}
+          size={80}
           src={mediaPlaying.cover}
           style={{ borderRadius: 8 }}
         />
@@ -154,7 +154,7 @@ function MediaPlayer() {
           <Title
             level={5}
             style={{
-              color: "#fff",
+              color: darkMode ? darkTheme.color : lightTheme.color,
               margin: 0,
               fontSize: 14,
               fontFamily: "Raleway",
@@ -198,7 +198,7 @@ function MediaPlayer() {
               step={0.1}
               value={isScrubbing ? scrubTime : currentTime}
               onChange={handleSeekChange}
-              onChangeComplete={handleSeekAfterChange}
+              onAfterChange={handleSeekAfterChange}
               tooltip={{ open: false }}
               style={{ flex: 1 }}
             />
@@ -210,27 +210,68 @@ function MediaPlayer() {
 
         {/* Controls */}
         <Space size="middle">
-          <Button type="text" icon={<SkipBack size={18} color="#fff" />} />
+          <Button
+            type="text"
+            icon={
+              <SkipBack
+                size={18}
+                style={{
+                  color: darkMode ? darkTheme.color : lightTheme.color,
+                }}
+              />
+            }
+          />
           <Button
             shape="circle"
             type="primary"
             size="large"
             onClick={togglePlay}
             style={{
-              background: "#52c41a",
+              background: "#333",
               border: "none",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
-            icon={isPlaying ? <Pause size={22} /> : <Play size={22} />}
+            icon={
+              isPlaying ? (
+                <Pause
+                  size={22}
+                  style={{
+                    color: darkTheme.color,
+                  }}
+                />
+              ) : (
+                <Play
+                  size={22}
+                  style={{
+                    color: darkTheme.color,
+                  }}
+                />
+              )
+            }
           />
-          <Button type="text" icon={<SkipForward size={18} color="#fff" />} />
+          <Button
+            type="text"
+            icon={
+              <SkipForward
+                size={18}
+                style={{
+                  color: darkMode ? darkTheme.color : lightTheme.color,
+                }}
+              />
+            }
+          />
         </Space>
 
         {/* Volume */}
         <Space style={{ width: 120 }} size="middle">
-          <Volume2 size={20} color="#fff" />
+          <Volume2
+            size={20}
+            style={{
+              color: darkMode ? darkTheme.color : lightTheme.color,
+            }}
+          />
           <Slider
             min={0}
             max={100}
