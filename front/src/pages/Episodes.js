@@ -1,6 +1,9 @@
 import { Button, Card, Col, Image, Row, Typography } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import wam from "../assets/audio/wam.mp3";
+import wam2 from "../assets/audio/wam2.mp3";
+import wam3 from "../assets/audio/wam3.mp3";
+import wam4 from "../assets/audio/wam4.mp3";
 import { format } from "date-fns";
 import {
   CalendarOutlined,
@@ -12,6 +15,7 @@ import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
 import Swal from "sweetalert2";
 import MediaPlayer from "../components/MediaPlayer";
+import Loader from "../components/Loader";
 
 const { Title, Text } = Typography;
 
@@ -32,7 +36,7 @@ const initialEpisodes = [
     description: "A little description here to serve the template",
     timestamp: "2025-07-08",
     episode: 2,
-    audio: wam,
+    audio: wam2,
     cover: "https://images.unsplash.com/photo-1590410790503-ff66c3e9e1e5?w=900",
   },
   {
@@ -41,7 +45,7 @@ const initialEpisodes = [
     description: "A little description here to serve the template",
     timestamp: "2025-07-08",
     episode: 3,
-    audio: wam,
+    audio: wam3,
     cover:
       "https://plus.unsplash.com/premium_photo-1664526283895-54f9de9e0d96?w=900",
   },
@@ -51,7 +55,7 @@ const initialEpisodes = [
     description: "A little description here to serve the template",
     timestamp: "2025-07-08",
     episode: 4,
-    audio: wam,
+    audio: wam4,
     cover: "https://images.unsplash.com/photo-1517384084767-6bc118943770?w=900",
   },
 ];
@@ -79,22 +83,6 @@ function Episodes() {
   const [episodes, setEpisodes] = useState(initialEpisodes);
   const [loading, setLoading] = useState(false);
 
-  // const playMedia = (media) => {
-  //   console.log(media);
-  //   setLoading(true);
-  //   try {
-  //     setMediaPlaying(media);
-  //   } catch (error) {
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Error",
-  //       text: "Something went wrong. Refresh the page and try again",
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   // Load durations dynamically
   useEffect(() => {
     initialEpisodes.forEach((ep, idx) => {
@@ -108,6 +96,8 @@ function Episodes() {
       };
     });
   }, []);
+
+  if (loading) return <Loader text={"Please wait..."} size={"large"} />;
 
   return (
     <>
@@ -185,9 +175,21 @@ function Episodes() {
                             if (currentEp?.id === ep.id && isPlaying) {
                               setIsPlaying(false);
                             } else {
-                              setCurrentEp(ep);
-                              playMedia(ep);
-                              setIsPlaying(true);
+                              setLoading(true);
+                              try {
+                                setCurrentEp(ep);
+                                playMedia(ep);
+                                setIsPlaying(true);
+                              } catch (error) {
+                                console.log(error);
+                                Swal.fire({
+                                  icon: "error",
+                                  title: "Error",
+                                  text: "Something went wrong. Refresh the page and try again",
+                                });
+                              } finally {
+                                setLoading(false);
+                              }
                             }
                           }}
                           style={{

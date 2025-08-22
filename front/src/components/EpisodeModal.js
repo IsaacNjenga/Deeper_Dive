@@ -8,7 +8,7 @@ function EpisodeModal({ openModal, setOpenModal, loading, episodeContent }) {
       open={openModal}
       onCancel={() => setOpenModal(false)}
       confirmLoading={loading}
-      style={{ maxWidth: "95vw" }}
+      style={{ maxWidth: "95vw", width: 700 }}
     >
       <pre>{JSON.stringify(episodeContent, null, 2)}</pre>
     </Modal>

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react";
 import { Card, Typography, Button, Space, Slider, Avatar } from "antd";
 import { UserContext } from "../App";
@@ -9,7 +9,16 @@ const { Title, Text } = Typography;
 function MediaPlayer() {
   const audioRef = useRef(null);
   const { isPlaying, setIsPlaying, mediaPlaying } = useContext(UserContext);
-  const [volume, setVolume] = useState(3);
+
+
+  const [volume, setVolume] = useState(70);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  // smooth seek states
+  const [isScrubbing, setIsScrubbing] = useState(false);
+  const [scrubTime, setScrubTime] = useState(0);
+
   const [openEpisodeModal, setOpenEpisodeModal] = useState(false);
   const [episodeContent, setEpisodeContent] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -18,28 +27,93 @@ function MediaPlayer() {
     setLoading(true);
     setOpenEpisodeModal(true);
     setEpisodeContent(episode);
-    setTimeout(() => {
-      setLoading(false);
-    }, 100);
+    setTimeout(() => setLoading(false), 100);
   };
 
-  React.useEffect(() => {
-    if (!audioRef.current) return;
+  // Play/pause sync with global state
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const doPlay = async () => {
+      try {
+        await audio.play();
+      } catch {
+        // Autoplay blocked — revert UI
+        setIsPlaying(false);
+      }
+    };
+    if (isPlaying) doPlay();
+    else audio.pause();
+  }, [isPlaying, mediaPlaying, setIsPlaying]);
 
-    if (isPlaying) {
-      audioRef.current.play();
-    } else {
-      audioRef.current.pause();
-    }
-  }, [isPlaying, mediaPlaying]);
+  // Duration, time updates, and ended handler
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
 
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
+    const onLoaded = () => {
+      setDuration(audio.duration || 0);
+      setCurrentTime(audio.currentTime || 0);
+      setScrubTime(0);
+    };
+    const onTimeUpdate = () => {
+      if (!isScrubbing) setCurrentTime(audio.currentTime || 0);
+    };
+    const onEnded = () => {
+      // reset to start and switch to play icon
+      audio.currentTime = 0;
+      setCurrentTime(0);
+      setIsPlaying(false);
+    };
+
+    audio.addEventListener("loadedmetadata", onLoaded);
+    audio.addEventListener("timeupdate", onTimeUpdate);
+    audio.addEventListener("ended", onEnded);
+
+    // set initial volume
+    audio.volume = volume / 100;
+
+    return () => {
+      audio.removeEventListener("loadedmetadata", onLoaded);
+      audio.removeEventListener("timeupdate", onTimeUpdate);
+      audio.removeEventListener("ended", onEnded);
+    };
+  }, [isScrubbing, setIsPlaying, volume]);
+
+  // Reset UI when a new media loads (optional but keeps things tidy)
+  useEffect(() => {
+    setCurrentTime(0);
+    setDuration(0);
+    setIsScrubbing(false);
+    setScrubTime(0);
+  }, [mediaPlaying]);
+
+  const togglePlay = () => setIsPlaying(!isPlaying);
 
   const handleVolumeChange = (value) => {
     setVolume(value);
-    audioRef.current.volume = value / 100;
+    if (audioRef.current) audioRef.current.volume = value / 100;
+  };
+
+  // While dragging slider, show the preview time without committing
+  const handleSeekChange = (value) => {
+    setIsScrubbing(true);
+    setScrubTime(value);
+  };
+  // On release, commit seek to audio and resume live updates
+  const handleSeekAfterChange = (value) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = value;
+    }
+    setCurrentTime(value);
+    setIsScrubbing(false);
+  };
+
+  const formatTime = (secs) => {
+    if (!Number.isFinite(secs)) return "0:00";
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60).toString().padStart(2, "0");
+    return `${m}:${s}`;
   };
 
   if (!mediaPlaying) return null;
@@ -49,33 +123,34 @@ function MediaPlayer() {
       <Card
         style={{
           position: "fixed",
-          bottom: 20,
+          bottom: 1,
           left: "50%",
           transform: "translateX(-50%)",
-          width: 580,
+          width: 740,
           borderRadius: 16,
           boxShadow: "0 4px 16px rgba(0,0,0,0.2)",
           background: "#1f1f1f",
           color: "#fff",
           zIndex: 10,
-          padding: "12px 16px",
+          padding: "1px 16px",
         }}
         bodyStyle={{
           display: "flex",
           alignItems: "center",
           padding: "12px 16px",
+          gap: 12,
         }}
       >
-        {/* Cover Art */}
+        {/* Cover */}
         <Avatar
           shape="square"
           size={56}
           src={mediaPlaying.cover}
-          style={{ borderRadius: 8, marginRight: 12 }}
+          style={{ borderRadius: 8 }}
         />
 
-        {/* Track Info */}
-        <div style={{ flex: 1, paddingRight: "10px" }}>
+        {/* Track Info + Seek */}
+        <div style={{ flex: 1, minWidth: 0 }}>
           <Title
             level={5}
             style={{
@@ -83,40 +158,53 @@ function MediaPlayer() {
               margin: 0,
               fontSize: 14,
               fontFamily: "Raleway",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
             }}
+            title={mediaPlaying.title}
           >
             {mediaPlaying.title}
           </Title>
+
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              gap: 12,
             }}
           >
-            <Text style={{ color: "#aaa", fontSize: 12, fontFamily: "Roboto" }}>
-              Episode: {mediaPlaying.episode}{" "}
+            <Text style={{ color: "#aaa", fontSize: 12 }}>
+              Episode: {mediaPlaying.episode}
             </Text>
             <Button
               type="text"
-              style={{
-                color: "#aaa",
-                fontSize: 12,
-                fontFamily: "Roboto",
-              }}
+              style={{ color: "#aaa", fontSize: 12 }}
               onClick={() => viewModal(mediaPlaying)}
             >
-              <div
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.textDecoration = "underline";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.textDecoration = "none";
-                }}
-              >
-                View more
-              </div>
+              View more
             </Button>
+          </div>
+
+          {/* Seek bar */}
+          <div style={{ display: "flex", alignItems: "center", marginTop: 6 }}>
+            <Text style={{ color: "#aaa", fontSize: 11, marginRight: 6 }}>
+              {formatTime(isScrubbing ? scrubTime : currentTime)}
+            </Text>
+            <Slider
+              min={0}
+              max={duration || 0}
+              step={0.1}
+              value={isScrubbing ? scrubTime : currentTime}
+              onChange={handleSeekChange}
+              onChangeComplete={handleSeekAfterChange}
+              tooltip={{ open: false }}
+              style={{ flex: 1 }}
+            />
+            <Text style={{ color: "#aaa", fontSize: 11, marginLeft: 6 }}>
+              {formatTime(duration)}
+            </Text>
           </div>
         </div>
 
@@ -135,14 +223,14 @@ function MediaPlayer() {
               alignItems: "center",
               justifyContent: "center",
             }}
-            icon={isPlaying ? <Pause size={20} /> : <Play size={20} />}
+            icon={isPlaying ? <Pause size={22} /> : <Play size={22} />}
           />
           <Button type="text" icon={<SkipForward size={18} color="#fff" />} />
         </Space>
 
         {/* Volume */}
-        <Space style={{ marginLeft: 12, width: 100 }}>
-          <Volume2 size={16} color="#fff" />
+        <Space style={{ width: 120 }} size="middle">
+          <Volume2 size={20} color="#fff" />
           <Slider
             min={0}
             max={100}
@@ -152,9 +240,10 @@ function MediaPlayer() {
           />
         </Space>
 
-        {/* Audio element */}
+        {/* Audio */}
         <audio ref={audioRef} src={mediaPlaying.audio} preload="metadata" />
       </Card>
+
       <EpisodeModal
         openModal={openEpisodeModal}
         setOpenModal={setOpenEpisodeModal}
