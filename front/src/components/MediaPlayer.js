@@ -5,6 +5,7 @@ import { darkTheme, lightTheme, UserContext } from "../App";
 import EpisodeModal from "./EpisodeModal";
 import { formatDuration } from "../pages/Episodes";
 import { MdForward10, MdReplay10 } from "react-icons/md";
+import MobilePlayer from "./mobilePlayer";
 
 const { Title, Text } = Typography;
 
@@ -23,7 +24,7 @@ const cardStyle = {
 
 function MediaPlayer() {
   const audioRef = useRef(null);
-  const { isPlaying, setIsPlaying, mediaPlaying, darkMode } =
+  const { isPlaying, setIsPlaying, mediaPlaying, darkMode, isMobile } =
     useContext(UserContext);
   const [volume, setVolume] = useState(70);
   const [currentTime, setCurrentTime] = useState(0);
@@ -130,209 +131,225 @@ function MediaPlayer() {
 
   return (
     <>
-      <Card
-        style={{
-          ...cardStyle,
-          background: darkMode
-            ? darkTheme.backgroundColor
-            : lightTheme.backgroundColor,
-        }}
-        bodyStyle={{
-          alignItems: "center",
-          padding: "12px 5px",
-        }}
-      >
-        <div
+      {isMobile ? (
+        <MobilePlayer
+          togglePlay={togglePlay}
+          duration={duration}
+          isScrubbing={isScrubbing}
+          scrubTime={scrubTime}
+          handleSeekAfterChange={handleSeekAfterChange}
+          handleSeekChange={handleSeekChange}
+          darkMode={darkMode}
+          isPlaying={isPlaying}
+          currentTime={currentTime}
+          mediaPlaying={mediaPlaying}audioRef={audioRef}
+          viewModal={viewModal}
+
+        />
+      ) : (
+        <Card
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: 8,
+            ...cardStyle,
+            background: darkMode
+              ? darkTheme.backgroundColor
+              : lightTheme.backgroundColor,
+          }}
+          bodyStyle={{
+            alignItems: "center",
+            padding: "12px 5px",
           }}
         >
-          {/* Cover */}
           <div
             style={{
               display: "flex",
-              gap: 5,
-              alignItems: "center",
-              marginRight: 10,
+              justifyContent: "space-between",
+              gap: 8,
             }}
           >
-            <div>
-              <Avatar
-                shape="square"
-                size={80}
-                src={mediaPlaying.cover}
-                style={{ borderRadius: 8 }}
-              />
-            </div>
-            <div>
-              {/* Track Info */}
-              <div style={{ flex: 1 }}>
-                <Title
-                  level={5}
-                  style={{
-                    color: darkMode ? darkTheme.color : lightTheme.color,
-                    margin: 0,
-                    fontSize: 14,
-                    fontFamily: "Raleway",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                  title={mediaPlaying.title}
-                >
-                  {mediaPlaying.title}
-                </Title>
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    gap: 8,
-                  }}
-                >
-                  <Text style={{ color: "#aaa", fontSize: 12 }}>
-                    Episode: {mediaPlaying.episode}
-                  </Text>
-                  <Button
-                    type="text"
-                    style={{ color: "#aaa", fontSize: 12 }}
-                    onClick={() => viewModal(mediaPlaying)}
+            {/* Cover */}
+            <div
+              style={{
+                display: "flex",
+                gap: 5,
+                alignItems: "center",
+                marginRight: 10,
+              }}
+            >
+              <div>
+                <Avatar
+                  shape="square"
+                  size={80}
+                  src={mediaPlaying.cover}
+                  style={{ borderRadius: 8 }}
+                />
+              </div>
+              <div>
+                {/* Track Info */}
+                <div style={{ flex: 1 }}>
+                  <Title
+                    level={5}
+                    style={{
+                      color: darkMode ? darkTheme.color : lightTheme.color,
+                      margin: 0,
+                      fontSize: 14,
+                      fontFamily: "Raleway",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                    title={mediaPlaying.title}
                   >
-                    View more
-                  </Button>
+                    {mediaPlaying.title}
+                  </Title>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <Text style={{ color: "#aaa", fontSize: 12 }}>
+                      Episode: {mediaPlaying.episode}
+                    </Text>
+                    <Button
+                      type="text"
+                      style={{ color: "#aaa", fontSize: 12 }}
+                      onClick={() => viewModal(mediaPlaying)}
+                    >
+                      View more
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* seek */}
-          <div style={{ width: "100%" }}>
+            {/* seek */}
+            <div style={{ width: "100%" }}>
+              <div
+                style={{
+                  margin: "auto",
+                  textAlign: "center",
+                }}
+              >
+                {/* Controls */}
+                <Space size="middle">
+                  <Button
+                    type="text"
+                    icon={
+                      <MdReplay10
+                        size={28}
+                        style={{
+                          color: darkMode ? darkTheme.color : lightTheme.color,
+                        }}
+                      />
+                    }
+                    // onClick={() => seek(-10)}
+                  />
+
+                  <Button
+                    shape="circle"
+                    type="primary"
+                    size="large"
+                    onClick={togglePlay}
+                    style={{
+                      background: "#333",
+                      border: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    icon={
+                      isPlaying ? (
+                        <Pause
+                          size={22}
+                          style={{
+                            color: darkTheme.color,
+                          }}
+                        />
+                      ) : (
+                        <Play
+                          size={22}
+                          style={{
+                            color: darkTheme.color,
+                          }}
+                        />
+                      )
+                    }
+                  />
+                  <Button
+                    type="text"
+                    icon={
+                      <MdForward10
+                        size={28}
+                        style={{
+                          color: darkMode ? darkTheme.color : lightTheme.color,
+                        }}
+                      />
+                    }
+                    // onClick={() => seek(-10)}
+                  />
+                </Space>
+              </div>
+              {/* Seek bar */}
+              <div
+                style={{ display: "flex", alignItems: "center", marginTop: 6 }}
+              >
+                <Text style={{ color: "#aaa", fontSize: 11, marginRight: 6 }}>
+                  {formatDuration(isScrubbing ? scrubTime : currentTime)}
+                </Text>
+                <Slider
+                  min={0}
+                  max={duration || 0}
+                  step={0.1}
+                  value={isScrubbing ? scrubTime : currentTime}
+                  onChange={handleSeekChange}
+                  onAfterChange={handleSeekAfterChange}
+                  tooltip={{ open: false }}
+                  style={{ flex: 1 }}
+                />
+                <Text style={{ color: "#aaa", fontSize: 11, marginLeft: 6 }}>
+                  {formatDuration(duration)}
+                </Text>
+              </div>
+            </div>
+
+            {/* Volume */}
             <div
               style={{
-                margin: "auto",
-                textAlign: "center",
+                alignContent: "center",
+                justifyContent: "flex-end",
+                marginLeft: 10,
               }}
             >
-              {/* Controls */}
-              <Space size="middle">
-                <Button
-                  type="text"
-                  icon={
-                    <MdReplay10
-                      size={28}
-                      style={{
-                        color: darkMode ? darkTheme.color : lightTheme.color,
-                        
-                      }}
-                    />
-                  }
-                  // onClick={() => seek(-10)}
-                />
-
-                <Button
-                  shape="circle"
-                  type="primary"
-                  size="large"
-                  onClick={togglePlay}
+              <Space style={{ width: 120 }} size="middle">
+                <Volume2
+                  size={22}
                   style={{
-                    background: "#333",
-                    border: "none",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    color: darkMode ? darkTheme.color : lightTheme.color,
                   }}
-                  icon={
-                    isPlaying ? (
-                      <Pause
-                        size={22}
-                        style={{
-                          color: darkTheme.color,
-                        }}
-                      />
-                    ) : (
-                      <Play
-                        size={22}
-                        style={{
-                          color: darkTheme.color,
-                        }}
-                      />
-                    )
-                  }
                 />
-                <Button
-                  type="text"
-                  icon={
-                    <MdForward10
-                      size={28}
-                      style={{
-                        color: darkMode ? darkTheme.color : lightTheme.color,
-                      }}
-                    />
-                  }
-                  // onClick={() => seek(-10)}
+                <Slider
+                  min={0}
+                  max={100}
+                  value={volume}
+                  onChange={handleVolumeChange}
+                  style={{ width: 80 }}
                 />
               </Space>
             </div>
-            {/* Seek bar */}
-            <div
-              style={{ display: "flex", alignItems: "center", marginTop: 6 }}
-            >
-              <Text style={{ color: "#aaa", fontSize: 11, marginRight: 6 }}>
-                {formatDuration(isScrubbing ? scrubTime : currentTime)}
-              </Text>
-              <Slider
-                min={0}
-                max={duration || 0}
-                step={0.1}
-                value={isScrubbing ? scrubTime : currentTime}
-                onChange={handleSeekChange}
-                onAfterChange={handleSeekAfterChange}
-                tooltip={{ open: false }}
-                style={{ flex: 1 }}
-              />
-              <Text style={{ color: "#aaa", fontSize: 11, marginLeft: 6 }}>
-                {formatDuration(duration)}
-              </Text>
-            </div>
           </div>
 
-          {/* Volume */}
-          <div
-            style={{
-              alignContent: "center",
-              justifyContent: "flex-end",
-              marginLeft: 10,
-            }}
-          >
-            <Space style={{ width: 120 }} size="middle">
-              <Volume2
-                size={22}
-                style={{
-                  color: darkMode ? darkTheme.color : lightTheme.color,
-                }}
-              />
-              <Slider
-                min={0}
-                max={100}
-                value={volume}
-                onChange={handleVolumeChange}
-                style={{ width: 80 }}
-              />
-            </Space>
-          </div>
-        </div>
-
-        {/* Audio */}
-        <audio
-          key={mediaPlaying?.id}
-          ref={audioRef}
-          src={mediaPlaying.audio}
-          preload="metadata"
-        />
-      </Card>
+          {/* Audio */}
+          <audio
+            key={mediaPlaying?.id}
+            ref={audioRef}
+            src={mediaPlaying.audio}
+            preload="metadata"
+          />
+        </Card>
+      )}
 
       <EpisodeModal
         openModal={openEpisodeModal}
