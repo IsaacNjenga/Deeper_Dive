@@ -1,9 +1,10 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
-import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react";
+import { Play, Pause, Volume2 } from "lucide-react";
 import { Card, Typography, Button, Space, Slider, Avatar } from "antd";
 import { darkTheme, lightTheme, UserContext } from "../App";
 import EpisodeModal from "./EpisodeModal";
 import { formatDuration } from "../pages/Episodes";
+import { MdForward10, MdReplay10 } from "react-icons/md";
 
 const { Title, Text } = Typography;
 
@@ -12,7 +13,7 @@ const cardStyle = {
   bottom: 5,
   left: "50%",
   transform: "translateX(-50%)",
-  width: '100%',
+  width: 1000,
   borderRadius: 16,
   boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
   color: "#fff",
@@ -154,6 +155,7 @@ function MediaPlayer() {
               display: "flex",
               gap: 5,
               alignItems: "center",
+              marginRight: 10,
             }}
           >
             <div>
@@ -219,14 +221,17 @@ function MediaPlayer() {
                 <Button
                   type="text"
                   icon={
-                    <SkipBack
-                      size={18}
+                    <MdReplay10
+                      size={28}
                       style={{
                         color: darkMode ? darkTheme.color : lightTheme.color,
+                        
                       }}
                     />
                   }
+                  // onClick={() => seek(-10)}
                 />
+
                 <Button
                   shape="circle"
                   type="primary"
@@ -260,13 +265,14 @@ function MediaPlayer() {
                 <Button
                   type="text"
                   icon={
-                    <SkipForward
-                      size={18}
+                    <MdForward10
+                      size={28}
                       style={{
                         color: darkMode ? darkTheme.color : lightTheme.color,
                       }}
                     />
                   }
+                  // onClick={() => seek(-10)}
                 />
               </Space>
             </div>
@@ -296,8 +302,9 @@ function MediaPlayer() {
           {/* Volume */}
           <div
             style={{
-              alignItems: "center",
               alignContent: "center",
+              justifyContent: "flex-end",
+              marginLeft: 10,
             }}
           >
             <Space style={{ width: 120 }} size="middle">
@@ -317,6 +324,7 @@ function MediaPlayer() {
             </Space>
           </div>
         </div>
+
         {/* Audio */}
         <audio
           key={mediaPlaying?.id}
