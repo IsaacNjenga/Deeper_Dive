@@ -16,6 +16,7 @@ import { darkTheme, lightTheme, UserContext } from "../App";
 import Swal from "sweetalert2";
 import MediaPlayer from "../components/MediaPlayer";
 import Loader from "../components/Loader";
+import ShinyText from "../components/ShinyText";
 
 const { Title, Text } = Typography;
 
@@ -71,7 +72,6 @@ export const formatDuration = (totalSeconds) => {
     .join(":");
 };
 
-
 function Episodes() {
   const {
     darkMode,
@@ -106,16 +106,12 @@ function Episodes() {
       <Motion>
         <div>
           <div style={{ textAlign: "center" }}>
-            <Title
-              level={3}
-              style={{
-                color: "#484789",
-                marginBottom: 0,
-                fontFamily: "Raleway",
-              }}
-            >
-              Start Listening Today
-            </Title>
+            <ShinyText
+              text={"Start Listening Today"}
+              disabled={false}
+              speed={3}
+              className="custom-class"
+            />
             <Title
               style={{
                 color: darkMode ? darkTheme.color : lightTheme.color,

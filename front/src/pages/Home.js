@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Motion from "../components/motion.js";
 import { Card, Col, Row, Tag, Typography, Button, Input, Image } from "antd";
 import { darkTheme, lightTheme, UserContext } from "../App.js";
+import GradientText from "../components/gradientText.js";
 
 const { Title, Text, Paragraph } = Typography;
 const img1 =
@@ -70,8 +71,23 @@ function Home() {
                 }}
               >
                 Go beyond the headlines.{" "}
-                <span style={{ color: "#ed0141" }}>Dive Deeper</span> into the
-                ideas shaping life & work
+                <span>
+                  <GradientText
+                    colors={[
+                      "#ff3b30", // vivid apple red
+                      "#ff6b00", // orange glow
+                      "#b22222", // firebrick
+                      "#ff1744", // hot pinkish red
+                      "#ff4500", // flame orange
+                    ]}
+                    animationSpeed={8}
+                    showBorder={false}
+                    className="custom-class"
+                  >
+                    Dive Deeper
+                  </GradientText>
+                </span>{" "}
+                into the ideas shaping life & work
               </Title>
               <Text
                 type="secondary"
