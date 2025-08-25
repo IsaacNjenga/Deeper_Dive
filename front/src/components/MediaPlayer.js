@@ -14,7 +14,7 @@ const cardStyle = {
   bottom: 5,
   left: "50%",
   transform: "translateX(-50%)",
-  width: 1000,
+  width: 1050,
   borderRadius: 16,
   boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
   color: "#fff",
@@ -181,16 +181,16 @@ function MediaPlayer() {
             style={{
               display: "flex",
               justifyContent: "space-between",
-              gap: 8,
+              gap: 5,
             }}
           >
             {/* Cover */}
             <div
               style={{
                 display: "flex",
-                gap: 5,
+                gap: 3,
                 alignItems: "center",
-                marginRight: 10,
+                marginRight: 5,
               }}
             >
               <div>
@@ -225,19 +225,18 @@ function MediaPlayer() {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      gap: 8,
+                      gap: 5,
                     }}
                   >
                     <Text style={{ color: "#aaa", fontSize: 12 }}>
                       Episode: {mediaPlaying.episode}
                     </Text>
-                    <Button
-                      type="text"
+                    <Text
                       style={{ color: "#aaa", fontSize: 12 }}
                       onClick={() => viewModal(mediaPlaying)}
                     >
                       View more
-                    </Button>
+                    </Text>
                   </div>
                 </div>
               </div>
@@ -338,7 +337,7 @@ function MediaPlayer() {
               style={{
                 alignContent: "center",
                 justifyContent: "flex-end",
-                marginLeft: 10,
+                marginLeft: 0,
               }}
             >
               <Space style={{ width: 120 }} size="middle">

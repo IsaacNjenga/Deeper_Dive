@@ -57,7 +57,9 @@ function App() {
           mediaPlaying,
           setMediaPlaying,
           playMedia,
-          pauseMedia,currentEp, setCurrentEp
+          pauseMedia,
+          currentEp,
+          setCurrentEp,
         }}
       >
         <AnimatePresence mode="wait">

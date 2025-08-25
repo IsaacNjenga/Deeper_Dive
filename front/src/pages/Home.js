@@ -176,6 +176,7 @@ function Home() {
                         src={ep.image}
                         alt="pd_img"
                         style={{ height: "100%" }}
+                        preview={false}
                       />
                     </div>
                   }

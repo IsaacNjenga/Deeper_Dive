@@ -14,7 +14,6 @@ import {
 import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
 import Swal from "sweetalert2";
-import MediaPlayer from "../components/MediaPlayer";
 import Loader from "../components/Loader";
 import ShinyText from "../components/ShinyText";
 import EpisodeModal from "../components/EpisodeModal";
@@ -64,6 +63,16 @@ const initialEpisodes = [
     audio: wam4,
     cover: "https://images.unsplash.com/photo-1517384084767-6bc118943770?w=900",
   },
+  {
+    id: 5,
+    title: "How do I create this: Part 2?",
+    description:
+      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
+    timestamp: "2025-07-18",
+    episode: 5,
+    audio: wam4,
+    cover: "https://images.unsplash.com/photo-1517384084767-6bc118943770?w=900",
+  },
 ];
 
 export const formatDuration = (totalSeconds) => {
@@ -80,7 +89,6 @@ export const formatDuration = (totalSeconds) => {
 function Episodes() {
   const {
     darkMode,
-    mediaPlaying,
     playMedia,
     currentEp,
     setCurrentEp,
@@ -281,8 +289,10 @@ function Episodes() {
                     >
                       <Button
                         type="text"
-                        style={{ fontFamily: "Raleway" }}
-                        onClick={() => {viewModal(ep)}}
+                        style={{ fontFamily: "Raleway", color: "#aaa" }}
+                        onClick={() => {
+                          viewModal(ep);
+                        }}
                       >
                         View More
                       </Button>
@@ -294,7 +304,7 @@ function Episodes() {
           </div>
         </div>
       </Motion>
-      <MediaPlayer media={mediaPlaying} />
+      {/* <MediaPlayer media={mediaPlaying} /> */}
       <EpisodeModal
         openModal={openEpisodeModal}
         setOpenModal={setOpenEpisodeModal}
