@@ -34,6 +34,7 @@ const featuredLists = [
     text: "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
   },
 ];
+
 function Home() {
   const { isMobile, darkMode } = useContext(UserContext);
 

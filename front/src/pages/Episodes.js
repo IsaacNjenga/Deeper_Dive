@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import MediaPlayer from "../components/MediaPlayer";
 import Loader from "../components/Loader";
 import ShinyText from "../components/ShinyText";
+import EpisodeModal from "../components/EpisodeModal";
 
 const { Title, Text } = Typography;
 
@@ -24,7 +25,8 @@ const initialEpisodes = [
   {
     id: 1,
     title: "How do I create this?",
-    description: "A little description here to serve the template",
+    description:
+      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
     timestamp: "2025-07-08",
     episode: 1,
     audio: wam,
@@ -34,7 +36,8 @@ const initialEpisodes = [
   {
     id: 2,
     title: "How do I create this again?",
-    description: "A little description here to serve the template",
+    description:
+      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
     timestamp: "2025-07-08",
     episode: 2,
     audio: wam2,
@@ -43,7 +46,8 @@ const initialEpisodes = [
   {
     id: 3,
     title: "How do I create this once more?",
-    description: "A little description here to serve the template",
+    description:
+      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
     timestamp: "2025-07-08",
     episode: 3,
     audio: wam3,
@@ -53,7 +57,8 @@ const initialEpisodes = [
   {
     id: 4,
     title: "How do I create this: Part 1?",
-    description: "A little description here to serve the template",
+    description:
+      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
     timestamp: "2025-07-08",
     episode: 4,
     audio: wam4,
@@ -84,6 +89,15 @@ function Episodes() {
   } = useContext(UserContext);
   const [episodes, setEpisodes] = useState(initialEpisodes);
   const [loading, setLoading] = useState(false);
+  const [openEpisodeModal, setOpenEpisodeModal] = useState(false);
+  const [episodeContent, setEpisodeContent] = useState(null);
+
+  const viewModal = (episode) => {
+    setLoading(true);
+    setOpenEpisodeModal(true);
+    setEpisodeContent(episode);
+    setTimeout(() => setLoading(false), 100);
+  };
 
   // Load durations dynamically
   useEffect(() => {
@@ -259,6 +273,20 @@ function Episodes() {
                         </Text>
                       }
                     />
+                    <div
+                      style={{
+                        marginTop: 8,
+                        textAlign: "right",
+                      }}
+                    >
+                      <Button
+                        type="text"
+                        style={{ fontFamily: "Raleway" }}
+                        onClick={() => {viewModal(ep)}}
+                      >
+                        View More
+                      </Button>
+                    </div>
                   </Card>
                 </Col>
               ))}
@@ -267,6 +295,12 @@ function Episodes() {
         </div>
       </Motion>
       <MediaPlayer media={mediaPlaying} />
+      <EpisodeModal
+        openModal={openEpisodeModal}
+        setOpenModal={setOpenEpisodeModal}
+        loading={loading}
+        episodeContent={episodeContent}
+      />
     </>
   );
 }

@@ -12,7 +12,7 @@ const ShinyText = ({ text, disabled = false, speed = 3, className = "" }) => {
       style={{ animationDuration }}
     >
       <Title
-        level={3}
+        level={2}
         style={{
           color: "#484789",
           marginBottom: 0,
