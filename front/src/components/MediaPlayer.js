@@ -119,6 +119,22 @@ function MediaPlayer() {
     setIsScrubbing(false);
   };
 
+  const onForward = () => {
+    if (audioRef.current) {
+      const newTime = Math.min(audioRef.current.currentTime + 10, duration);
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
+  const onRewind = () => {
+    if (audioRef.current) {
+      const newTime = Math.max(audioRef.current.currentTime - 10, 0);
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
   // Set audio volume when volume changes
   useEffect(() => {
     const audio = audioRef.current;
@@ -142,9 +158,11 @@ function MediaPlayer() {
           darkMode={darkMode}
           isPlaying={isPlaying}
           currentTime={currentTime}
-          mediaPlaying={mediaPlaying}audioRef={audioRef}
+          mediaPlaying={mediaPlaying}
+          audioRef={audioRef}
           viewModal={viewModal}
-
+          onRewind={onRewind}
+          onForward={onForward}
         />
       ) : (
         <Card
@@ -245,7 +263,7 @@ function MediaPlayer() {
                         }}
                       />
                     }
-                    // onClick={() => seek(-10)}
+                    onClick={onRewind}
                   />
 
                   <Button
@@ -288,7 +306,7 @@ function MediaPlayer() {
                         }}
                       />
                     }
-                    // onClick={() => seek(-10)}
+                    onClick={onForward}
                   />
                 </Space>
               </div>

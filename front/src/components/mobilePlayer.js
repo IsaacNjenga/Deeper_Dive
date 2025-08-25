@@ -1,17 +1,17 @@
 import { Button, Card, Slider, Space, Typography } from "antd";
 import { Pause, Play } from "lucide-react";
-import React from "react";
 import { MdForward10, MdReplay10 } from "react-icons/md";
 import { darkTheme, lightTheme } from "../App";
 import { formatDuration } from "../pages/Episodes";
 
 const { Title, Text } = Typography;
+
 const cardStyle = {
   position: "fixed",
   bottom: 5,
   left: "50%",
   transform: "translateX(-50%)",
-  width: '100%',
+  width: "100%",
   borderRadius: 16,
   boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
   color: "#fff",
@@ -32,6 +32,8 @@ function MobilePlayer({
   mediaPlaying,
   audioRef,
   viewModal,
+  onRewind,
+  onForward,
 }) {
   return (
     <Card
@@ -99,7 +101,7 @@ function MobilePlayer({
                   }}
                 />
               }
-              // onClick={() => seek(-10)}
+              onClick={onRewind}
             />
 
             <Button
@@ -142,7 +144,7 @@ function MobilePlayer({
                   }}
                 />
               }
-              // onClick={() => seek(-10)}
+              onClick={onForward}
             />
           </Space>
         </div>
