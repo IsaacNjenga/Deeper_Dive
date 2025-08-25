@@ -15,7 +15,7 @@ const cardStyle = {
   borderRadius: 16,
   boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
   color: "#fff",
-  zIndex: 10000,
+  zIndex: 1000,
   padding: "1px 5px",
 };
 
