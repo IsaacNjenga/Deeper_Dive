@@ -7,6 +7,19 @@ import { formatDuration } from "../pages/Episodes";
 
 const { Title, Text } = Typography;
 
+const cardStyle = {
+  position: "fixed",
+  bottom: 5,
+  left: "50%",
+  transform: "translateX(-50%)",
+  width: 740,
+  borderRadius: 16,
+  boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+  color: "#fff",
+  zIndex: 10,
+  padding: "1px 16px",
+};
+
 function MediaPlayer() {
   const audioRef = useRef(null);
   const { isPlaying, setIsPlaying, mediaPlaying, darkMode } =
@@ -43,47 +56,44 @@ function MediaPlayer() {
     else audio.pause();
   }, [isPlaying, mediaPlaying, setIsPlaying]);
 
-  // Duration, time updates, and ended handler
+  // Sync audio metadata and playback progress
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const onLoaded = () => {
+    const handleLoadedMetadata = () => {
       setDuration(audio.duration || 0);
       setCurrentTime(audio.currentTime || 0);
       setScrubTime(0);
     };
-    const onTimeUpdate = () => {
-      if (!isScrubbing) setCurrentTime(audio.currentTime || 0);
+
+    const handleTimeUpdate = () => {
+      if (!isScrubbing) {
+        setCurrentTime(audio.currentTime || 0);
+      }
     };
-    const onEnded = () => {
-      // reset to start and switch to play icon
+
+    const handleEnded = () => {
       audio.currentTime = 0;
       setCurrentTime(0);
       setIsPlaying(false);
     };
 
-    audio.addEventListener("loadedmetadata", onLoaded);
-    audio.addEventListener("timeupdate", onTimeUpdate);
-    audio.addEventListener("ended", onEnded);
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("ended", handleEnded);
 
-    // set initial volume
-    audio.volume = volume / 100;
+    // Handle cached audio (metadata already available)
+    if (audio.readyState >= 1) {
+      handleLoadedMetadata();
+    }
 
     return () => {
-      audio.removeEventListener("loadedmetadata", onLoaded);
-      audio.removeEventListener("timeupdate", onTimeUpdate);
-      audio.removeEventListener("ended", onEnded);
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("ended", handleEnded);
     };
-  }, [isScrubbing, setIsPlaying, volume]);
-
-  // Reset UI and force audio reload when track changes
-  useEffect(() => {
-    setCurrentTime(0);
-    setDuration(0);
-    setIsScrubbing(false);
-    setScrubTime(0);
-  }, [mediaPlaying]);
+  }, [mediaPlaying, isScrubbing, setIsPlaying]);
 
   const togglePlay = () => setIsPlaying(!isPlaying);
 
@@ -107,25 +117,24 @@ function MediaPlayer() {
     setIsScrubbing(false);
   };
 
+  // Set audio volume when volume changes
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = volume / 100;
+    }
+  }, [volume]);
+
   if (!mediaPlaying) return null;
 
   return (
     <>
       <Card
         style={{
-          position: "fixed",
-          bottom: 5,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: 740,
-          borderRadius: 16,
-          boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+          ...cardStyle,
           background: darkMode
             ? darkTheme.backgroundColor
             : lightTheme.backgroundColor,
-          color: "#fff",
-          zIndex: 10,
-          padding: "1px 16px",
         }}
         bodyStyle={{
           display: "flex",
