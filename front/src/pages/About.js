@@ -1,13 +1,21 @@
 import React, { useContext } from "react";
 import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
-import { Image, Typography } from "antd";
+import { Carousel, Image, Typography } from "antd";
+import "../assets/css/about.css";
 
 const { Title, Paragraph } = Typography;
 
 const img =
   "https://images.unsplash.com/photo-1620932934088-fbdb2920e484?w=900";
+const img2 =
+  "https://images.unsplash.com/photo-1531558297330-791932f4f398?w=900";
+const img3 =
+  "https://images.unsplash.com/photo-1648522168784-067e98df88c0?w=900";
+const img4 =
+  "https://images.unsplash.com/photo-1660832458429-526d0601054f?q=80&w=900";
 
+const images = [img, img2, img3, img4];
 function About() {
   const { isMobile, darkMode } = useContext(UserContext);
 
@@ -39,16 +47,24 @@ function About() {
             padding: "0px 10px",
           }}
         >
-          <Image
-            src={img}
-            alt="img"
-            preview={false}
-            style={{
-              borderRadius: 2,
-              filter: "grayscale(100%)",
-              transition: "filter 0.3s ease",
-            }}
-          />
+          <Carousel dots={false} autoplay autoplaySpeed={2500} fade>
+            {images.map((img, index) => (
+              <Image
+                key={index}
+                src={img}
+                alt="img"
+                preview={false}
+                style={{
+                  borderRadius: 12,
+                  filter: "grayscale(100%)",
+                  transition: "filter 0.3s ease",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+                className="ant-image-img"
+              />
+            ))}
+          </Carousel>
         </div>
         <div
           style={{
