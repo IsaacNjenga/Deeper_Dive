@@ -14,7 +14,6 @@ import FooterSection from "./Footer";
 import logo from "../assets/icons/logo.png";
 import { MenuOutlined, MoonFilled, SunFilled } from "@ant-design/icons";
 import { UserContext } from "../App";
-import MediaPlayer from "./MediaPlayer";
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
@@ -22,8 +21,7 @@ const { Title, Text } = Typography;
 const logoTextStyle = { display: "flex", flexDirection: "column" };
 
 function Navbar() {
-  const { isMobile, setDarkMode, darkMode, mediaPlaying } =
-    useContext(UserContext);
+  const { isMobile, setDarkMode, darkMode } = useContext(UserContext);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -252,8 +250,8 @@ function Navbar() {
           }}
         >
           <Outlet />
-          <MediaPlayer media={mediaPlaying} />
         </Content>
+        {/* <MediaPlayer media={mediaPlaying} /> */}
 
         <Footer
           style={{

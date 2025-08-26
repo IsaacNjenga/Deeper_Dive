@@ -8,6 +8,8 @@ import Reviews from "./pages/Reviews";
 import Contact from "./pages/Contact";
 import Guests from "./pages/Guests";
 import { AnimatePresence } from "framer-motion";
+import { useMedia } from "./components/MediaContext";
+import MediaPlayer from "./components/MediaPlayer";
 
 export const UserContext = createContext();
 
@@ -27,8 +29,10 @@ function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [darkMode, setDarkMode] = useState(true);
   const [currentEp, setCurrentEp] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [mediaPlaying, setMediaPlaying] = useState(null);
+  //const [isPlaying, setIsPlaying] = useState(false);
+  //  const [mediaPlaying, setMediaPlaying] = useState(null);
+
+  const { setMediaPlaying, setIsPlaying } = useMedia();
 
   const playMedia = (media) => {
     setMediaPlaying(media);
@@ -52,10 +56,6 @@ function App() {
           isMobile,
           setDarkMode,
           darkMode,
-          isPlaying,
-          setIsPlaying,
-          mediaPlaying,
-          setMediaPlaying,
           playMedia,
           pauseMedia,
           currentEp,
@@ -74,6 +74,7 @@ function App() {
             </Route>
           </Routes>
         </AnimatePresence>
+        <MediaPlayer />
       </UserContext.Provider>
     </>
   );

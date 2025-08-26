@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import Loader from "../components/Loader";
 import ShinyText from "../components/ShinyText";
 import EpisodeModal from "../components/EpisodeModal";
+import { useMedia } from "../components/MediaContext";
 
 const { Title, Text } = Typography;
 
@@ -87,14 +88,9 @@ export const formatDuration = (totalSeconds) => {
 };
 
 function Episodes() {
-  const {
-    darkMode,
-    playMedia,
-    currentEp,
-    setCurrentEp,
-    isPlaying,
-    setIsPlaying,
-  } = useContext(UserContext);
+  const { darkMode, playMedia, currentEp, setCurrentEp } =
+    useContext(UserContext);
+  const { isPlaying, setIsPlaying } = useMedia();
   const [episodes, setEpisodes] = useState(initialEpisodes);
   const [loading, setLoading] = useState(false);
   const [openEpisodeModal, setOpenEpisodeModal] = useState(false);

@@ -6,6 +6,7 @@ import EpisodeModal from "./EpisodeModal";
 import { formatDuration } from "../pages/Episodes";
 import { MdForward10, MdReplay10 } from "react-icons/md";
 import MobilePlayer from "./mobilePlayer";
+import { useMedia } from "./MediaContext";
 
 const { Title, Text } = Typography;
 
@@ -24,8 +25,8 @@ const cardStyle = {
 
 function MediaPlayer() {
   const audioRef = useRef(null);
-  const { isPlaying, setIsPlaying, mediaPlaying, darkMode, isMobile } =
-    useContext(UserContext);
+  const { darkMode, isMobile } = useContext(UserContext);
+  const { isPlaying, setIsPlaying, mediaPlaying } = useMedia();
   const [volume, setVolume] = useState(70);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -232,7 +233,7 @@ function MediaPlayer() {
                       Episode: {mediaPlaying.episode}
                     </Text>
                     <Text
-                      style={{ color: "#aaa", fontSize: 12 }}
+                      style={{ color: "#aaa", fontSize: 12, cursor: "pointer" }}
                       onClick={() => viewModal(mediaPlaying)}
                     >
                       View more

@@ -38,6 +38,8 @@ function Contact() {
       contact: (
         <a
           href="mailto:john@gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             color: darkMode ? darkTheme.color : lightTheme.color,
             textDecoration: "none",
@@ -151,7 +153,7 @@ function Contact() {
             margin: 0,
           }}
         >
-          FAQ
+          FAQs
         </Title>
         {/* accordion */}
         <div style={{ margin: 10, padding: "30px 40px" }}>
