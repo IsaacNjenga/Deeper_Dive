@@ -44,7 +44,7 @@ function About() {
             alt="img"
             preview={false}
             style={{
-              borderRadius: 12,
+              borderRadius: 2,
               filter: "grayscale(100%)",
               transition: "filter 0.3s ease",
             }}

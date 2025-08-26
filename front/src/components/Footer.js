@@ -9,32 +9,17 @@ import {
   XOutlined,
   YoutubeOutlined,
 } from "@ant-design/icons";
-import { UserContext } from "../App";
+import { darkTheme, lightTheme, UserContext } from "../App";
 import Swal from "sweetalert2";
+import "../assets/css/footer.css";
 
 const { Title } = Typography;
-
-const inputStyle = {
-  height: 40,
-  borderRadius: 16,
-  padding: 15,
-  width: "100%",
-  border: "1px solid #a7b4c0",
-  fontFamily: "Raleway",
-};
-
-const cardStyle = {
-  borderRadius: 20,
-  border: "1px solid #a7b4c0",
-  boxShadow: "0 2px 8px 2px rgba(0,0,0,0.29)",
-  marginBottom: 10,
-};
 
 const iconStyle = { fontSize: 25 };
 
 function FooterSection() {
   const [form] = Form.useForm();
-  const { isMobile } = useContext(UserContext);
+  const { isMobile, darkMode } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -60,6 +45,29 @@ function FooterSection() {
     }
   };
 
+  const inputStyle = {
+    height: 40,
+    borderRadius: 16,
+    padding: 15,
+    width: "100%",
+    border: "1px solid #a7b4c0",
+    fontFamily: "Raleway",
+    background: darkMode
+      ? darkTheme.backgroundColor
+      : lightTheme.backgroundColor,
+    color: darkMode ? darkTheme.color : lightTheme.color,
+  };
+
+  const cardStyle = {
+    borderRadius: 20,
+    border: "1px solid #a7b4c0",
+    boxShadow: "0 2px 8px 2px rgba(0,0,0,0.29)",
+    marginBottom: 10,
+    background: darkMode
+      ? darkTheme.backgroundColor
+      : lightTheme.backgroundColor,
+  };
+
   return (
     <footer style={{ marginBottom: 30 }}>
       <div
@@ -75,7 +83,11 @@ function FooterSection() {
           <Card style={cardStyle}>
             <Title
               level={3}
-              style={{ textAlign: "center", fontFamily: "Raleway" }}
+              style={{
+                textAlign: "center",
+                fontFamily: "Raleway",
+                color: darkMode ? darkTheme.color : lightTheme.color,
+              }}
             >
               Contact the show
             </Title>
@@ -88,18 +100,30 @@ function FooterSection() {
                 }}
               >
                 <div style={{ width: "100%" }}>
-                  <Form.Item name="name">
-                    <Input placeholder="Your name" style={inputStyle} />
+                  <Form.Item title="Name" name="name">
+                    <Input
+                      placeholder="Your name"
+                      style={inputStyle}
+                      className="custom-input"
+                    />
                   </Form.Item>
                 </div>
                 <div style={{ width: "100%" }}>
                   <Form.Item name="email_address">
-                    <Input placeholder="Email" style={inputStyle} />
+                    <Input
+                      placeholder="Email"
+                      style={inputStyle}
+                      className="custom-input"
+                    />
                   </Form.Item>
                 </div>
               </div>
               <Form.Item name="subject">
-                <Input placeholder="Subject" style={inputStyle} />
+                <Input
+                  placeholder="Subject"
+                  style={inputStyle}
+                  className="custom-input"
+                />
               </Form.Item>
               <Form.Item name="body">
                 <Input.TextArea
@@ -111,12 +135,21 @@ function FooterSection() {
                     width: "100%",
                     border: "1px solid #a7b4c0",
                     fontFamily: "Raleway",
+                    background: darkMode
+                      ? darkTheme.backgroundColor
+                      : lightTheme.backgroundColor,
+                    color: darkMode ? darkTheme.color : lightTheme.color,
                   }}
+                  className="custom-input"
                 />
               </Form.Item>
               <Button
                 type="primary"
-                style={{ borderRadius: 20, padding: 20 }}
+                style={{
+                  borderRadius: 20,
+                  padding: 20,
+                  width: isMobile ? "100%" : "20%",
+                }}
                 htmlType="submit"
                 loading={loading}
                 block={isMobile ? true : false}
@@ -135,6 +168,7 @@ function FooterSection() {
                 textAlign: "center",
                 marginBottom: 24,
                 fontFamily: "Raleway",
+                color: darkMode ? darkTheme.color : lightTheme.color,
               }}
             >
               Follow on all platforms
@@ -151,7 +185,7 @@ function FooterSection() {
                 {
                   icon: <TikTokOutlined style={iconStyle} />,
                   label: "TikTok",
-                  color: "#000000",
+                  color: darkMode ? darkTheme.color : lightTheme.color,
                   link: "https://www.tiktok.com/",
                 },
                 {
@@ -188,12 +222,15 @@ function FooterSection() {
                       gap: 3,
                       padding: "12px 12px",
                       borderRadius: 12,
-                      backgroundColor: "white",
+                      background: darkMode
+                        ? darkTheme.backgroundColor
+                        : lightTheme.backgroundColor,
                       boxShadow: "0 2px 8px rgba(0,0,0,0.19)",
                       cursor: "pointer",
                       transition: "all 0.3s ease",
                       fontWeight: 500,
                       color: item.color,
+                      border: "1px solid #fff",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-4px)";

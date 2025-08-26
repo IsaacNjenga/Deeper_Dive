@@ -1,0 +1,4 @@
+.custom-input::placeholder {
+  color: #9ca3af; /* Tailwind gray-400 */
+  opacity: 1; /* Make sure it's not transparent */
+}
