@@ -2,12 +2,12 @@ import React, { useContext, useState } from "react";
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
 
 import {
-  AppleOutlined,
-  InstagramOutlined,
-  SpotifyOutlined,
+  AppleFilled,
+  InstagramFilled,
+  SpotifyFilled,
   TikTokOutlined,
   XOutlined,
-  YoutubeOutlined,
+  YoutubeFilled,
 } from "@ant-design/icons";
 import { darkTheme, lightTheme, UserContext } from "../App";
 import Swal from "sweetalert2";
@@ -177,7 +177,7 @@ function FooterSection() {
             <Row gutter={[16, 16]} justify="center">
               {[
                 {
-                  icon: <InstagramOutlined style={iconStyle} />,
+                  icon: <InstagramFilled style={iconStyle} />,
                   label: "Instagram",
                   color: "#ee2a7b",
                   link: "https://www.instagram.com/",
@@ -189,25 +189,26 @@ function FooterSection() {
                   link: "https://www.tiktok.com/",
                 },
                 {
-                  icon: <XOutlined style={iconStyle} />,
-                  label: "X",
-                  color: "#1DA1F2",
-                  link: "https://x.com/home?lang=en",
-                },
-                {
-                  icon: <SpotifyOutlined style={iconStyle} />,
-                  label: "Spotify",
-                  color: "#1DB954",
-                  link: "https://open.spotify.com/",
-                },
-                {
-                  icon: <YoutubeOutlined style={iconStyle} />,
+                  icon: <YoutubeFilled style={iconStyle} />,
                   label: "YouTube",
                   color: "#FF0000",
                   link: "https://www.youtube.com/",
                 },
                 {
-                  icon: <AppleOutlined style={iconStyle} />,
+                  icon: <XOutlined style={iconStyle} />,
+                  label: "X",
+                  color: darkMode ? darkTheme.color : lightTheme.color,
+                  link: "https://x.com/home?lang=en",
+                },
+                {
+                  icon: <SpotifyFilled style={iconStyle} />,
+                  label: "Spotify",
+                  color: "#1DB954",
+                  link: "https://open.spotify.com/",
+                },
+
+                {
+                  icon: <AppleFilled style={iconStyle} />,
                   label: "Apple Music",
                   color: "#999999",
                   link: "https://music.apple.com/us/new",

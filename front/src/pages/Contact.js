@@ -23,14 +23,25 @@ function Contact() {
 
   const labelStyle = {
     color: darkMode ? darkTheme.color : lightTheme.color,
+    fontSize: 20,
   };
-  const childStyle = {};
+  const childStyle = { fontSize: 16 };
 
   const details = [
     {
       id: 1,
       name: "Email",
-      contact: "john@email.com",
+      contact: (
+        <a
+          href="mailto:john@gmail.com"
+          style={{
+            color: darkMode ? darkTheme.color : lightTheme.color,
+            textDecoration: "none",
+          }}
+        >
+          john@gmail.com
+        </a>
+      ),
       icon: <MailOutlined style={iconStyle} />,
     },
     {
