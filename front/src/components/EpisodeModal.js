@@ -22,7 +22,8 @@ function EpisodeModal({ openModal, setOpenModal, loading, episodeContent }) {
       width={720}
       bodyStyle={{
         padding: 24,
-        margin: 10,zIndex:10000
+        margin: 10,
+        zIndex: 10000,
       }}
     >
       <Row gutter={[24, 24]}>
@@ -43,6 +44,7 @@ function EpisodeModal({ openModal, setOpenModal, loading, episodeContent }) {
               height: "100%",
               maxHeight: 350,
             }}
+            className="ant2"
           />
         </Col>
 

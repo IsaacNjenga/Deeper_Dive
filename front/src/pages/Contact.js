@@ -1,10 +1,14 @@
 import React, { useContext } from "react";
 import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
-import { Card, Col, Row, Typography } from "antd";
-import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
+import { Card, Col, Collapse, Row, Typography } from "antd";
+import {
+  MailOutlined,
+  PhoneOutlined,
+  CaretRightOutlined,
+} from "@ant-design/icons";
 
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 
 function Contact() {
   const { darkMode } = useContext(UserContext);
@@ -16,6 +20,11 @@ function Contact() {
     fontSize: "2.5rem",
     color: darkMode ? darkTheme.color : lightTheme.color,
   };
+
+  const labelStyle = {
+    color: darkMode ? darkTheme.color : lightTheme.color,
+  };
+  const childStyle = {};
 
   const details = [
     {
@@ -31,6 +40,25 @@ function Contact() {
       icon: <PhoneOutlined style={iconStyle} />,
     },
   ];
+
+  const collapseItems = [
+    {
+      key: 1,
+      label: <Text style={labelStyle}>Label 1</Text>,
+      children: <Paragraph style={childStyle}>Paragraph 1</Paragraph>,
+    },
+    {
+      key: 2,
+      label: <Text style={labelStyle}>Label 2</Text>,
+      children: <Paragraph style={childStyle}>Paragraph 2</Paragraph>,
+    },
+    {
+      key: 3,
+      label: <Text style={labelStyle}>Label 3</Text>,
+      children: <Paragraph style={childStyle}>Paragraph 3</Paragraph>,
+    },
+  ];
+
   return (
     <Motion>
       <Title
@@ -58,7 +86,7 @@ function Contact() {
                   key={d.id}
                   hoverable
                   style={{
-                    minHeight: 250,
+                    minHeight: 200,
                     height: "100%",
                     borderRadius: 12,
                     display: "flex",
@@ -99,8 +127,38 @@ function Contact() {
             ))}
           </Row>
         </div>
+        <Title
+          style={{
+            color: darkMode ? darkTheme.color : lightTheme.color,
+            fontFamily: "Raleway",
+            fontSize: "3.5rem",
+            textAlign: "center",
+            margin: 0,
+          }}
+        >
+          FAQ
+        </Title>
         {/* accordion */}
-        <div></div>
+        <div style={{ margin: 10, padding: "30px 40px" }}>
+          <Collapse
+            accordion
+            expandIcon={({ isActive }) => (
+              <CaretRightOutlined
+                rotate={isActive ? 90 : 0}
+                style={{ color: darkMode ? darkTheme.color : lightTheme.color }}
+              />
+            )}
+            items={collapseItems}
+            style={{
+              borderRadius: 12,
+              overflow: "hidden",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+              background: darkMode
+                ? darkTheme.backgroundColor
+                : lightTheme.backgroundColor,
+            }}
+          />
+        </div>
       </div>
     </Motion>
   );
