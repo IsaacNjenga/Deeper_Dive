@@ -47,7 +47,7 @@ function About() {
             padding: "0px 10px",
           }}
         >
-          <Carousel dots={false} autoplay autoplaySpeed={2500} fade>
+          <Carousel dots={false} autoplay autoplaySpeed={3500} fade>
             {images.map((img, index) => (
               <Image
                 key={index}

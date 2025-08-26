@@ -140,6 +140,7 @@ function Home() {
                     objectFit: "cover",
                   }}
                   preview={false}
+                  className="ant2"
                 />
               </div>
             </div>
@@ -177,6 +178,7 @@ function Home() {
                         alt="pd_img"
                         style={{ height: "100%" }}
                         preview={false}
+                        className="ant2"
                       />
                     </div>
                   }

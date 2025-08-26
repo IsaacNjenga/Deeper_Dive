@@ -178,6 +178,7 @@ function Episodes() {
                             height: "100%",
                             objectFit: "cover",
                           }}
+                          className="ant2"
                         />
 
                         {/* Play Button Overlay */}
