@@ -1,0 +1,36 @@
+/* Dark */
+.collapse--dark .ant-collapse-item,
+.collapse--dark .ant-collapse-header {
+  background: #121212 !important;
+  color: #eaeaea;
+  border-color: rgba(255,255,255,0.12);
+}
+
+.collapse--dark .ant-collapse-content,
+.collapse--dark .ant-collapse-content-box {
+  background: #0f0f0f !important;  /* ✅ content bg */
+  color: #eaeaea;
+  border-top-color: rgba(255,255,255,0.12);
+}
+
+/* Light */
+.collapse--light .ant-collapse-item,
+.collapse--light .ant-collapse-header {
+  background: #fafafa !important;
+  color: #111;
+  border-color: #eee;
+}
+
+.collapse--light .ant-collapse-content,
+.collapse--light .ant-collapse-content-box {
+  background: #ffffff !important;   /* or #fdfdfd */
+  color: #333;
+  border-top-color: #eee;
+}
+
+/* Optional polish */
+.collapse--dark .ant-collapse,
+.collapse--light .ant-collapse {
+  border-radius: 12px;
+  overflow: hidden;
+}

@@ -7,6 +7,7 @@ import {
   PhoneOutlined,
   CaretRightOutlined,
 } from "@ant-design/icons";
+import "../assets/css/contact.css";
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -25,7 +26,10 @@ function Contact() {
     color: darkMode ? darkTheme.color : lightTheme.color,
     fontSize: 20,
   };
-  const childStyle = { fontSize: 16 };
+  const childStyle = {
+    fontSize: 16,
+    color: darkMode ? darkTheme.color : lightTheme.color,
+  };
 
   const details = [
     {
@@ -168,6 +172,7 @@ function Contact() {
                 ? darkTheme.backgroundColor
                 : lightTheme.backgroundColor,
             }}
+            rootClassName={darkMode ? "collapse--dark" : "collapse--light"}
           />
         </div>
       </div>
