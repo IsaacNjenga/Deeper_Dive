@@ -12,8 +12,16 @@ import {
 import { Link, Outlet } from "react-router-dom";
 import FooterSection from "./Footer";
 import logo from "../assets/icons/logo.png";
-import { MenuOutlined, MoonFilled, SunFilled } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  MenuOutlined,
+  MoonFilled,
+  PlaySquareOutlined,
+  SunFilled,
+} from "@ant-design/icons";
 import { UserContext } from "../App";
+import Playlist from "../components/Playlist.js";
+import { useMedia } from "./MediaContext.js";
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
@@ -21,7 +29,14 @@ const { Title, Text } = Typography;
 const logoTextStyle = { display: "flex", flexDirection: "column" };
 
 function Navbar() {
-  const { isMobile, setDarkMode, darkMode } = useContext(UserContext);
+  const {
+    isMobile,
+    setDarkMode,
+    darkMode,
+    togglePlaylistDrawer,
+    playlistDrawer,
+  } = useContext(UserContext);
+  const { playlist } = useMedia();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -117,26 +132,50 @@ function Navbar() {
           </div>
 
           {isMobile ? (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginLeft: "auto",
-              }}
-            >
-              <Button
-                type="text"
-                onClick={toggleDrawer}
-                icon={
-                  <MenuOutlined
-                    style={{
-                      color: darkMode ? "white" : "#090c11",
-                      fontSize: 20,
-                    }}
-                  />
-                }
-              />
-            </div>
+            <>
+              {" "}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginLeft: "auto",
+                }}
+              >
+                <Button
+                  type="text"
+                  onClick={toggleDrawer}
+                  icon={
+                    <MenuOutlined
+                      style={{
+                        color: darkMode ? "white" : "#090c11",
+                        fontSize: 20,
+                      }}
+                    />
+                  }
+                />
+              </div>{" "}
+              <div style={{ marginLeft: 15, alignItems: "center" }}>
+                <Button
+                  type="primary"
+                  shape="circle"
+                  style={{
+                    background: "#4f4f8e",
+                    padding: "20px 20px",
+                    margin: "10px 0px",
+                  }}
+                  icon={
+                    <PlaySquareOutlined
+                      style={{
+                        color: "#fff",
+                        fontSize: 22,
+                      }}
+                    />
+                  }
+                  onClick={togglePlaylistDrawer}
+                  title="View playlist"
+                />
+              </div>
+            </>
           ) : (
             <>
               {/* Menu */}
@@ -181,6 +220,27 @@ function Navbar() {
                   onClick={toggleMode}
                 />
               </div>
+              <div style={{ marginLeft: 15, alignItems: "center" }}>
+                <Button
+                  type="primary"
+                  shape="circle"
+                  style={{
+                    background: "#4f4f8e",
+                    padding: "20px 20px",
+                    margin: "10px 0px",
+                  }}
+                  icon={
+                    <PlaySquareOutlined
+                      style={{
+                        color: "#fff",
+                        fontSize: 22,
+                      }}
+                    />
+                  }
+                  onClick={togglePlaylistDrawer}
+                  title="View playlist"
+                />
+              </div>
             </>
           )}
         </Header>
@@ -191,6 +251,13 @@ function Navbar() {
           onClose={toggleDrawer}
           open={drawerVisible}
           style={{ backgroundColor: darkMode ? "#090c11" : "#f2f5fa" }}
+          closeIcon={
+            <CloseOutlined
+              style={{
+                color: darkMode ? "white" : "#090c11",
+              }}
+            />
+          }
         >
           <Menu
             mode="vertical"
@@ -238,6 +305,23 @@ function Navbar() {
               </div>
             </Menu.Item>
           </Menu>
+        </Drawer>
+
+        <Drawer
+          placement="right"
+          width={450}
+          onClose={togglePlaylistDrawer}
+          open={playlistDrawer}
+          style={{ backgroundColor: darkMode ? "#090c11" : "#f2f5fa" }}
+          closeIcon={
+            <CloseOutlined
+              style={{
+                color: darkMode ? "white" : "#090c11",
+              }}
+            />
+          }
+        >
+          <Playlist playlist={playlist} />
         </Drawer>
 
         {/* Main content */}

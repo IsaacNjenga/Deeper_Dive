@@ -10,7 +10,9 @@ import Guests from "./pages/Guests";
 import { AnimatePresence } from "framer-motion";
 import { useMedia } from "./components/MediaContext";
 import MediaPlayer from "./components/MediaPlayer";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 export const UserContext = createContext();
 
 export const lightTheme = {
@@ -24,15 +26,20 @@ export const darkTheme = {
   secondary: "#85898d",
 };
 
+//const mode = cookies.get("mode");
+
 function App() {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [darkMode, setDarkMode] = useState(true);
   const [currentEp, setCurrentEp] = useState(null);
-  //const [isPlaying, setIsPlaying] = useState(false);
-  //  const [mediaPlaying, setMediaPlaying] = useState(null);
+  const [playlistDrawer, setPlaylistDrawer] = useState(false);
 
   const { setMediaPlaying, setIsPlaying } = useMedia();
+
+  const togglePlaylistDrawer = () => {
+    setPlaylistDrawer(!playlistDrawer);
+  };
 
   const playMedia = (media) => {
     setMediaPlaying(media);
@@ -60,6 +67,8 @@ function App() {
           pauseMedia,
           currentEp,
           setCurrentEp,
+          togglePlaylistDrawer,
+          playlistDrawer,
         }}
       >
         <AnimatePresence mode="wait">

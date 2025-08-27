@@ -18,6 +18,7 @@ import Loader from "../components/Loader";
 import ShinyText from "../components/ShinyText";
 import EpisodeModal from "../components/EpisodeModal";
 import { useMedia } from "../components/MediaContext";
+import Playlist from "../components/Playlist";
 
 const { Title, Text } = Typography;
 
@@ -90,7 +91,7 @@ export const formatDuration = (totalSeconds) => {
 function Episodes() {
   const { darkMode, playMedia, currentEp, setCurrentEp } =
     useContext(UserContext);
-  const { isPlaying, setIsPlaying } = useMedia();
+  const { isPlaying, setIsPlaying, playlist, setPlaylist } = useMedia();
   const [episodes, setEpisodes] = useState(initialEpisodes);
   const [loading, setLoading] = useState(false);
   const [openEpisodeModal, setOpenEpisodeModal] = useState(false);
@@ -101,6 +102,31 @@ function Episodes() {
     setOpenEpisodeModal(true);
     setEpisodeContent(episode);
     setTimeout(() => setLoading(false), 100);
+  };
+
+  const allEpisodes = [...episodes];
+
+  const addToPlaylist = (episode) => {
+    const selectedEpisode = allEpisodes.find((e) => e.id === episode.id);
+    if (!selectedEpisode) {
+      console.warn("Episode not found");
+      return;
+    }
+    setPlaylist((prevList) => {
+      const updatedList = [
+        ...prevList,
+        {
+          id: selectedEpisode.id,
+          title: selectedEpisode.title,
+          description: selectedEpisode.description,
+          timestamp: selectedEpisode.timestamp,
+          episode: selectedEpisode.episode,
+          audio: selectedEpisode.audio,
+          cover: selectedEpisode.cover,
+        },
+      ];
+      return updatedList;
+    });
   };
 
   // Load durations dynamically
@@ -197,6 +223,7 @@ function Episodes() {
                                 setCurrentEp(ep);
                                 playMedia(ep);
                                 setIsPlaying(true);
+                                addToPlaylist(ep);
                               } catch (error) {
                                 console.log(error);
                                 Swal.fire({
@@ -302,6 +329,7 @@ function Episodes() {
         </div>
       </Motion>
       {/* <MediaPlayer media={mediaPlaying} /> */}
+      <Playlist playlist={playlist} />
       <EpisodeModal
         openModal={openEpisodeModal}
         setOpenModal={setOpenEpisodeModal}

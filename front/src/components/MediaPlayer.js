@@ -15,7 +15,7 @@ const cardStyle = {
   bottom: 5,
   left: "50%",
   transform: "translateX(-50%)",
-  width: 1050,
+  width: 1100,
   borderRadius: 16,
   boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
   color: "#fff",
