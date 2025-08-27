@@ -10,6 +10,7 @@ import {
   ClockCircleOutlined,
   PauseCircleOutlined,
   PlayCircleOutlined,
+  UnorderedListOutlined,
 } from "@ant-design/icons";
 import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
@@ -174,6 +175,7 @@ function Episodes() {
                   <Card
                     hoverable
                     style={{
+                      minHeight: 200,
                       height: "100%",
                       borderRadius: 12,
                       display: "flex",
@@ -191,6 +193,29 @@ function Episodes() {
                           borderTopRightRadius: 12,
                         }}
                       >
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: "10%",
+                            right: 0,
+                            transform: "translate(-50%, -50%)",
+                            color: "#fff",
+                            zIndex: 2,
+                          }}
+                        >
+                          <Button
+                            shape="circle"
+                            style={{
+                              fontSize: 16,
+                              fontFamily: "Roboto",
+                              color: "#333",
+                              boxShadow: "0 4px 12px rgba(0,0,0,0.45)",
+                            }}
+                            title="Add to playlist"
+                          >
+                            <UnorderedListOutlined />
+                          </Button>
+                        </div>
                         <Image
                           src={ep.cover}
                           alt="pod_cover"
@@ -255,7 +280,7 @@ function Episodes() {
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        marginBottom: 8,
+                        marginBottom: 2,
                       }}
                     >
                       <Text
@@ -280,7 +305,8 @@ function Episodes() {
                         <Title
                           level={5}
                           style={{
-                            marginBottom: 4,
+                            marginTop: 1,
+                            marginBottom: 2,
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
@@ -300,6 +326,7 @@ function Episodes() {
                             overflow: "hidden",
                             fontFamily: "Raleway",
                           }}
+                          ellipsis
                         >
                           {ep.description}
                         </Text>

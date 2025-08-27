@@ -10,9 +10,9 @@ import Guests from "./pages/Guests";
 import { AnimatePresence } from "framer-motion";
 import { useMedia } from "./components/MediaContext";
 import MediaPlayer from "./components/MediaPlayer";
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 
-const cookies = new Cookies();
+//const cookies = new Cookies();
 export const UserContext = createContext();
 
 export const lightTheme = {
