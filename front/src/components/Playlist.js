@@ -5,6 +5,7 @@ import {
   PlayCircleOutlined,
   DeleteOutlined,
   PauseCircleOutlined,
+  PlaySquareOutlined,
 } from "@ant-design/icons";
 import { useMedia } from "./MediaContext";
 
@@ -12,17 +13,24 @@ const { Text } = Typography;
 
 function Playlist({ playlist }) {
   const { darkMode } = useContext(UserContext);
-  const { setMediaPlaying, setIsPlaying, setPlaylist, isPlaying } = useMedia();
+  const {
+    setIsPlaying,
+    setPlaylist,
+    isPlaying,
+    setCurrentIndex,
+    setIsPlayingAll,
+    playEpisode,
+  } = useMedia();
 
   useEffect(() => {
     const savedPlaylist = JSON.parse(localStorage.getItem("playlist"));
     if (savedPlaylist) setPlaylist(savedPlaylist);
   }, []);
 
-  const playEpisode = (episode) => {
-    setMediaPlaying(episode);
-    setIsPlaying(true);
-  };
+  // const playEpisode = (episode) => {
+  //   setMediaPlaying(episode);
+  //   setIsPlaying(true);
+  // };
 
   const removeFromPlaylist = (id) => {
     setPlaylist((prev) => {
@@ -31,6 +39,24 @@ function Playlist({ playlist }) {
       return updated;
     });
   };
+
+  const handlePlayAll = () => {
+    if (playlist.length > 0) {
+      setCurrentIndex(0);
+      setIsPlayingAll(true);
+      playEpisode(playlist[0]);
+    }
+  };
+
+  // const handleEpisodeEnd = () => {
+  //   if (isPlayingAll && currentIndex < playlist.length - 1) {
+  //     const nextIndex = currentIndex + 1;
+  //     setCurrentIndex(nextIndex);
+  //     playEpisode(playlist[nextIndex]);
+  //   } else {
+  //     setIsPlayingAll(false);
+  //   }
+  // };
 
   if (!playlist || playlist.length === 0) {
     return (
@@ -53,7 +79,34 @@ function Playlist({ playlist }) {
         padding: "10px",
       }}
     >
-      <h2 style={{ marginBottom: "15px" }}>My Playlist</h2>
+      <h2 style={{ marginBottom: "15px", fontFamily: "Raleway" }}>
+        My Playlist
+      </h2>
+
+      <div style={{ marginBottom: "15px" }}>
+        <Button
+          type="text"
+          icon={
+            <PlaySquareOutlined
+              style={{
+                color: darkMode ? darkTheme.color : lightTheme.color,
+                fontSize: 18,
+              }}
+            />
+          }
+          style={{
+            color: darkMode ? darkTheme.color : lightTheme.color,
+            fontFamily: "Raleway",
+            background: darkMode
+              ? darkTheme.backgroundColor
+              : lightTheme.backgroundColor,
+            border: "1px solid #333",
+          }}
+          onClick={handlePlayAll}
+        >
+          Play All
+        </Button>
+      </div>
       <List
         itemLayout="horizontal"
         dataSource={playlist}
@@ -67,12 +120,14 @@ function Playlist({ playlist }) {
                     <PauseCircleOutlined
                       style={{
                         color: darkMode ? darkTheme.color : lightTheme.color,
+                        fontSize: 18,
                       }}
                     />
                   ) : (
                     <PlayCircleOutlined
                       style={{
                         color: darkMode ? darkTheme.color : lightTheme.color,
+                        fontSize: 18,
                       }}
                     />
                   )
@@ -88,7 +143,7 @@ function Playlist({ playlist }) {
               <Button
                 type="text"
                 danger
-                icon={<DeleteOutlined />}
+                icon={<DeleteOutlined style={{ fontSize: 18 }} />}
                 onClick={() => removeFromPlaylist(item.id)}
               />,
             ]}
@@ -100,6 +155,7 @@ function Playlist({ playlist }) {
               boxShadow: darkMode
                 ? "0 2px 6px rgba(0,0,0,0.4)"
                 : "0 2px 6px rgba(0,0,0,0.1)",
+              border: "1px solid #333",
             }}
           >
             <List.Item.Meta
@@ -109,6 +165,7 @@ function Playlist({ playlist }) {
                   strong
                   style={{
                     color: darkMode ? darkTheme.color : lightTheme.color,
+                    fontFamily: "Raleway",
                   }}
                 >
                   {item.title}
@@ -120,6 +177,7 @@ function Playlist({ playlist }) {
                   ellipsis
                   style={{
                     color: darkMode ? darkTheme.color : lightTheme.color,
+                    fontFamily: "Roboto",
                   }}
                 >
                   Episode: {item.episode}

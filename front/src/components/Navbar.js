@@ -309,7 +309,7 @@ function Navbar() {
 
         <Drawer
           placement="right"
-          width={450}
+          width={480}
           onClose={togglePlaylistDrawer}
           open={playlistDrawer}
           style={{ backgroundColor: darkMode ? "#090c11" : "#f2f5fa" }}

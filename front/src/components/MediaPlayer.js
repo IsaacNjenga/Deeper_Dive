@@ -26,7 +26,17 @@ const cardStyle = {
 function MediaPlayer() {
   const audioRef = useRef(null);
   const { darkMode, isMobile } = useContext(UserContext);
-  const { isPlaying, setIsPlaying, mediaPlaying } = useMedia();
+  const {
+    isPlaying,
+    setIsPlaying,
+    mediaPlaying,
+    currentIndex,
+    setCurrentIndex,
+    isPlayingAll,
+    setIsPlayingAll,
+    playlist,
+    playEpisode,
+  } = useMedia();
   const [volume, setVolume] = useState(70);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -143,6 +153,17 @@ function MediaPlayer() {
       audio.volume = volume / 100;
     }
   }, [volume]);
+
+  //handle autoplay
+  const handleEpisodeEnd = () => {
+    if (isPlayingAll && currentIndex < playlist.length - 1) {
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      playEpisode(playlist[nextIndex]);
+    } else {
+      setIsPlayingAll(false);
+    }
+  };
 
   if (!mediaPlaying) return null;
 
@@ -361,8 +382,11 @@ function MediaPlayer() {
           {/* Audio */}
           <audio
             key={mediaPlaying?.id}
+            //controls
+            autoPlay
+            onEnded={handleEpisodeEnd}
             ref={audioRef}
-            src={mediaPlaying.audio}
+            src={playlist[currentIndex]?.audio}
             preload="metadata"
           />
         </Card>

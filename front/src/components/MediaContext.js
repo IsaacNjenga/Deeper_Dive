@@ -6,6 +6,13 @@ function MediaProvider({ children }) {
   const [mediaPlaying, setMediaPlaying] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playlist, setPlaylist] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlayingAll, setIsPlayingAll] = useState(false);
+
+  const playEpisode = (episode) => {
+    setMediaPlaying(episode);
+    setIsPlaying(true);
+  };
 
   return (
     <MediaContext.Provider
@@ -16,6 +23,11 @@ function MediaProvider({ children }) {
         setIsPlaying,
         playlist,
         setPlaylist,
+        currentIndex,
+        setCurrentIndex,
+        isPlayingAll,
+        setIsPlayingAll,
+        playEpisode,
       }}
     >
       {children}
