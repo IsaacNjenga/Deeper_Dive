@@ -6,7 +6,7 @@ import { Card, Col, Image, Row, Typography, Button } from "antd";
 const { Title, Text, Paragraph } = Typography;
 
 const bannerImg =
-  "https://plus.unsplash.com/premium_photo-1661329937685-e9e4eb06a36a?w=900";
+  "https://images.pexels.com/photos/14218476/pexels-photo-14218476.jpeg";
 
 const guestList = [
   {
@@ -49,7 +49,7 @@ function Guests() {
             alt="banner"
             preview={false}
             width="100%"
-            height={450}
+            height={500}
             style={{ objectFit: "cover" }}
             className="ant2"
           />
@@ -110,6 +110,7 @@ function Guests() {
                         borderRadius: "16px 16px 0 0",
                       }}
                       preview={false}
+                      className="ant2"
                     />
                   }
                 >
