@@ -12,15 +12,15 @@ const { Title, Text } = Typography;
 
 const cardStyle = {
   position: "fixed",
-  bottom: 5,
+  bottom: 3,
   left: "50%",
   transform: "translateX(-50%)",
   width: 1100,
   borderRadius: 16,
-  boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+  boxShadow: "0 4px 16px rgba(0,0,0,0.44)",
   color: "#fff",
   zIndex: 10,
-  padding: "1px 16px",
+  padding: "0px 5px",
 };
 
 function MediaPlayer() {
@@ -182,16 +182,15 @@ function MediaPlayer() {
             style={{
               display: "flex",
               justifyContent: "space-between",
-              gap: 5,
+              gap: 18,
             }}
           >
             {/* Cover */}
             <div
               style={{
                 display: "flex",
-                gap: 3,
+                gap: 10,
                 alignItems: "center",
-                marginRight: 5,
               }}
             >
               <div>

@@ -101,7 +101,6 @@ function Episodes() {
   const [loading, setLoading] = useState(false);
   const [openEpisodeModal, setOpenEpisodeModal] = useState(false);
   const [episodeContent, setEpisodeContent] = useState(null);
-  const [isInPlaylist, setIsInPlaylist] = useState(false);
 
   const viewModal = (episode) => {
     setLoading(true);
@@ -131,22 +130,10 @@ function Episodes() {
           cover: selectedEpisode.cover,
         },
       ];
+      localStorage.setItem("playlist", JSON.stringify(updatedList));
       return updatedList;
     });
   };
-
-  const playlistCheck = (episode) => {
-    const exists = playlist.some((e) => e.id === episode.id);
-    setIsInPlaylist(exists);
-  };
-
-  // useEffect(() => {
-  //   if (initialEpisodes.length > 0) {
-  //     playlistCheck(initialEpisodes[0]);
-  //   }
-  // }, [playlist, initialEpisodes]);
-
-  //console.log(isInPlaylist);
 
   // Load durations dynamically
   useEffect(() => {
@@ -239,8 +226,12 @@ function Episodes() {
                               }}
                               onClick={() => {
                                 addToPlaylist(ep);
-                                playlistCheck(ep);
                               }}
+                              disabled={
+                                playlist.some((e) => e.id === ep.id)
+                                  ? true
+                                  : false
+                              }
                             >
                               {playlist.some((e) => e.id === ep.id) ? (
                                 <CheckOutlined style={{ color: "green" }} />
