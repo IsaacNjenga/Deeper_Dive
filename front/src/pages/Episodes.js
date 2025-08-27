@@ -1,4 +1,4 @@
-import { Button, Card, Col, Image, Row, Typography } from "antd";
+import { Button, Card, Col, Image, Popover, Row, Typography } from "antd";
 import React, { useContext, useEffect, useState } from "react";
 import wam from "../assets/audio/wam.mp3";
 import wam2 from "../assets/audio/wam2.mp3";
@@ -7,6 +7,7 @@ import wam4 from "../assets/audio/wam4.mp3";
 import { format } from "date-fns";
 import {
   CalendarOutlined,
+  CheckOutlined,
   ClockCircleOutlined,
   PauseCircleOutlined,
   PlayCircleOutlined,
@@ -19,7 +20,6 @@ import Loader from "../components/Loader";
 import ShinyText from "../components/ShinyText";
 import EpisodeModal from "../components/EpisodeModal";
 import { useMedia } from "../components/MediaContext";
-import Playlist from "../components/Playlist";
 
 const { Title, Text } = Typography;
 
@@ -90,6 +90,10 @@ export const formatDuration = (totalSeconds) => {
 };
 
 function Episodes() {
+  useEffect(() => {
+    document.title = "Episodes - A Deeper Dive";
+  }, []);
+
   const { darkMode, playMedia, currentEp, setCurrentEp } =
     useContext(UserContext);
   const { isPlaying, setIsPlaying, playlist, setPlaylist } = useMedia();
@@ -97,6 +101,7 @@ function Episodes() {
   const [loading, setLoading] = useState(false);
   const [openEpisodeModal, setOpenEpisodeModal] = useState(false);
   const [episodeContent, setEpisodeContent] = useState(null);
+  const [isInPlaylist, setIsInPlaylist] = useState(false);
 
   const viewModal = (episode) => {
     setLoading(true);
@@ -129,6 +134,19 @@ function Episodes() {
       return updatedList;
     });
   };
+
+  const playlistCheck = (episode) => {
+    const exists = playlist.some((e) => e.id === episode.id);
+    setIsInPlaylist(exists);
+  };
+
+  // useEffect(() => {
+  //   if (initialEpisodes.length > 0) {
+  //     playlistCheck(initialEpisodes[0]);
+  //   }
+  // }, [playlist, initialEpisodes]);
+
+  //console.log(isInPlaylist);
 
   // Load durations dynamically
   useEffect(() => {
@@ -197,24 +215,40 @@ function Episodes() {
                           style={{
                             position: "absolute",
                             top: "10%",
-                            right: 0,
+                            right: "-3%",
                             transform: "translate(-50%, -50%)",
                             color: "#fff",
                             zIndex: 2,
                           }}
                         >
-                          <Button
-                            shape="circle"
-                            style={{
-                              fontSize: 16,
-                              fontFamily: "Roboto",
-                              color: "#333",
-                              boxShadow: "0 4px 12px rgba(0,0,0,0.45)",
-                            }}
-                            title="Add to playlist"
+                          <Popover
+                            title={`${
+                              playlist.some((e) => e.id === ep.id)
+                                ? "Added to playlist"
+                                : "Add to playlist"
+                            }`}
+                            trigger="hover"
                           >
-                            <UnorderedListOutlined />
-                          </Button>
+                            <Button
+                              shape="circle"
+                              style={{
+                                fontSize: 16,
+                                fontFamily: "Roboto",
+                                color: "#333",
+                                boxShadow: "0 4px 12px rgba(0,0,0,0.45)",
+                              }}
+                              onClick={() => {
+                                addToPlaylist(ep);
+                                playlistCheck(ep);
+                              }}
+                            >
+                              {playlist.some((e) => e.id === ep.id) ? (
+                                <CheckOutlined style={{ color: "green" }} />
+                              ) : (
+                                <UnorderedListOutlined />
+                              )}
+                            </Button>
+                          </Popover>
                         </div>
                         <Image
                           src={ep.cover}
@@ -356,7 +390,7 @@ function Episodes() {
         </div>
       </Motion>
       {/* <MediaPlayer media={mediaPlaying} /> */}
-      <Playlist playlist={playlist} />
+
       <EpisodeModal
         openModal={openEpisodeModal}
         setOpenModal={setOpenEpisodeModal}

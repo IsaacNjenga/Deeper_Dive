@@ -48,8 +48,14 @@ function Playlist({ playlist }) {
           <List.Item
             actions={[
               <Button
-                type="text"
-                icon={<PlayCircleOutlined />}
+                type="text" 
+                icon={
+                  <PlayCircleOutlined
+                    style={{
+                      color: darkMode ? darkTheme.color : lightTheme.color,
+                    }}
+                  />
+                }
                 onClick={() => playEpisode(item)}
               />,
               <Button
@@ -71,9 +77,24 @@ function Playlist({ playlist }) {
           >
             <List.Item.Meta
               avatar={<Avatar src={item.cover} shape="square" size="large" />}
-              title={<Text strong>{item.title}</Text>}
+              title={
+                <Text
+                  strong
+                  style={{
+                    color: darkMode ? darkTheme.color : lightTheme.color,
+                  }}
+                >
+                  {item.title}
+                </Text>
+              }
               description={
-                <Text type="secondary" ellipsis>
+                <Text
+                  type="secondary"
+                  ellipsis
+                  style={{
+                    color: darkMode ? darkTheme.color : lightTheme.color,
+                  }}
+                >
                   Episode: {item.episode}
                 </Text>
               }
