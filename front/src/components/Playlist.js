@@ -27,11 +27,6 @@ function Playlist({ playlist }) {
     if (savedPlaylist) setPlaylist(savedPlaylist);
   }, []);
 
-  // const playEpisode = (episode) => {
-  //   setMediaPlaying(episode);
-  //   setIsPlaying(true);
-  // };
-
   const removeFromPlaylist = (id) => {
     setPlaylist((prev) => {
       const updated = prev.filter((item) => item.id !== id);
@@ -47,16 +42,6 @@ function Playlist({ playlist }) {
       playEpisode(playlist[0]);
     }
   };
-
-  // const handleEpisodeEnd = () => {
-  //   if (isPlayingAll && currentIndex < playlist.length - 1) {
-  //     const nextIndex = currentIndex + 1;
-  //     setCurrentIndex(nextIndex);
-  //     playEpisode(playlist[nextIndex]);
-  //   } else {
-  //     setIsPlayingAll(false);
-  //   }
-  // };
 
   if (!playlist || playlist.length === 0) {
     return (

@@ -37,7 +37,7 @@ function MediaPlayer() {
     playlist,
     playEpisode,
   } = useMedia();
-  const [volume, setVolume] = useState(70);
+  const [volume, setVolume] = useState(100);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isScrubbing, setIsScrubbing] = useState(false);
@@ -358,7 +358,7 @@ function MediaPlayer() {
               style={{
                 alignContent: "center",
                 justifyContent: "flex-end",
-                marginLeft: 0,
+                marginRight: 10,
               }}
             >
               <Space style={{ width: 120 }} size="middle">
