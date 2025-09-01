@@ -43,7 +43,7 @@ function About() {
       >
         <div
           style={{
-            width: isMobile ? "100%" : "60%",
+            width: isMobile ? "100%" : "55%",
             padding: "0px 10px",
           }}
         >
@@ -68,7 +68,7 @@ function About() {
         </div>
         <div
           style={{
-            width: isMobile ? "100%" : "40%",
+            width: isMobile ? "100%" : "45%",
             alignContent: "center",
           }}
         >
@@ -80,12 +80,24 @@ function About() {
               textAlign: "justify",
             }}
           >
-            Pharetra magna ac placerat vestibulum lectus mauris ultrices. Ut
-            pharetra sit amet aliquam id diam maecenas ultricies mi.
-            Sollicitudin ac orci phasellus egestas tellus rutrum. Venenatis cras
-            sed felis eget. Amet risus nullam eget felis eget nunc. Lacus
-            vestibulum sed arcu non odio euismod. Consectetur adipiscing elit
-            duis tristique.
+            I am a visionary, my sole purpose — inspire people to lead healthier
+            lives physically, emotionally, mentally and spiritually. I am the
+            host of A Deeper Dive podcast. A platform which aims to go beyond
+            the surface and talk about issues facing young men through my lens.
+            My mission is to inspire people to be bold and share their story by
+            initiating tough conversations.
+          </Paragraph>
+          <Paragraph
+            style={{
+              color: darkMode ? darkTheme.color : lightTheme.color,
+              fontSize: "1.6rem",
+              padding: isMobile ? "0px 0px" : "0px 25px",
+              textAlign: "justify",
+            }}
+          >
+            I am also the founder of misfits, a fitness brand. I am currently
+            pursuing a bachelor's degree in data science and analytics at
+            USIU-Africa
           </Paragraph>
         </div>
       </div>

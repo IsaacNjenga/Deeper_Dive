@@ -71,7 +71,7 @@ function Home() {
                   fontSize: isMobile ? 48 : 56,
                 }}
               >
-                Go beyond the headlines.{" "}
+                Go beneath the surface.{" "}
                 <span>
                   <GradientText
                     colors={[
@@ -88,7 +88,7 @@ function Home() {
                     Dive Deeper
                   </GradientText>
                 </span>{" "}
-                into the ideas shaping life & work
+                into the stories, trauma and ideas shaping a young man's life.
               </Title>
               <Text
                 type="secondary"
@@ -216,11 +216,10 @@ function Home() {
               fontFamily: "Raleway",
             }}
           >
-            <strong>A Deeper Dive</strong> is a podcast dedicated to exploring
-            the stories, challenges, and insights shaping the future of Africa
-            and the world. Each episode takes you beyond the headlines, offering
-            fresh perspectives from leaders in business, science, art, and
-            culture.
+            <strong>A Deeper Dive</strong> is a podcast dedicated to tackle deep
+            seated traumas, issues and challenges facing a young man’s life. It
+            is dedicated to initiate tough conversations and inspire people to
+            live in their truth by fostering vulnerability and transparency.
           </Paragraph>
         </div>
 
