@@ -20,6 +20,7 @@ import Loader from "../components/Loader";
 import ShinyText from "../components/ShinyText";
 import EpisodeModal from "../components/EpisodeModal";
 import { useMedia } from "../components/MediaContext";
+import useFetchEpisodes from "../hooks/fetchEpisodes";
 
 const { Title, Text } = Typography;
 
@@ -78,8 +79,24 @@ const initialEpisodes = [
   },
 ];
 
-export const formatDuration = (totalSeconds) => {
-  const seconds = Math.floor(totalSeconds); // ensure integer seconds
+export const formatDuration = (input) => {
+  let seconds = Number(input);
+
+  // Normalize input
+  if (seconds > 1e12) {
+    // > ~31 years in µs, treat as µs
+    seconds = Math.floor(seconds / 1e6);
+  } else if (seconds > 1e6) {
+    // > ~11 days in ms, treat as ms
+    seconds = Math.floor(seconds / 1000);
+  } else if (seconds > 1000) {
+    // > 16 minutes in seconds, likely ms
+    seconds = Math.floor(seconds / 1000);
+  } else {
+    // Already in seconds
+    seconds = Math.floor(seconds);
+  }
+
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   const secs = seconds % 60;
@@ -96,11 +113,15 @@ function Episodes() {
 
   const { darkMode, playMedia, currentEp, setCurrentEp } =
     useContext(UserContext);
+  const { episodes, episodesLoading } = useFetchEpisodes();
   const { isPlaying, setIsPlaying, playlist, setPlaylist } = useMedia();
-  const [episodes, setEpisodes] = useState(initialEpisodes);
+  const [oldEpisodes, setEpisodes] = useState(initialEpisodes);
   const [loading, setLoading] = useState(false);
   const [openEpisodeModal, setOpenEpisodeModal] = useState(false);
   const [episodeContent, setEpisodeContent] = useState(null);
+
+  //console.log(episodes.items);
+  const episodeItems = episodes?.items;
 
   const viewModal = (episode) => {
     setLoading(true);
@@ -109,7 +130,7 @@ function Episodes() {
     setTimeout(() => setLoading(false), 100);
   };
 
-  const allEpisodes = [...episodes];
+  const allEpisodes = [...oldEpisodes];
 
   const addToPlaylist = (episode) => {
     const selectedEpisode = allEpisodes.find((e) => e.id === episode.id);
@@ -149,7 +170,7 @@ function Episodes() {
     });
   }, []);
 
-  if (loading) return <Loader text={"Please wait..."} size={"large"} />;
+  if (episodesLoading) return <Loader text={"Please wait..."} size={"large"} />;
 
   return (
     <>
@@ -175,7 +196,7 @@ function Episodes() {
 
           <div style={{ margin: 10, padding: "30px 40px" }}>
             <Row gutter={[16, 16]}>
-              {episodes.map((ep) => (
+              {episodeItems?.map((ep, index) => (
                 <Col key={ep.id} xs={24} sm={12} md={8}>
                   <Card
                     hoverable
@@ -198,7 +219,7 @@ function Episodes() {
                           borderTopRightRadius: 12,
                         }}
                       >
-                        <div
+                        {/* <div
                           style={{
                             position: "absolute",
                             top: "10%",
@@ -240,9 +261,9 @@ function Episodes() {
                               )}
                             </Button>
                           </Popover>
-                        </div>
+                        </div> */}
                         <Image
-                          src={ep.cover}
+                          src={ep.images[0].url}
                           alt="pod_cover"
                           preview={false}
                           style={{
@@ -264,28 +285,28 @@ function Episodes() {
                             )
                           }
                           size="large"
-                          onClick={() => {
-                            if (currentEp?.id === ep.id && isPlaying) {
-                              setIsPlaying(false);
-                            } else {
-                              setLoading(true);
-                              try {
-                                setCurrentEp(ep);
-                                playMedia(ep);
-                                setIsPlaying(true);
-                                addToPlaylist(ep);
-                              } catch (error) {
-                                console.log(error);
-                                Swal.fire({
-                                  icon: "error",
-                                  title: "Error",
-                                  text: "Something went wrong. Refresh the page and try again",
-                                });
-                              } finally {
-                                setLoading(false);
-                              }
-                            }
-                          }}
+                          // onClick={() => {
+                          //   if (currentEp?.id === ep.id && isPlaying) {
+                          //     setIsPlaying(false);
+                          //   } else {
+                          //     setLoading(true);
+                          //     try {
+                          //       setCurrentEp(ep);
+                          //       playMedia(ep);
+                          //       setIsPlaying(true);
+                          //       addToPlaylist(ep);
+                          //     } catch (error) {
+                          //       console.log(error);
+                          //       Swal.fire({
+                          //         icon: "error",
+                          //         title: "Error",
+                          //         text: "Something went wrong. Refresh the page and try again",
+                          //       });
+                          //     } finally {
+                          //       setLoading(false);
+                          //     }
+                          //   }
+                          // }}
                           style={{
                             position: "absolute",
                             top: "50%",
@@ -313,14 +334,16 @@ function Episodes() {
                         style={{ fontSize: 13, fontFamily: "Roboto" }}
                       >
                         <CalendarOutlined />{" "}
-                        {format(new Date(ep.timestamp), "PPP")}
+                        {format(new Date(ep.release_date), "PPP")}
                       </Text>
                       <Text
                         type="secondary"
                         style={{ fontSize: 13, fontFamily: "Roboto" }}
                       >
                         <ClockCircleOutlined />{" "}
-                        {ep.duration ? `${formatDuration(ep.duration)}` : "…"}
+                        {ep.duration_ms
+                          ? `${formatDuration(ep.duration_ms)}`
+                          : "…"}
                       </Text>
                     </div>
 
@@ -328,7 +351,7 @@ function Episodes() {
                     <Card.Meta
                       title={
                         <Title
-                          level={5}
+                          level={4}
                           style={{
                             marginTop: 1,
                             marginBottom: 2,
@@ -338,7 +361,7 @@ function Episodes() {
                             fontFamily: "Raleway",
                           }}
                         >
-                          Episode {ep.episode}: {ep.title}
+                          {ep.name}
                         </Title>
                       }
                       description={

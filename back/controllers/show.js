@@ -13,7 +13,7 @@ const podcastData = async (req, res) => {
 
     const data = await response.json();
     if (response.ok) {
-      res.status(200).json(data);
+      res.status(200).json({ success: true, episodes: data.episodes });
     } else {
       console.error("Error fetching podcast data:", data);
       res.status(500).json({ message: "Error fetching podcast data" });

@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 
 import { formatDuration } from "../pages/Episodes";
+import { format } from "date-fns";
 
 const { Title, Paragraph } = Typography;
 
@@ -34,7 +35,7 @@ function EpisodeModal({ openModal, setOpenModal, loading, episodeContent }) {
           style={{ alignItems: "center", textAlign: "center" }}
         >
           <Image
-            src={episodeContent?.cover}
+            src={episodeContent?.images[0].url}
             alt="cover"
             preview={false}
             style={{
@@ -65,19 +66,16 @@ function EpisodeModal({ openModal, setOpenModal, loading, episodeContent }) {
           >
             {/* Title */}
             <Title level={2} style={{ margin: 0, fontFamily: "Raleway" }}>
-              {episodeContent?.title}
+              {episodeContent?.name}
             </Title>
 
             {/* Meta */}
             <Space size={[8, 8]} wrap>
-              <Tag icon={<NumberOutlined />} color="grey">
-                Episode {episodeContent?.episode}
-              </Tag>
               <Tag icon={<CalendarOutlined />} color="#4a4a89">
-                Aired: {episodeContent?.timestamp}
+                Aired: {format(new Date(episodeContent?.release_date), "PPP")}
               </Tag>
               <Tag icon={<ClockCircleOutlined />} color="#f6032c">
-                Duration: {formatDuration(episodeContent?.duration)}
+                Duration: {formatDuration(episodeContent?.duration_ms)}
               </Tag>
             </Space>
 

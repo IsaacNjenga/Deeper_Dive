@@ -10,6 +10,7 @@ import Guests from "./pages/Guests";
 import { AnimatePresence } from "framer-motion";
 import { useMedia } from "./components/MediaContext";
 import MediaPlayer from "./components/MediaPlayer";
+import axios from "axios";
 //import Cookies from "universal-cookie";
 
 //const cookies = new Cookies();
@@ -27,6 +28,9 @@ export const darkTheme = {
 };
 
 //const mode = cookies.get("mode");
+axios.defaults.baseURL = "http://localhost:3001/api";
+//axios.defaults.baseURL = "https://deeper-dive-server.vercel.app/api";
+axios.defaults.withCredentials = true;
 
 function App() {
   const location = useLocation();
