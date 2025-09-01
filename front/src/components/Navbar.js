@@ -154,7 +154,7 @@ function Navbar() {
                   }
                 />
               </div>{" "}
-              <div style={{ marginLeft: 15, alignItems: "center" }}>
+              {/* <div style={{ marginLeft: 15, alignItems: "center" }}>
                 <Button
                   type="primary"
                   shape="circle"
@@ -174,7 +174,7 @@ function Navbar() {
                   onClick={togglePlaylistDrawer}
                   title="View playlist"
                 />
-              </div>
+              </div> */}
             </>
           ) : (
             <>
@@ -220,7 +220,7 @@ function Navbar() {
                   onClick={toggleMode}
                 />
               </div>
-              <div style={{ marginLeft: 15, alignItems: "center" }}>
+              {/* <div style={{ marginLeft: 15, alignItems: "center" }}>
                 <Button
                   type="primary"
                   shape="circle"
@@ -240,7 +240,7 @@ function Navbar() {
                   onClick={togglePlaylistDrawer}
                   title="View playlist"
                 />
-              </div>
+              </div> */}
             </>
           )}
         </Header>
