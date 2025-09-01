@@ -3,19 +3,24 @@ import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
 import { Carousel, Image, Typography } from "antd";
 import "../assets/css/about.css";
+import Img1 from "../assets/images/image0.jpeg";
+import Img2 from "../assets/images/image2.jpeg";
+import Img3 from "../assets/images/image3.jpeg";
+import Img4 from "../assets/images/image4.jpeg";
+import Img5 from "../assets/images/image5.jpeg";
 
 const { Title, Paragraph } = Typography;
 
-const img =
-  "https://images.unsplash.com/photo-1620932934088-fbdb2920e484?w=900";
-const img2 =
-  "https://images.unsplash.com/photo-1531558297330-791932f4f398?w=900";
-const img3 =
-  "https://images.unsplash.com/photo-1648522168784-067e98df88c0?w=900";
-const img4 =
-  "https://images.unsplash.com/photo-1660832458429-526d0601054f?q=80&w=900";
+// const img =
+//   "https://images.unsplash.com/photo-1620932934088-fbdb2920e484?w=900";
+// const img2 =
+//   "https://images.unsplash.com/photo-1531558297330-791932f4f398?w=900";
+// const img3 =
+//   "https://images.unsplash.com/photo-1648522168784-067e98df88c0?w=900";
+// const img4 =
+//   "https://images.unsplash.com/photo-1660832458429-526d0601054f?q=80&w=900";
 
-const images = [img, img2, img3, img4];
+const images = [Img1, Img2, Img3, Img4];
 function About() {
   const { isMobile, darkMode } = useContext(UserContext);
 
@@ -77,7 +82,7 @@ function About() {
               color: darkMode ? darkTheme.color : lightTheme.color,
               fontSize: "1.6rem",
               padding: isMobile ? "0px 0px" : "0px 25px",
-              textAlign: "justify",
+              textAlign: isMobile ? "left" : "justify",
             }}
           >
             I am a visionary, my sole purpose — inspire people to lead healthier
@@ -92,7 +97,7 @@ function About() {
               color: darkMode ? darkTheme.color : lightTheme.color,
               fontSize: "1.6rem",
               padding: isMobile ? "0px 0px" : "0px 25px",
-              textAlign: "justify",
+              textAlign: isMobile ? "left" : "justify",
             }}
           >
             I am also the founder of misfits, a fitness brand. I am currently
