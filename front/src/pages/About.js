@@ -74,7 +74,7 @@ function About() {
         <div
           style={{
             width: isMobile ? "100%" : "45%",
-            alignContent: "center",
+            //alignContent: "center",
           }}
         >
           <Paragraph
@@ -85,12 +85,13 @@ function About() {
               textAlign: isMobile ? "left" : "justify",
             }}
           >
-            I am a visionary, my sole purpose — inspire people to lead healthier
-            lives physically, emotionally, mentally and spiritually. I am the
-            host of A Deeper Dive podcast. A platform which aims to go beyond
-            the surface and talk about issues facing young men through my lens.
-            My mission is to inspire people to be bold and share their story by
-            initiating tough conversations.
+            I am a visionary, my sole purpose — <b>inspire</b> people to lead
+            healthier lives <i>physically</i>, <i>emotionally</i>,{" "}
+            <i>mentally</i> and <i>spiritually</i>. I am the host of A Deeper
+            Dive podcast, a platform which aims to go beyond the surface and
+            talk about issues facing young men through my lens. My{" "}
+            <b>mission</b> is to inspire people to be bold and share their story
+            by initiating tough conversations.
           </Paragraph>
           <Paragraph
             style={{
@@ -100,9 +101,9 @@ function About() {
               textAlign: isMobile ? "left" : "justify",
             }}
           >
-            I am also the founder of misfits, a fitness brand. I am currently
-            pursuing a bachelor's degree in data science and analytics at
-            USIU-Africa
+            I am also the founder of Misfits, a fitness brand that is committed
+            to empowering individuals. Currently, I am pursuing a Bachelor's
+            Degree in Data Science and Analytics at USIU-Africa.
           </Paragraph>
         </div>
       </div>
