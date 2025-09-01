@@ -82,7 +82,7 @@ function About() {
               color: darkMode ? darkTheme.color : lightTheme.color,
               fontSize: "1.6rem",
               padding: isMobile ? "0px 0px" : "0px 25px",
-              textAlign: isMobile ? "left" : "justify",
+              textAlign: "justify",
             }}
           >
             I am a visionary, my sole purpose — <b>inspire</b> people to lead
@@ -98,7 +98,7 @@ function About() {
               color: darkMode ? darkTheme.color : lightTheme.color,
               fontSize: "1.6rem",
               padding: isMobile ? "0px 0px" : "0px 25px",
-              textAlign: isMobile ? "left" : "justify",
+              textAlign: "justify",
             }}
           >
             I am also the founder of Misfits, a fitness brand that is committed

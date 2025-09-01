@@ -98,9 +98,8 @@ function Home() {
                   fontFamily: "Raleway",
                 }}
               >
-                Long-form conversations hosted by Jeremy Nyabila — with
-                founders, artists, scientists, and leaders across Africa and the
-                world.
+                Long-form conversations hosted by Jeremy Nyabila — with a range
+                of exciting guests from all over.
               </Text>
               <div style={{ marginTop: 20 }}>
                 <Button
