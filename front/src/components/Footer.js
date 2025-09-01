@@ -180,7 +180,7 @@ function FooterSection() {
                   icon: <InstagramFilled style={iconStyle} />,
                   label: "Instagram",
                   color: "#ee2a7b",
-                  link: "https://www.instagram.com/",
+                  link: "https://www.instagram.com/adeeperdivepodcast?igsh=MW51NWY2dDVsdGd1&utm_source=qr",
                 },
                 {
                   icon: <TikTokOutlined style={iconStyle} />,
@@ -204,7 +204,7 @@ function FooterSection() {
                   icon: <SpotifyFilled style={iconStyle} />,
                   label: "Spotify",
                   color: "#1DB954",
-                  link: "https://open.spotify.com/",
+                  link: "https://open.spotify.com/show/2i1gNQLoqN2MhxaLIomtQe?si=QZzKbvtPT0mcjR2colcVAQ",
                 },
 
                 {

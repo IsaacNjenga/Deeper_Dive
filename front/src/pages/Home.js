@@ -3,6 +3,7 @@ import Motion from "../components/motion.js";
 import { Card, Col, Row, Tag, Typography, Button, Input, Image } from "antd";
 import { darkTheme, lightTheme, UserContext } from "../App.js";
 import GradientText from "../components/gradientText.js";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text, Paragraph } = Typography;
 const img1 =
@@ -36,6 +37,7 @@ const featuredLists = [
 ];
 
 function Home() {
+  const navigate = useNavigate();
   const { isMobile, darkMode } = useContext(UserContext);
 
   return (
@@ -106,10 +108,19 @@ function Home() {
                   type="primary"
                   size="large"
                   style={{ marginRight: 10, fontFamily: "Raleway" }}
+                  onClick={() => navigate("/episodes")}
                 >
                   Listen Now
                 </Button>
-                <Button size="large">Subscribe</Button>
+                <Button size="large">
+                  <a
+                    href="https://open.spotify.com/show/2i1gNQLoqN2MhxaLIomtQe?si=QZzKbvtPT0mcjR2colcVAQ"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Subscribe
+                  </a>
+                </Button>
               </div>
             </div>
 
