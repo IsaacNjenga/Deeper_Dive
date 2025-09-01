@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 const { Title, Text, Paragraph } = Typography;
 const img1 =
-  "https://images.unsplash.com/photo-1581368135153-a506cf13b1e1?w=900";
+  "https://images.unsplash.com/photo-1528716321680-815a8cdb8cbe?w=900";
 const img2 =
-  "https://images.unsplash.com/photo-1567596275753-92607c3ce1ae?w=900";
+  "https://images.unsplash.com/photo-1619344501177-cb47c4a94c59?w=900";
 const img3 =
-  "https://images.unsplash.com/photo-1593697820826-2e76c9720a99?w=900";
+  "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=900";
 const avatarImg =
   "https://images.unsplash.com/photo-1594703276852-68829b071330?w=900";
 
@@ -19,20 +19,23 @@ const featuredLists = [
   {
     id: 1,
     image: img1,
-    title: "Cold open",
-    text: "Designing a Life You Don't Need a Vacation From",
+    title: "The Power Of Yet",
+    text: "Do you have a growth or fixed mindset? Life can be challenging and it is crucial to develop a growth mindset in every aspect of life.",
+    url: "https://open.spotify.com/episode/4y6pjFXwP8cX2DysnzrPJn",
   },
   {
     id: 2,
     image: img2,
-    title: "Behavioral Scientist, Habit Labs",
-    text: "Dr. Muriuki researches how tiny, repeatable actions compound into meaningful behavior change.",
+    title: "I Landed My Dream Job, But...",
+    text: "Take a deeper dive on how my passion for fitness and wellness has developed since childhood and how I declined my dream job as a fitness trainer.",
+    url: "https://open.spotify.com/episode/6LTLDIWyUjo0wqetNcZPRy",
   },
   {
     id: 3,
     image: img3,
-    title: "Myth vs Reality",
-    text: "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
+    title: "A 22 Year Old Freshman",
+    text: "Take a deep breath and dive into my the first episode of the pod. I talk about being a 22 year old freshman navigating uni life.",
+    url: "https://open.spotify.com/episode/4007zXeTB8hsKW8lg5lXHu",
   },
 ];
 
@@ -166,6 +169,7 @@ function Home() {
               color: darkMode ? darkTheme.color : lightTheme.color,
               fontFamily: "Raleway",
               textAlign: "center",
+              textDecoration: "underline",
             }}
           >
             Featured Episodes
@@ -175,31 +179,65 @@ function Home() {
               <Col xs={24} sm={12} md={8} key={ep}>
                 <Card
                   hoverable
-                  style={{ borderRadius: 12, height: "100%" }}
+                  style={{
+                    borderRadius: 12,
+                    height: "100%",
+                    background: "rgba(0,0,0,0)",
+                    border: "none",
+                  }}
                   cover={
-                    <div
+                    <Image
+                      src={ep.image}
+                      alt="pd_img"
                       style={{
-                        background: "#e4e6eb",
-                        borderRadius: 12,
+                        height: 300,
+                        objectFit: "contain",
                       }}
-                    >
-                      <Image
-                        src={ep.image}
-                        alt="pd_img"
-                        style={{ height: "100%" }}
-                        preview={false}
-                        className="ant2"
-                      />
-                    </div>
+                      preview={false}
+                      className="ant2"
+                    />
                   }
                   key={ep.id}
                 >
                   <Card.Meta
-                    title={`Episode ${ep.id}: ${ep.title}`}
-                    description={ep.text}
+                    title={
+                      <Title
+                        level={isMobile ? 5 : 4}
+                        style={{
+                          color: darkMode ? darkTheme.color : lightTheme.color,
+                          fontFamily: "Raleway",
+                          margin: 0,
+                        }}
+                      >
+                        {ep.title}
+                      </Title>
+                    }
+                    description={
+                      <Paragraph
+                        style={{
+                          color: darkMode ? darkTheme.color : lightTheme.color,
+                          fontFamily: "Roboto",
+                          margin: 0,
+                          fontSize: 16,
+                        }}
+                      >
+                        {ep.text}
+                      </Paragraph>
+                    }
                   />
                   <Button type="link" style={{ padding: 0, marginTop: 8 }}>
-                    Listen →
+                    <a
+                      href={ep.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: darkMode ? darkTheme.color : lightTheme.color,
+                        fontFamily: "Raleway",
+                        fontSize: 18,
+                      }}
+                    >
+                      Listen →
+                    </a>
                   </Button>
                 </Card>
               </Col>
@@ -213,9 +251,10 @@ function Home() {
             style={{
               color: darkMode ? darkTheme.color : lightTheme.color,
               fontFamily: "Roboto",
+              textDecoration: "underline",
             }}
           >
-            About the Podcast
+            About The Podcast
           </Title>
           <Paragraph
             style={{
@@ -243,8 +282,12 @@ function Home() {
             textAlign: "center",
           }}
         >
-          <Title level={3}>Stay Updated</Title>
-          <Text>Subscribe to get new episodes straight to your inbox</Text>
+          <Title level={3} style={{ fontFamily: "Raleway" }}>
+            Stay Updated
+          </Title>
+          <Text style={{ fontFamily: "Raleway" }}>
+            Subscribe to get new episodes straight to your inbox
+          </Text>
           <div
             style={{
               marginTop: 20,
@@ -255,7 +298,9 @@ function Home() {
             }}
           >
             <Input placeholder="Enter your email" style={{ width: 280 }} />
-            <Button type="primary">Subscribe</Button>
+            <Button type="primary" style={{ fontFamily: "Raleway" }}>
+              Subscribe
+            </Button>
           </div>
         </div>
       </Motion>

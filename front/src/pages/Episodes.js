@@ -111,7 +111,7 @@ function Episodes() {
     document.title = "Episodes - A Deeper Dive";
   }, []);
 
-  const { darkMode, playMedia, currentEp, setCurrentEp } =
+  const { darkMode, playMedia, currentEp, setCurrentEp, isMobile } =
     useContext(UserContext);
   const { episodes, episodesLoading } = useFetchEpisodes();
   const { isPlaying, setIsPlaying, playlist, setPlaylist } = useMedia();
@@ -275,7 +275,7 @@ function Episodes() {
                         />
 
                         {/* Play Button Overlay */}
-                        <Button
+                        {/* <Button
                           shape="circle"
                           icon={
                             currentEp?.id === ep.id && isPlaying ? (
@@ -317,7 +317,29 @@ function Episodes() {
                             boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
                             zIndex: 2,
                           }}
-                        />
+                        /> */}
+
+                        <Button
+                          shape="circle"
+                          style={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            backgroundColor: "#484789",
+                            color: "#fff",
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+                            zIndex: 2,
+                          }}
+                        >
+                          <a
+                            href={ep.external_urls.spotify}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <PlayCircleOutlined style={{ fontSize: 28 }} />
+                          </a>
+                        </Button>
                       </div>
                     }
                   >
@@ -331,14 +353,14 @@ function Episodes() {
                     >
                       <Text
                         type="secondary"
-                        style={{ fontSize: 13, fontFamily: "Roboto" }}
+                        style={{ fontSize: 14, fontFamily: "Roboto" }}
                       >
                         <CalendarOutlined />{" "}
                         {format(new Date(ep.release_date), "PPP")}
                       </Text>
                       <Text
                         type="secondary"
-                        style={{ fontSize: 13, fontFamily: "Roboto" }}
+                        style={{ fontSize: 14, fontFamily: "Roboto" }}
                       >
                         <ClockCircleOutlined />{" "}
                         {ep.duration_ms
@@ -351,7 +373,7 @@ function Episodes() {
                     <Card.Meta
                       title={
                         <Title
-                          level={4}
+                          level={isMobile ? 5 : 4}
                           style={{
                             marginTop: 1,
                             marginBottom: 2,
