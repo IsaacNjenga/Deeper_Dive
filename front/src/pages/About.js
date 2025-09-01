@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
 import { Carousel, Image, Typography } from "antd";
@@ -22,6 +22,10 @@ const { Title, Paragraph } = Typography;
 
 const images = [Img1, Img2, Img3, Img4, Img5];
 function About() {
+  useEffect(() => {
+    document.title = "About - A Deeper Dive";
+  }, []);
+  
   const { isMobile, darkMode } = useContext(UserContext);
 
   return (

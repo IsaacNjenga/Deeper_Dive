@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
 import { Card, Col, Collapse, Row, Typography } from "antd";
@@ -12,6 +12,10 @@ import "../assets/css/contact.css";
 const { Title, Text, Paragraph } = Typography;
 
 function Contact() {
+  useEffect(() => {
+    document.title = "Contact - A Deeper Dive";
+  }, []);
+  
   const { darkMode } = useContext(UserContext);
 
   const iconStyle = {
