@@ -202,7 +202,7 @@ function Home() {
                   <Card.Meta
                     title={
                       <Title
-                        level={isMobile ? 5 : 4}
+                        level={4}
                         style={{
                           color: darkMode ? darkTheme.color : lightTheme.color,
                           fontFamily: "Raleway",
