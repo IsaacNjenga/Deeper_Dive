@@ -20,7 +20,7 @@ const { Title, Paragraph } = Typography;
 // const img4 =
 //   "https://images.unsplash.com/photo-1660832458429-526d0601054f?q=80&w=900";
 
-const images = [Img1, Img2, Img3, Img4];
+const images = [Img1, Img2, Img3, Img4, Img5];
 function About() {
   const { isMobile, darkMode } = useContext(UserContext);
 
