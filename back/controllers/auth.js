@@ -42,7 +42,7 @@ const spotifyCallback = async (req, res) => {
     const authOptions = {
       url: "https://accounts.spotify.com/api/token",
       form: {
-        code: code,
+        code,
         redirect_uri: "https://deeper-dive.vercel.app/callback",
         grant_type: "authorization_code",
       },
@@ -52,7 +52,6 @@ const spotifyCallback = async (req, res) => {
           Buffer.from(client_id + ":" + client_secret).toString("base64"),
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      json: true,
     };
 
     const response = await fetch(authOptions.url, {
@@ -64,9 +63,13 @@ const spotifyCallback = async (req, res) => {
     const data = await response.json();
 
     if (response.ok) {
-      return res.status(200).json({ success: true, data: response.data });
+      return res.status(200).json({ success: true, data });
     } else {
-      throw new Error(data.error || "Failed to retrieve access token");
+      throw new Error(
+        data.error_description ||
+          data.error ||
+          "Failed to retrieve access token"
+      );
     }
   } catch (error) {
     console.error(error);
