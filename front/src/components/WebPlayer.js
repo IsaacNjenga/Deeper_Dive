@@ -1,7 +1,7 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Spin } from "antd";
 import axios from "axios";
-//import Login from "./Login";
+import Login from "./Login";
 
 const initialTrack = {
   name: "No Track Playing",
@@ -106,52 +106,52 @@ function WebPlayer({ token, tokenLoading }) {
   }
 
   return (
-    <div className="flex flex-col items-center p-4 bg-gray-900 text-white rounded-2xl shadow-lg w-[350px]">
-      <div className="flex items-center space-x-4">
-        <img
-          src={currentTrack.album.images[0]?.url || "/placeholder.jpg"}
-          alt="Album cover"
-          className="w-24 h-24 rounded-lg shadow"
-        />
-        <div>
-          <h2 className="text-lg font-bold">{currentTrack?.name}</h2>
-          <p className="text-sm text-gray-300">
-            {currentTrack?.artists[0]?.name}
-          </p>
-        </div>
-      </div>
+    // <div className="flex flex-col items-center p-4 bg-gray-900 text-white rounded-2xl shadow-lg w-[350px]">
+    //   <div className="flex items-center space-x-4">
+    //     <img
+    //       src={currentTrack.album.images[0]?.url || "/placeholder.jpg"}
+    //       alt="Album cover"
+    //       className="w-24 h-24 rounded-lg shadow"
+    //     />
+    //     <div>
+    //       <h2 className="text-lg font-bold">{currentTrack?.name}</h2>
+    //       <p className="text-sm text-gray-300">
+    //         {currentTrack?.artists[0]?.name}
+    //       </p>
+    //     </div>
+    //   </div>
 
-      {!isActive ? (
-        <button
-          className="mt-4 px-4 py-2 bg-green-600 rounded-full hover:bg-green-700"
-          onClick={transferPlaybackHere}
-        >
-          Connect Web Player
-        </button>
-      ) : (
-        <div className="flex items-center justify-center mt-6 space-x-6">
-          <button
-            className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
-            onClick={() => player.previousTrack()}
-          >
-            ⏮
-          </button>
-          <button
-            className="px-6 py-2 bg-green-600 rounded-full hover:bg-green-700"
-            onClick={() => player.togglePlay()}
-          >
-            {isPaused ? "▶️ Play" : "⏸ Pause"}
-          </button>
-          <button
-            className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
-            onClick={() => player.nextTrack()}
-          >
-            ⏭
-          </button>
-        </div>
-      )}
-    </div>
-    // <Login />
+    //   {!isActive ? (
+    //     <button
+    //       className="mt-4 px-4 py-2 bg-green-600 rounded-full hover:bg-green-700"
+    //       onClick={transferPlaybackHere}
+    //     >
+    //       Connect Web Player
+    //     </button>
+    //   ) : (
+    //     <div className="flex items-center justify-center mt-6 space-x-6">
+    //       <button
+    //         className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
+    //         onClick={() => player.previousTrack()}
+    //       >
+    //         ⏮
+    //       </button>
+    //       <button
+    //         className="px-6 py-2 bg-green-600 rounded-full hover:bg-green-700"
+    //         onClick={() => player.togglePlay()}
+    //       >
+    //         {isPaused ? "▶️ Play" : "⏸ Pause"}
+    //       </button>
+    //       <button
+    //         className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
+    //         onClick={() => player.nextTrack()}
+    //       >
+    //         ⏭
+    //       </button>
+    //     </div>
+    //   )}
+    // </div>
+    <Login />
   );
 }
 
