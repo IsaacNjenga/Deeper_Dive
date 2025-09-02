@@ -7,7 +7,7 @@ import { spotifyAuth, spotifyCallback } from "../controllers/auth.js";
 const router = express.Router();
 
 //get token
-router.get("/token", generateToken);
+//?router.get("/token", generateToken); use callback route instead
 
 //auth and callback token
 router.get("/auth", spotifyAuth);

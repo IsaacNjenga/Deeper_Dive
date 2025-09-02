@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ function useGetToken() {
     const getToken = async () => {
       setTokenLoading(true);
       try {
-        const res = await axios.get("/token");
+        const res = await axios.get("/callback");
         if (res.data.success) {
           setToken(res.data.accessToken);
         }
