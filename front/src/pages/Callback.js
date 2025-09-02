@@ -26,7 +26,7 @@ function Callback() {
         setAccessToken(data.access_token);
         setRefreshToken(data.refresh_token);
         setExpiresIn(data.expires_in);
-        navigate("/callback");
+        navigate("/player");
       } catch (error) {
         console.error("Error fetching access token:", error);
       }
