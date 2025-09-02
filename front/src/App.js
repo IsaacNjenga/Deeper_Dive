@@ -41,7 +41,6 @@ function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [currentEp, setCurrentEp] = useState(null);
   const [playlistDrawer, setPlaylistDrawer] = useState(false);
-  const { token, tokenLoading } = useGetToken();
 
   const { setMediaPlaying, setIsPlaying } = useMedia();
 
@@ -89,12 +88,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/guests" element={<Guests />} />
               <Route path="/callback" element={<Callback />} />
-              <Route
-                path="/player"
-                element={
-                  <WebPlayer token={token} tokenLoading={tokenLoading} />
-                }
-              />
+              <Route path="/player" element={<WebPlayer />} />
             </Route>
           </Routes>
         </AnimatePresence>
