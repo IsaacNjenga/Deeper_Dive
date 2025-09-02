@@ -64,9 +64,7 @@ const spotifyCallback = async (req, res) => {
     const data = await response.json();
 
     if (response.ok) {
-      return res
-        .status(200)
-        .json({ success: true, accessToken: data.access_token });
+      return res.status(200).json({ success: true, data: response.data });
     } else {
       throw new Error(data.error || "Failed to retrieve access token");
     }
@@ -76,4 +74,24 @@ const spotifyCallback = async (req, res) => {
   }
 };
 
-export { spotifyAuth, spotifyCallback };
+const refreshToken = async (req, res) => {
+  try {
+    const { refresh_token } = req.body;
+    const response = await axios.post(
+      "https://accounts.spotify.com/api/token",
+      new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: refresh_token,
+        client_id: client_id,
+        client_secret: client_secret,
+      }).toString(),
+      { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error refreshing access token" });
+  }
+};
+
+export { spotifyAuth, spotifyCallback, refreshToken };

@@ -6,7 +6,7 @@ import EpisodeModal from "./EpisodeModal";
 import { formatDuration } from "../pages/Episodes";
 import { MdForward10, MdReplay10 } from "react-icons/md";
 import MobilePlayer from "./mobilePlayer";
-import { useMedia } from "./MediaContext";
+import { useMedia } from "../context/MediaContext";
 
 const { Title, Text } = Typography;
 

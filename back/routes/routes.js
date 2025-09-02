@@ -3,15 +3,17 @@ import { fetchEpisodes } from "../controllers/episodes.js";
 import { artistData } from "../controllers/artist.js";
 import generateToken from "../middleware/accessToken.js";
 import { podcastData } from "../controllers/show.js";
-import { spotifyAuth, spotifyCallback } from "../controllers/auth.js";
+import {
+  refreshToken,
+  spotifyAuth,
+  spotifyCallback,
+} from "../controllers/auth.js";
 const router = express.Router();
-
-//get token
-//?router.get("/token", generateToken); use callback route instead
 
 //auth and callback token
 router.get("/auth", spotifyAuth);
 router.post("/callback", spotifyCallback);
+router.post("/refresh_token", refreshToken);
 
 router.post("/episode", generateToken, fetchEpisodes);
 router.post("/artist", generateToken, artistData);

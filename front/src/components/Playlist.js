@@ -7,7 +7,7 @@ import {
   PauseCircleOutlined,
   PlaySquareOutlined,
 } from "@ant-design/icons";
-import { useMedia } from "./MediaContext";
+import { useMedia } from "../context/MediaContext";
 
 const { Text } = Typography;
 

@@ -8,7 +8,7 @@ import Reviews from "./pages/Reviews";
 import Contact from "./pages/Contact";
 import Guests from "./pages/Guests";
 import { AnimatePresence } from "framer-motion";
-import { useMedia } from "./components/MediaContext";
+import { useMedia } from "./context/MediaContext";
 import MediaPlayer from "./components/MediaPlayer";
 import axios from "axios";
 import WebPlayer from "./components/WebPlayer";

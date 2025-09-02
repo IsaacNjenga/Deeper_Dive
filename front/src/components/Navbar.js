@@ -20,7 +20,7 @@ import {
 } from "@ant-design/icons";
 import { UserContext } from "../App";
 import Playlist from "../components/Playlist.js";
-import { useMedia } from "./MediaContext.js";
+import { useMedia } from "../context/MediaContext.js";
 
 const { Header, Content, Footer } = Layout;
 const { Title, Text } = Typography;
