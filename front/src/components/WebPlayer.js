@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Spin } from "antd";
 import axios from "axios";
 import Login from "./Login";
+import { useAuth } from "../context/AuthContext";
 
 const initialTrack = {
   name: "No Track Playing",
@@ -11,16 +11,17 @@ const initialTrack = {
   artists: [{ name: "" }],
 };
 
-function WebPlayer({ token, tokenLoading }) {
+function WebPlayer() {
   const [player, setPlayer] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(initialTrack);
   const [deviceId, setDeviceId] = useState(null);
+  const { accessToken } = useAuth();
 
   // Load Spotify SDK and init player once token is available
   useEffect(() => {
-    if (!token) return;
+    if (!accessToken) return;
 
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -31,7 +32,7 @@ function WebPlayer({ token, tokenLoading }) {
       const spotifyPlayer = new window.Spotify.Player({
         name: "Deeper Dive Web Player",
         getOAuthToken: (cb) => {
-          cb(token);
+          cb(accessToken);
         },
         volume: 0.5,
       });
@@ -68,7 +69,7 @@ function WebPlayer({ token, tokenLoading }) {
         player.disconnect();
       }
     };
-  }, [token]);
+  }, [accessToken]);
 
   // Transfer playback to this web player and play something
   const transferPlaybackHere = async () => {
@@ -82,7 +83,7 @@ function WebPlayer({ token, tokenLoading }) {
           play: true,
         },
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
 
@@ -93,7 +94,7 @@ function WebPlayer({ token, tokenLoading }) {
           uris: ["spotify:track:4uLU6hMCjMI75M1A2tKUQC"], // example track
         },
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
     } catch (err) {
@@ -101,57 +102,58 @@ function WebPlayer({ token, tokenLoading }) {
     }
   };
 
-  if (tokenLoading) {
-    return <Spin fullscreen tip="Loading Spotify..." />;
-  }
-
   return (
-    // <div className="flex flex-col items-center p-4 bg-gray-900 text-white rounded-2xl shadow-lg w-[350px]">
-    //   <div className="flex items-center space-x-4">
-    //     <img
-    //       src={currentTrack.album.images[0]?.url || "/placeholder.jpg"}
-    //       alt="Album cover"
-    //       className="w-24 h-24 rounded-lg shadow"
-    //     />
-    //     <div>
-    //       <h2 className="text-lg font-bold">{currentTrack?.name}</h2>
-    //       <p className="text-sm text-gray-300">
-    //         {currentTrack?.artists[0]?.name}
-    //       </p>
-    //     </div>
-    //   </div>
+    <>
+      {accessToken ? (
+        <div className="flex flex-col items-center p-4 bg-gray-900 text-white rounded-2xl shadow-lg w-[350px]">
+          <div className="flex items-center space-x-4">
+            <img
+              src={currentTrack.album.images[0]?.url || "/placeholder.jpg"}
+              alt="Album cover"
+              className="w-24 h-24 rounded-lg shadow"
+            />
+            <div>
+              <h2 className="text-lg font-bold">{currentTrack?.name}</h2>
+              <p className="text-sm text-gray-300">
+                {currentTrack?.artists[0]?.name}
+              </p>
+            </div>
+          </div>
 
-    //   {!isActive ? (
-    //     <button
-    //       className="mt-4 px-4 py-2 bg-green-600 rounded-full hover:bg-green-700"
-    //       onClick={transferPlaybackHere}
-    //     >
-    //       Connect Web Player
-    //     </button>
-    //   ) : (
-    //     <div className="flex items-center justify-center mt-6 space-x-6">
-    //       <button
-    //         className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
-    //         onClick={() => player.previousTrack()}
-    //       >
-    //         ⏮
-    //       </button>
-    //       <button
-    //         className="px-6 py-2 bg-green-600 rounded-full hover:bg-green-700"
-    //         onClick={() => player.togglePlay()}
-    //       >
-    //         {isPaused ? "▶️ Play" : "⏸ Pause"}
-    //       </button>
-    //       <button
-    //         className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
-    //         onClick={() => player.nextTrack()}
-    //       >
-    //         ⏭
-    //       </button>
-    //     </div>
-    //   )}
-    // </div>
-    <Login />
+          {!isActive ? (
+            <button
+              className="mt-4 px-4 py-2 bg-green-600 rounded-full hover:bg-green-700"
+              onClick={transferPlaybackHere}
+            >
+              Connect Web Player
+            </button>
+          ) : (
+            <div className="flex items-center justify-center mt-6 space-x-6">
+              <button
+                className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
+                onClick={() => player.previousTrack()}
+              >
+                ⏮
+              </button>
+              <button
+                className="px-6 py-2 bg-green-600 rounded-full hover:bg-green-700"
+                onClick={() => player.togglePlay()}
+              >
+                {isPaused ? "▶️ Play" : "⏸ Pause"}
+              </button>
+              <button
+                className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
+                onClick={() => player.nextTrack()}
+              >
+                ⏭
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <Login />
+      )}
+    </>
   );
 }
 
