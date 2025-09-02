@@ -23,10 +23,10 @@ function Callback() {
           "https://deeper-dive-server.vercel.app/api/callback",
           { code }
         );
-        console.log(data);
-        setAccessToken(data.access_token);
-        setRefreshToken(data.refresh_token);
-        setExpiresIn(data.expires_in);
+        console.log(data.data.access_token);
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+        setExpiresIn(data.data.expires_in);
         navigate("/player");
       } catch (error) {
         console.error("Error fetching access token:", error);
