@@ -471,10 +471,10 @@ class App {
   }
   onWheel(e) {
     const delta = e.deltaY || e.wheelDelta || e.detail;
-    this.scroll.target +=
-      (delta > 0 ? this.scrollSpeed : -this.scrollSpeed) * 0.2;
+    this.scroll.target += delta * 0.002; // smooth factor
     this.onCheckDebounce();
   }
+
   onCheck() {
     if (!this.medias || !this.medias[0]) return;
     const width = this.medias[0].width;
@@ -502,11 +502,8 @@ class App {
     }
   }
   update() {
-    this.scroll.current = lerp(
-      this.scroll.current,
-      this.scroll.target,
-      this.scroll.ease
-    );
+    this.scroll.current += (this.scroll.target - this.scroll.current) * 0.08;
+
     const direction = this.scroll.current > this.scroll.last ? "right" : "left";
     if (this.medias) {
       this.medias.forEach((media) => media.update(this.scroll, direction));
@@ -559,7 +556,7 @@ export default function CircularGallery({
   borderRadius = 0.05,
   font = "bold 30px Figtree",
   scrollSpeed = 2,
-  scrollEase = 0.05,
+  scrollEase = 0.1,
 }) {
   const containerRef = useRef(null);
   useEffect(() => {
