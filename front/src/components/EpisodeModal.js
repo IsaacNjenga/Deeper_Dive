@@ -1,9 +1,5 @@
 import { Col, Image, Modal, Row, Typography, Space, Tag } from "antd";
-import {
-  CalendarOutlined,
-  ClockCircleOutlined,
-  NumberOutlined,
-} from "@ant-design/icons";
+import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons";
 
 import { formatDuration } from "../pages/Episodes";
 import { format } from "date-fns";

@@ -20,14 +20,18 @@ const generateToken = async (req, res, next) => {
     if (response.ok) {
       req.accessToken = data.access_token;
       next();
-    //   return res.status(200).json({ accessToken: data.access_token });
     } else {
       console.error("Error fetching access token:", data);
       return res.status(500).json({ message: "Error generating access token" });
     }
+    return res
+      .status(200)
+      .json({ success: true, accessToken: data.access_token });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Error generating an access token" });
+    return res
+      .status(500)
+      .json({ message: "Error generating an access token" });
   }
 };
 

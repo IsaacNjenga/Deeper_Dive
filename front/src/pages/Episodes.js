@@ -1,83 +1,80 @@
-import { Button, Card, Col, Image, Popover, Row, Typography } from "antd";
-import React, { useContext, useEffect, useState } from "react";
-import wam from "../assets/audio/wam.mp3";
-import wam2 from "../assets/audio/wam2.mp3";
-import wam3 from "../assets/audio/wam3.mp3";
-import wam4 from "../assets/audio/wam4.mp3";
+import { Button, Card, Col, Image, Row, Typography } from "antd";
+import { useContext, useEffect, useState } from "react";
+// import wam from "../assets/audio/wam.mp3";
+// import wam2 from "../assets/audio/wam2.mp3";
+// import wam3 from "../assets/audio/wam3.mp3";
+// import wam4 from "../assets/audio/wam4.mp3";
 import { format } from "date-fns";
 import {
   CalendarOutlined,
-  CheckOutlined,
   ClockCircleOutlined,
-  PauseCircleOutlined,
   PlayCircleOutlined,
-  UnorderedListOutlined,
 } from "@ant-design/icons";
 import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
-import Swal from "sweetalert2";
+//import Swal from "sweetalert2";
 import Loader from "../components/Loader";
 import ShinyText from "../components/ShinyText";
 import EpisodeModal from "../components/EpisodeModal";
-import { useMedia } from "../components/MediaContext";
+//import { useMedia } from "../components/MediaContext";
 import useFetchEpisodes from "../hooks/fetchEpisodes";
 
 const { Title, Text } = Typography;
 
-const initialEpisodes = [
-  {
-    id: 1,
-    title: "How do I create this?",
-    description:
-      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
-    timestamp: "2025-07-08",
-    episode: 1,
-    audio: wam,
-    cover:
-      "https://plus.unsplash.com/premium_photo-1668790459187-3b2a743253e1?w=900",
-  },
-  {
-    id: 2,
-    title: "How do I create this again?",
-    description:
-      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
-    timestamp: "2025-07-08",
-    episode: 2,
-    audio: wam2,
-    cover: "https://images.unsplash.com/photo-1590410790503-ff66c3e9e1e5?w=900",
-  },
-  {
-    id: 3,
-    title: "How do I create this once more?",
-    description:
-      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
-    timestamp: "2025-07-08",
-    episode: 3,
-    audio: wam3,
-    cover:
-      "https://plus.unsplash.com/premium_photo-1664526283895-54f9de9e0d96?w=900",
-  },
-  {
-    id: 4,
-    title: "How do I create this: Part 1?",
-    description:
-      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
-    timestamp: "2025-07-08",
-    episode: 4,
-    audio: wam4,
-    cover: "https://images.unsplash.com/photo-1517384084767-6bc118943770?w=900",
-  },
-  {
-    id: 5,
-    title: "How do I create this: Part 2?",
-    description:
-      "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
-    timestamp: "2025-07-18",
-    episode: 5,
-    audio: wam4,
-    cover: "https://images.unsplash.com/photo-1517384084767-6bc118943770?w=900",
-  },
-];
+// const initialEpisodes = [
+//   {
+//     id: 1,
+//     title: "How do I create this?",
+//     description:
+//       "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
+//     timestamp: "2025-07-08",
+//     episode: 1,
+//     audio: wam,
+//     cover:
+//       "https://plus.unsplash.com/premium_photo-1668790459187-3b2a743253e1?w=900",
+//   },
+//   {
+//     id: 2,
+//     title: "How do I create this again?",
+//     description:
+//       "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
+//     timestamp: "2025-07-08",
+//     episode: 2,
+//     audio: wam2,
+//     cover: "https://images.unsplash.com/photo-1590410790503-ff66c3e9e1e5?w=900",
+//   },
+//   {
+//     id: 3,
+//     title: "How do I create this once more?",
+//     description:
+//       "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
+//     timestamp: "2025-07-08",
+//     episode: 3,
+//     audio: wam3,
+//     cover:
+//       "https://plus.unsplash.com/premium_photo-1664526283895-54f9de9e0d96?w=900",
+//   },
+//   {
+//     id: 4,
+//     title: "How do I create this: Part 1?",
+//     description:
+//       "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
+//     timestamp: "2025-07-08",
+//     episode: 4,
+//     audio: wam4,
+//     cover: "https://images.unsplash.com/photo-1517384084767-6bc118943770?w=900",
+//   },
+//   {
+//     id: 5,
+//     title: "How do I create this: Part 2?",
+//     description:
+//       "I sit down with a behavioral scientist to unpack sustainable habit loops and work-life design.",
+//     timestamp: "2025-07-18",
+//     episode: 5,
+//     audio: wam4,
+//     cover: "https://images.unsplash.com/photo-1517384084767-6bc118943770?w=900",
+//   },
+// ];
 
 export const formatDuration = (input) => {
   let seconds = Number(input);
@@ -111,11 +108,21 @@ function Episodes() {
     document.title = "Episodes - A Deeper Dive";
   }, []);
 
-  const { darkMode, playMedia, currentEp, setCurrentEp, isMobile } =
-    useContext(UserContext);
+  const {
+    darkMode,
+    // playMedia,
+    //  currentEp,
+    //   setCurrentEp,
+    isMobile,
+  } = useContext(UserContext);
   const { episodes, episodesLoading } = useFetchEpisodes();
-  const { isPlaying, setIsPlaying, playlist, setPlaylist } = useMedia();
-  const [oldEpisodes, setEpisodes] = useState(initialEpisodes);
+  // const {
+  //    isPlaying,
+  //     setIsPlaying,
+  //    playlist,
+  //   setPlaylist,
+  // } = useMedia();
+  //const [oldEpisodes, setEpisodes] = useState(initialEpisodes);
   const [loading, setLoading] = useState(false);
   const [openEpisodeModal, setOpenEpisodeModal] = useState(false);
   const [episodeContent, setEpisodeContent] = useState(null);
@@ -130,45 +137,46 @@ function Episodes() {
     setTimeout(() => setLoading(false), 100);
   };
 
-  const allEpisodes = [...oldEpisodes];
+  //const allEpisodes = [...oldEpisodes];
 
-  const addToPlaylist = (episode) => {
-    const selectedEpisode = allEpisodes.find((e) => e.id === episode.id);
-    if (!selectedEpisode) {
-      console.warn("Episode not found");
-      return;
-    }
-    setPlaylist((prevList) => {
-      const updatedList = [
-        ...prevList,
-        {
-          id: selectedEpisode.id,
-          title: selectedEpisode.title,
-          description: selectedEpisode.description,
-          timestamp: selectedEpisode.timestamp,
-          episode: selectedEpisode.episode,
-          audio: selectedEpisode.audio,
-          cover: selectedEpisode.cover,
-        },
-      ];
-      localStorage.setItem("playlist", JSON.stringify(updatedList));
-      return updatedList;
-    });
-  };
+  // const addToPlaylist = (episode) => {
+  //   const selectedEpisode = allEpisodes.find((e) => e.id === episode.id);
+  //   if (!selectedEpisode) {
+  //     console.warn("Episode not found");
+  //     return;
+  //   }
+  //   setPlaylist((prevList) => {
+  //     const updatedList = [
+  //       ...prevList,
+  //       {
+  //         id: selectedEpisode.id,
+  //         title: selectedEpisode.title,
+  //         description: selectedEpisode.description,
+  //         timestamp: selectedEpisode.timestamp,
+  //         episode: selectedEpisode.episode,
+  //         audio: selectedEpisode.audio,
+  //         cover: selectedEpisode.cover,
+  //       },
+  //     ];
+  //     localStorage.setItem("playlist", JSON.stringify(updatedList));
+  //     return updatedList;
+  //   });
+  // };
 
   // Load durations dynamically
-  useEffect(() => {
-    initialEpisodes.forEach((ep, idx) => {
-      const audio = new Audio(ep.audio);
-      audio.onloadedmetadata = () => {
-        setEpisodes((prev) =>
-          prev.map((e) =>
-            e.id === ep.id ? { ...e, duration: Math.round(audio.duration) } : e
-          )
-        );
-      };
-    });
-  }, []);
+
+  // useEffect(() => {
+  //   initialEpisodes.forEach((ep, idx) => {
+  //     const audio = new Audio(ep.audio);
+  //     audio.onloadedmetadata = () => {
+  //       setEpisodes((prev) =>
+  //         prev.map((e) =>
+  //           e.id === ep.id ? { ...e, duration: Math.round(audio.duration) } : e
+  //         )
+  //       );
+  //     };
+  //   });
+  // }, []);
 
   if (episodesLoading) return <Loader text={"Please wait..."} size={"large"} />;
 

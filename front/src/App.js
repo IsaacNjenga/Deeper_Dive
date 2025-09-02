@@ -11,6 +11,8 @@ import { AnimatePresence } from "framer-motion";
 import { useMedia } from "./components/MediaContext";
 import MediaPlayer from "./components/MediaPlayer";
 import axios from "axios";
+import WebPlayer from "./components/WebPlayer";
+import useGetToken from "./hooks/getToken";
 //import Cookies from "universal-cookie";
 
 //const cookies = new Cookies();
@@ -28,8 +30,8 @@ export const darkTheme = {
 };
 
 //const mode = cookies.get("mode");
-//axios.defaults.baseURL = "http://localhost:3001/api";
-axios.defaults.baseURL = "https://deeper-dive-server.vercel.app/api";
+axios.defaults.baseURL = "http://localhost:3001/api";
+//axios.defaults.baseURL = "https://deeper-dive-server.vercel.app/api";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -38,6 +40,7 @@ function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [currentEp, setCurrentEp] = useState(null);
   const [playlistDrawer, setPlaylistDrawer] = useState(false);
+  const { token, tokenLoading } = useGetToken();
 
   const { setMediaPlaying, setIsPlaying } = useMedia();
 
@@ -84,6 +87,12 @@ function App() {
               <Route path="/reviews" element={<Reviews />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/guests" element={<Guests />} />
+              <Route
+                path="/player"
+                element={
+                  <WebPlayer token={token} tokenLoading={tokenLoading} />
+                }
+              />
             </Route>
           </Routes>
         </AnimatePresence>
