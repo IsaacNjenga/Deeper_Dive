@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const fetchUser = async (req, res) => {
   const { accessToken } = req.query;
 
@@ -7,6 +9,7 @@ const fetchUser = async (req, res) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+
 
     res.json(response.data);
   } catch (error) {
