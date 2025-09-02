@@ -2,6 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Login from "./Login";
 import { useAuth } from "../context/AuthContext";
+import { Card, Typography, Button, Space, Avatar } from "antd";
+import {
+  PlayCircleOutlined,
+  PauseCircleOutlined,
+  StepBackwardOutlined,
+  StepForwardOutlined,
+  CloudSyncOutlined,
+} from "@ant-design/icons";
+
+const { Title, Text } = Typography;
 
 const initialTrack = {
   name: "No Track Playing",
@@ -116,54 +126,85 @@ function WebPlayer() {
   return (
     <>
       {profile ? (
-        <>
-          <p>{profile.display_name}</p>
-          <div className="flex flex-col items-center p-4 bg-gray-900 text-white rounded-2xl shadow-lg w-[350px]">
-            <div className="flex items-center space-x-4">
-              <img
-                src={currentTrack.album.images[0]?.url || "/placeholder.jpg"}
-                alt="Album cover"
-                className="w-24 h-24 rounded-lg shadow"
-              />
-              <div>
-                <h2 className="text-lg font-bold">{currentTrack?.name}</h2>
-                <p className="text-sm text-gray-300">
-                  {currentTrack?.artists[0]?.name}
-                </p>
-              </div>
+        <Card
+          style={{
+            width: 380,
+            borderRadius: "16px",
+            backgroundColor: "#1e1e1e",
+            color: "white",
+          }}
+          bodyStyle={{ padding: "20px" }}
+          bordered={false}
+        >
+          <Space align="center" size="large">
+            <Avatar
+              shape="square"
+              size={100}
+              src={currentTrack.album.images[0]?.url || "/placeholder.jpg"}
+              style={{ borderRadius: "12px" }}
+            />
+            <div>
+              <Title level={4} style={{ margin: 0, color: "white" }}>
+                {currentTrack?.name}
+              </Title>
+              <Text type="secondary">{currentTrack?.artists[0]?.name}</Text>
             </div>
+          </Space>
 
-            {!isActive ? (
-              <button
-                className="mt-4 px-4 py-2 bg-green-600 rounded-full hover:bg-green-700"
-                onClick={transferPlaybackHere}
+          {!isActive ? (
+            <Button
+              type="primary"
+              icon={<CloudSyncOutlined />}
+              shape="round"
+              block
+              style={{
+                marginTop: "20px",
+                backgroundColor: "#1DB954",
+                border: "none",
+              }}
+              onClick={transferPlaybackHere}
+            >
+              Connect Web Player
+            </Button>
+          ) : (
+            <Space
+              style={{
+                marginTop: "30px",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <Button
+                shape="circle"
+                size="large"
+                icon={<StepBackwardOutlined />}
+                onClick={() => player.previousTrack()}
+              />
+              <Button
+                type="primary"
+                shape="round"
+                size="large"
+                icon={
+                  isPaused ? <PlayCircleOutlined /> : <PauseCircleOutlined />
+                }
+                onClick={() => player.togglePlay()}
+                style={{
+                  backgroundColor: "#1DB954",
+                  border: "none",
+                  padding: "0 25px",
+                }}
               >
-                Connect Web Player
-              </button>
-            ) : (
-              <div className="flex items-center justify-center mt-6 space-x-6">
-                <button
-                  className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
-                  onClick={() => player.previousTrack()}
-                >
-                  ⏮
-                </button>
-                <button
-                  className="px-6 py-2 bg-green-600 rounded-full hover:bg-green-700"
-                  onClick={() => player.togglePlay()}
-                >
-                  {isPaused ? "▶️ Play" : "⏸ Pause"}
-                </button>
-                <button
-                  className="px-4 py-2 bg-gray-700 rounded-full hover:bg-gray-600"
-                  onClick={() => player.nextTrack()}
-                >
-                  ⏭
-                </button>
-              </div>
-            )}
-          </div>
-        </>
+                {isPaused ? "Play" : "Pause"}
+              </Button>
+              <Button
+                shape="circle"
+                size="large"
+                icon={<StepForwardOutlined />}
+                onClick={() => player.nextTrack()}
+              />
+            </Space>
+          )}
+        </Card>
       ) : (
         <Login />
       )}
@@ -172,5 +213,3 @@ function WebPlayer() {
 }
 
 export default WebPlayer;
-
-//"BQA5-suAGmu7pDe5Wy1o8tQ7hDtQiuR1akZ_bjarIs8n75SoztnmSmPcajzQ6P0FCtsJnPxHtT2ALklaOkwiW_qRswpHON2mC29ZRsmkZ8BMl_o3-kZHNroV4CU2Sxueg7Ykv7-uEHLkM37PiOe9vF5kr8Y9rqwVvYZy_0a1XfusUCoL9vOlLF2hOaCtQa07Esl8Vj_k20JBIhIQyKmWkdNRe3QTlkPvnwYnYpqjYnWPytSpioJ72pEXw8pdsQ"
