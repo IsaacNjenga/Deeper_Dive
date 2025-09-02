@@ -19,7 +19,7 @@ function WebPlayer() {
   const [deviceId, setDeviceId] = useState(null);
   const [profile, setProfile] = useState(null);
   const { accessToken } = useAuth();
-  console.log(accessToken);
+  //console.log(accessToken);
 
   // Load Spotify SDK and init player once token is available
   useEffect(() => {
