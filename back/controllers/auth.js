@@ -18,7 +18,7 @@ const generateString = (length) => {
 
 const spotifyAuth = async (req, res) => {
   try {
-    const scope = "streaming user-read-email user-read-private";
+    const scope = "streaming user-read-email user-read-private user-modify-playback-state";
     const state = generateString(16);
 
     const authParameters = new URLSearchParams({
