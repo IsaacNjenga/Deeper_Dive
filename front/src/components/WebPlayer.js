@@ -19,7 +19,7 @@ function WebPlayer() {
   const [deviceId, setDeviceId] = useState(null);
   const [profile, setProfile] = useState(null);
   const { accessToken } = useAuth();
-  //console.log(accessToken);
+  console.log(accessToken);
 
   // Load Spotify SDK and init player once token is available
   useEffect(() => {
@@ -73,12 +73,11 @@ function WebPlayer() {
     };
   }, [accessToken]);
 
+  //https://api.spotify.com/v1/me
   useEffect(() => {
     if (!accessToken) return;
     axios
-      .get("https://api.spotify.com/v1/me", {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
+      .get(`me?accessToken=${accessToken}`)
       .then((res) => setProfile(res.data))
       .catch((err) => console.error(err));
   }, [accessToken]);
