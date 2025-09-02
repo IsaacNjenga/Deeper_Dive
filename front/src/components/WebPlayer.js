@@ -17,7 +17,9 @@ function WebPlayer() {
   const [isActive, setIsActive] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(initialTrack);
   const [deviceId, setDeviceId] = useState(null);
+  const [profile, setProfile] = useState(null);
   const { accessToken } = useAuth();
+  console.log(accessToken);
 
   // Load Spotify SDK and init player once token is available
   useEffect(() => {
@@ -71,6 +73,16 @@ function WebPlayer() {
     };
   }, [accessToken]);
 
+  useEffect(() => {
+    if (!accessToken) return;
+    axios
+      .get("https://api.spotify.com/v1/me", {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((res) => setProfile(res.data))
+      .catch((err) => console.error(err));
+  }, [accessToken]);
+
   // Transfer playback to this web player and play something
   const transferPlaybackHere = async () => {
     if (!deviceId) return;
@@ -104,9 +116,9 @@ function WebPlayer() {
 
   return (
     <>
-      {accessToken ? (
+      {profile ? (
         <>
-          <p>{accessToken}</p>
+          <p>{profile.display_name}</p>
           <div className="flex flex-col items-center p-4 bg-gray-900 text-white rounded-2xl shadow-lg w-[350px]">
             <div className="flex items-center space-x-4">
               <img
