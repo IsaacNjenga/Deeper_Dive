@@ -92,6 +92,7 @@ function WebPlayer() {
       .catch((err) => console.error(err));
   }, [accessToken]);
 
+  console.log("id", deviceId);
   // Transfer playback to this web player and play something
   const transferPlaybackHere = async () => {
     if (!deviceId) return;
