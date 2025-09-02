@@ -11,7 +11,7 @@ function Login() {
   const onLogin = async () => {
     setLoading(true);
     try {
-      window.location.href = "http://localhost:3001/api/auth";
+      window.location.href = "https://deeper-dive-server.vercel.app/api/auth";
     } catch (error) {
       console.error(error);
       Swal.fire({

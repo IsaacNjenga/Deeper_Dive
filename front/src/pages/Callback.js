@@ -12,7 +12,7 @@ function Callback() {
 
   useEffect(() => {
     const code = params.get("code");
-    console.log(code);
+
     if (!code) return;
 
     // const queryParams = new URLSearchParams(location.search);
@@ -24,6 +24,7 @@ function Callback() {
           "https://deeper-dive-server.vercel.app/api/callback",
           { code }
         );
+        console.log(data);
         setAccessToken(data.access_token);
         setRefreshToken(data.refresh_token);
         setExpiresIn(data.expires_in);
