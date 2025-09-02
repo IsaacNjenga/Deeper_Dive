@@ -33,61 +33,55 @@ function WebPlayer() {
 
   // Load Spotify SDK and init player once token is available
   useEffect(() => {
-  const script = document.createElement("script");
-  script.src = "https://sdk.scdn.co/spotify-player.js";
-  script.async = true;
+    if (!accessToken) return;
 
-  script.onload = () => {
-    console.log("✅ Spotify SDK script loaded");
-  };
+    const script = document.createElement("script");
+    script.src = "https://sdk.scdn.co/spotify-player.js";
+    script.async = true;
+    document.body.appendChild(script);
 
-  document.body.appendChild(script);
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      const spotifyPlayer = new window.Spotify.Player({
+        name: "Deeper Dive Web Player",
+        getOAuthToken: (cb) => {
+          cb(accessToken);
+        },
+        volume: 0.5,
+      });
 
-  window.onSpotifyWebPlaybackSDKReady = () => {
-    const spotifyPlayer = new window.Spotify.Player({
-      name: "My Web Player",
-      getOAuthToken: cb => {
-        cb(accessToken); // must include `streaming` scope
-      },
-      volume: 0.5,
-    });
+      setPlayer(spotifyPlayer);
 
-    // 🔴 Add all error listeners
-    spotifyPlayer.addListener("initialization_error", ({ message }) => {
-      console.error("❌ Initialization error:", message);
-    });
-    spotifyPlayer.addListener("authentication_error", ({ message }) => {
-      console.error("❌ Authentication error:", message);
-    });
-    spotifyPlayer.addListener("account_error", ({ message }) => {
-      console.error("❌ Account error:", message);
-    });
-    spotifyPlayer.addListener("playback_error", ({ message }) => {
-      console.error("❌ Playback error:", message);
-    });
+      // Device ready
+      spotifyPlayer.addListener("ready", ({ device_id }) => {
+        console.log("Ready with Device ID", device_id);
+        setDeviceId(device_id);
+      });
 
-    // 🟢 Ready listener
-    spotifyPlayer.addListener("ready", ({ device_id }) => {
-      console.log("🎉 Ready with Device ID:", device_id);
-    });
+      spotifyPlayer.addListener("not_ready", ({ device_id }) => {
+        console.log("Device ID offline", device_id);
+      });
 
-    // 🔴 Not Ready listener
-    spotifyPlayer.addListener("not_ready", ({ device_id }) => {
-      console.warn("⚠️ Device went offline:", device_id);
-    });
+      // Track state
+      spotifyPlayer.addListener("player_state_changed", (state) => {
+        if (!state) return;
 
-    spotifyPlayer.connect();
-  };
+        setCurrentTrack(state.track_window.current_track);
+        setIsPaused(state.paused);
 
-  // ✅ Cleanup: remove script + disconnect player
-  return () => {
-    if (window.spotifyPlayer) {
-      window.spotifyPlayer.disconnect();
-    }
-    document.body.removeChild(script);
-  };
-}, [accessToken]);
+        spotifyPlayer.getCurrentState().then((s) => {
+          setIsActive(!!s);
+        });
+      });
 
+      spotifyPlayer.connect();
+    };
+
+    return () => {
+      if (player) {
+        player.disconnect();
+      }
+    };
+  }, [accessToken]);
 
   //https://api.spotify.com/v1/me
   useEffect(() => {
@@ -99,7 +93,6 @@ function WebPlayer() {
   }, [accessToken]);
 
   console.log("id", deviceId);
-
   // Transfer playback to this web player and play something
   const transferPlaybackHere = async () => {
     if (!deviceId) return;
