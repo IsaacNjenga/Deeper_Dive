@@ -3,11 +3,10 @@ import Motion from "../components/motion";
 import { darkTheme, lightTheme, UserContext } from "../App";
 import { Carousel, Image, Typography } from "antd";
 import "../assets/css/about.css";
-import Img1 from "../assets/images/image0.jpeg";
-import Img2 from "../assets/images/image2.jpeg";
 import Img3 from "../assets/images/image3.jpeg";
-import Img4 from "../assets/images/image4.jpeg";
-import Img5 from "../assets/images/image5.jpeg";
+import Img8 from "../assets/images/image8.jpeg";
+import Img10 from "../assets/images/image10.jpeg";
+import CircularGallery from "../components/CircularGallery";
 
 const { Title, Paragraph } = Typography;
 
@@ -20,12 +19,12 @@ const { Title, Paragraph } = Typography;
 // const img4 =
 //   "https://images.unsplash.com/photo-1660832458429-526d0601054f?q=80&w=900";
 
-const images = [Img1, Img2, Img3, Img4, Img5];
+const images = [Img3, Img8, Img10];
 function About() {
   useEffect(() => {
     document.title = "About - A Deeper Dive";
   }, []);
-  
+
   const { isMobile, darkMode } = useContext(UserContext);
 
   return (
@@ -110,6 +109,15 @@ function About() {
             Degree in Data Science and Analytics at USIU-Africa.
           </Paragraph>
         </div>
+      </div>
+
+      <div>
+        <CircularGallery
+          bend={2}
+          textColor="#ffffff"
+          borderRadius={0.05}
+          scrollEase={0.02}
+        />
       </div>
     </Motion>
   );
