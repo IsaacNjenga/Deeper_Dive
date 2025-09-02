@@ -16,11 +16,11 @@ function useGetToken() {
         }
       } catch (error) {
         console.log(error);
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Failed to retrieve token",
-        });
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Error",
+        //   text: "Failed to retrieve token",
+        // });
       } finally {
         setTokenLoading(false);
       }

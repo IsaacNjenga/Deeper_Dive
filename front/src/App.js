@@ -31,8 +31,8 @@ export const darkTheme = {
 };
 
 //const mode = cookies.get("mode");
-axios.defaults.baseURL = "http://localhost:3001/api";
-//axios.defaults.baseURL = "https://deeper-dive-server.vercel.app/api";
+//axios.defaults.baseURL = "http://localhost:3001/api";
+axios.defaults.baseURL = "https://deeper-dive-server.vercel.app/api";
 axios.defaults.withCredentials = true;
 
 function App() {
