@@ -63,7 +63,7 @@ function Navbar() {
     { key: "3", label: "Guests", path: "/guests" },
     { key: "4", label: "About", path: "/about" },
     { key: "5", label: "Contact", path: "/contact" },
-    //{ key: "6", label: "Player", path: "/player" },
+//    { key: "6", label: "Player", path: "/player" },
   ];
 
   const headerStyle = {

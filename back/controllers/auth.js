@@ -24,7 +24,7 @@ const spotifyAuth = async (req, res) => {
       response_type: "code",
       client_id: client_id,
       scope: scope,
-      redirect_uri: "https://deeper-dive.vercel.app/",
+      redirect_uri: "https://deeper-dive.vercel.app/callback",
       state: state,
     });
 
@@ -43,7 +43,7 @@ const spotifyCallback = async (req, res) => {
       url: "https://accounts.spotify.com/api/token",
       form: {
         code: code,
-        redirect_uri: "https://deeper-dive.vercel.app/",
+        redirect_uri: "https://deeper-dive.vercel.app/callback",
         grant_type: "authorization_code",
       },
       headers: {

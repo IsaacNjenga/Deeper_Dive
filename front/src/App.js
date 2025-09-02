@@ -13,6 +13,7 @@ import MediaPlayer from "./components/MediaPlayer";
 import axios from "axios";
 import WebPlayer from "./components/WebPlayer";
 import useGetToken from "./hooks/getToken";
+import Callback from "./pages/Callback";
 //import Cookies from "universal-cookie";
 
 //const cookies = new Cookies();
@@ -87,6 +88,7 @@ function App() {
               <Route path="/reviews" element={<Reviews />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/guests" element={<Guests />} />
+              <Route path="/callback" element={<Callback />} />
               <Route
                 path="/player"
                 element={
