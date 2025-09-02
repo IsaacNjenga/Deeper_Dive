@@ -12,7 +12,6 @@ import { useMedia } from "./context/MediaContext";
 import MediaPlayer from "./components/MediaPlayer";
 import axios from "axios";
 import WebPlayer from "./components/WebPlayer";
-import useGetToken from "./hooks/getToken";
 import Callback from "./pages/Callback";
 //import Cookies from "universal-cookie";
 
@@ -31,8 +30,8 @@ export const darkTheme = {
 };
 
 //const mode = cookies.get("mode");
-//axios.defaults.baseURL = "http://localhost:3001/api";
-axios.defaults.baseURL = "https://deeper-dive-server.vercel.app/api";
+axios.defaults.baseURL = "http://localhost:3001/api";
+//axios.defaults.baseURL = "https://deeper-dive-server.vercel.app/api";
 axios.defaults.withCredentials = true;
 
 function App() {

@@ -38,7 +38,7 @@ const spotifyAuth = async (req, res) => {
 
 const spotifyCallback = async (req, res) => {
   try {
-    const { code } = req.query;
+    const { code } = req.body;
     const authOptions = {
       url: "https://accounts.spotify.com/api/token",
       form: {

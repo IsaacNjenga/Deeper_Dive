@@ -12,7 +12,7 @@ function Callback() {
 
   useEffect(() => {
     const code = params.get("code");
-
+    console.log(code);
     if (!code) return;
 
     // const queryParams = new URLSearchParams(location.search);
