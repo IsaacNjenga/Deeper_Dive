@@ -19,7 +19,7 @@ import EpisodeModal from "../components/EpisodeModal";
 //import { useMedia } from "../components/MediaContext";
 import useFetchEpisodes from "../hooks/fetchEpisodes";
 
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 
 // const initialEpisodes = [
 //   {
@@ -122,20 +122,32 @@ function Episodes() {
   //    playlist,
   //   setPlaylist,
   // } = useMedia();
-  //const [oldEpisodes, setEpisodes] = useState(initialEpisodes);
-  const [loading, setLoading] = useState(false);
+  //const [episodeItems, setEpisodes] = useState(initialEpisodes);
   const [openEpisodeModal, setOpenEpisodeModal] = useState(false);
   const [episodeContent, setEpisodeContent] = useState(null);
-
-  //console.log(episodes.items);
   const episodeItems = episodes?.items;
+  const [ellipsisMap, setEllipsisMap] = useState({});
 
-  const viewModal = (episode) => {
-    setLoading(true);
-    setOpenEpisodeModal(true);
-    setEpisodeContent(episode);
-    setTimeout(() => setLoading(false), 100);
+  useEffect(() => {
+    if (episodeItems) {
+      const initialMap = episodeItems?.reduce((acc, item) => {
+        acc[item.id] = true;
+        return acc;
+      }, {});
+      setEllipsisMap(initialMap);
+    }
+  }, [episodeItems]);
+
+  const toggleEllipsis = (key) => {
+    setEllipsisMap((prev) => ({ ...prev, [key]: !prev[key] }));
   };
+
+  // const viewModal = (episode) => {
+  //   setLoading(true);
+  //   setOpenEpisodeModal(true);
+  //   setEpisodeContent(episode);
+  //   setTimeout(() => setLoading(false), 100);
+  // };
 
   //const allEpisodes = [...oldEpisodes];
 
@@ -204,27 +216,31 @@ function Episodes() {
 
           <div style={{ margin: 10, padding: "30px 40px" }}>
             <Row gutter={[16, 16]}>
-              {episodeItems?.map((ep, index) => (
+              {episodeItems?.map((ep) => (
                 <Col key={ep.id} xs={24} sm={12} md={8}>
                   <Card
                     hoverable
                     style={{
-                      minHeight: 200,
-                      height: "100%",
+                      minHeight: 220,
                       borderRadius: 12,
                       display: "flex",
                       flexDirection: "column",
                       boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                      background: darkMode
+                        ? darkTheme.backgroundColor
+                        : lightTheme.backgroundColor,
+                      border: `1px solid ${darkMode ? "#fff" : "#333"}`,
                     }}
                     cover={
                       <div
                         style={{
                           position: "relative",
                           width: "100%",
-                          height: 200,
+                          height: 220,
                           overflow: "hidden",
                           borderTopLeftRadius: 12,
                           borderTopRightRadius: 12,
+                          padding: 1,
                         }}
                       >
                         {/* <div
@@ -278,6 +294,7 @@ function Episodes() {
                             width: "100%",
                             height: "100%",
                             objectFit: "cover",
+                            borderRadius: 12,
                           }}
                           className="ant2"
                         />
@@ -361,14 +378,22 @@ function Episodes() {
                     >
                       <Text
                         type="secondary"
-                        style={{ fontSize: 14, fontFamily: "Roboto" }}
+                        style={{
+                          fontSize: 14,
+                          fontFamily: "Roboto",
+                          color: darkMode ? darkTheme.color : lightTheme.color,
+                        }}
                       >
                         <CalendarOutlined />{" "}
                         {format(new Date(ep.release_date), "PPP")}
                       </Text>
                       <Text
                         type="secondary"
-                        style={{ fontSize: 14, fontFamily: "Roboto" }}
+                        style={{
+                          fontSize: 14,
+                          fontFamily: "Roboto",
+                          color: darkMode ? darkTheme.color : lightTheme.color,
+                        }}
                       >
                         <ClockCircleOutlined />{" "}
                         {ep.duration_ms
@@ -389,13 +414,16 @@ function Episodes() {
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             fontFamily: "Raleway",
+                            color: darkMode
+                              ? darkTheme.color
+                              : lightTheme.color,
                           }}
                         >
                           {ep.name}
                         </Title>
                       }
                       description={
-                        <Text
+                        <Paragraph
                           type="secondary"
                           style={{
                             display: "-webkit-box",
@@ -403,27 +431,35 @@ function Episodes() {
                             WebkitBoxOrient: "vertical",
                             overflow: "hidden",
                             fontFamily: "Raleway",
+                            color: darkMode
+                              ? darkTheme.color
+                              : lightTheme.color,
+                            marginBottom: 0,
                           }}
-                          ellipsis
+                          ellipsis={ellipsisMap[ep.id] ? { rows: 2 } : false}
                         >
                           {ep.description}
-                        </Text>
+                        </Paragraph>
                       }
                     />
                     <div
                       style={{
-                        marginTop: 8,
+                        marginTop: 0,
                         textAlign: "right",
                       }}
                     >
                       <Button
                         type="text"
-                        style={{ fontFamily: "Raleway", color: "#aaa" }}
-                        onClick={() => {
-                          viewModal(ep);
+                        style={{
+                          fontFamily: "Raleway",
+                          color: darkMode ? darkTheme.color : lightTheme.color,
                         }}
+                        onClick={() => toggleEllipsis(ep.id)}
+                        // onClick={() => {
+                        //   viewModal(ep);
+                        // }}
                       >
-                        View More
+                        {ellipsisMap[ep.id] ? "More" : "Less"}
                       </Button>
                     </div>
                   </Card>
@@ -438,7 +474,7 @@ function Episodes() {
       <EpisodeModal
         openModal={openEpisodeModal}
         setOpenModal={setOpenEpisodeModal}
-        loading={loading}
+        loading={episodesLoading}
         episodeContent={episodeContent}
       />
     </>
