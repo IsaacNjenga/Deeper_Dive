@@ -78,8 +78,8 @@ function App() {
         }}
       >
         <AnimatePresence mode="wait">
-          App
-          {/*<Routes location={location} key={location.pathname}>
+          // App
+          <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Navbar />}>
               <Route index element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -90,7 +90,7 @@ function App() {
               <Route path="/callback" element={<Callback />} />
               <Route path="/player" element={<WebPlayer />} />
             </Route>
-          </Routes>*/}
+          </Routes>
         </AnimatePresence>
         <MediaPlayer />
       </UserContext.Provider>
