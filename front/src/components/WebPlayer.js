@@ -81,6 +81,7 @@ function WebPlayer() {
         player.disconnect();
       }
     };
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   //https://api.spotify.com/v1/me

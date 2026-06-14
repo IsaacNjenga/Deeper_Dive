@@ -25,6 +25,7 @@ function Playlist({ playlist }) {
   useEffect(() => {
     const savedPlaylist = JSON.parse(localStorage.getItem("playlist"));
     if (savedPlaylist) setPlaylist(savedPlaylist);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const removeFromPlaylist = (id) => {
